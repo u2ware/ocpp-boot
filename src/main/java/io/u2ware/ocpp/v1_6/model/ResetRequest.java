@@ -1,0 +1,89 @@
+
+package io.u2ware.ocpp.v1_6.model;
+
+import java.util.HashMap;
+import java.util.Map;
+import javax.annotation.processing.Generated;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonValue;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import lombok.experimental.Accessors;
+import lombok.experimental.SuperBuilder;
+
+
+/**
+ * ResetRequest
+ * <p>
+ * 
+ * 
+ */
+@JsonInclude(JsonInclude.Include.ALWAYS)
+@SuperBuilder
+@ToString
+@Getter
+@Accessors(fluent = true)
+@NoArgsConstructor
+@AllArgsConstructor
+@JsonPropertyOrder({
+    "type"
+})
+@Generated("jsonschema2pojo")
+public class ResetRequest {
+
+    /**
+     * 
+     * (Required)
+     * 
+     */
+    @JsonProperty("type")
+    @NotNull
+    private ResetRequest.Type type;
+
+    @Generated("jsonschema2pojo")
+    public enum Type {
+
+        HARD("Hard"),
+        SOFT("Soft");
+        private final String value;
+        private final static Map<String, ResetRequest.Type> CONSTANTS = new HashMap<String, ResetRequest.Type>();
+
+        static {
+            for (ResetRequest.Type c: values()) {
+                CONSTANTS.put(c.value, c);
+            }
+        }
+
+        Type(String value) {
+            this.value = value;
+        }
+
+        @Override
+        public String toString() {
+            return this.value;
+        }
+
+        @JsonValue
+        public String value() {
+            return this.value;
+        }
+
+        @JsonCreator
+        public static ResetRequest.Type fromValue(String value) {
+            ResetRequest.Type constant = CONSTANTS.get(value);
+            if (constant == null) {
+                throw new IllegalArgumentException(value);
+            } else {
+                return constant;
+            }
+        }
+
+    }
+
+}

@@ -1,0 +1,15 @@
+package io.u2ware.ocpp.v2_0_1.actions;
+
+import java.util.Map;
+
+import io.u2ware.ocpp.v2_0_1.exception.ErrorCode;
+import io.u2ware.ocpp.v2_0_1.model.MeterValuesRequest;
+import io.u2ware.ocpp.v2_0_1.model.MeterValuesResponse;
+
+public interface MeterValuesOffer { 
+
+    public MeterValuesRequest sendMeterValuesRequest(String id, Map<String,Object> req);
+
+    public void receivedMeterValuesResponse(String id, MeterValuesResponse res, ErrorCode err);
+
+}

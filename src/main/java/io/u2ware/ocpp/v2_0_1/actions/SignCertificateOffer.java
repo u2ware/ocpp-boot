@@ -1,0 +1,15 @@
+package io.u2ware.ocpp.v2_0_1.actions;
+
+import java.util.Map;
+
+import io.u2ware.ocpp.v2_0_1.exception.ErrorCode;
+import io.u2ware.ocpp.v2_0_1.model.SignCertificateRequest;
+import io.u2ware.ocpp.v2_0_1.model.SignCertificateResponse;
+
+public interface SignCertificateOffer { 
+
+    public SignCertificateRequest sendSignCertificateRequest(String id, Map<String,Object> req);
+
+    public void receivedSignCertificateResponse(String id, SignCertificateResponse res, ErrorCode err);
+
+}

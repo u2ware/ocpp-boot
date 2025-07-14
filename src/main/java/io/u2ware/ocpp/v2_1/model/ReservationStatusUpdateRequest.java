@@ -1,0 +1,64 @@
+
+package io.u2ware.ocpp.v2_1.model;
+
+import javax.annotation.processing.Generated;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyDescription;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import lombok.experimental.Accessors;
+import lombok.experimental.SuperBuilder;
+
+@JsonInclude(JsonInclude.Include.ALWAYS)
+@SuperBuilder
+@ToString
+@Getter
+@Accessors(fluent = true)
+@NoArgsConstructor
+@AllArgsConstructor
+@JsonPropertyOrder({
+    "reservationId",
+    "reservationUpdateStatus",
+    "customData"
+})
+@Generated("jsonschema2pojo")
+public class ReservationStatusUpdateRequest {
+
+    /**
+     * The ID of the reservation.
+     * 
+     * (Required)
+     * 
+     */
+    @JsonProperty("reservationId")
+    @JsonPropertyDescription("The ID of the reservation.\r\n")
+    @DecimalMin("0")
+    @NotNull
+    private Integer reservationId;
+    /**
+     * The updated reservation status.
+     * 
+     * (Required)
+     * 
+     */
+    @JsonProperty("reservationUpdateStatus")
+    @JsonPropertyDescription("The updated reservation status.\r\n")
+    @NotNull
+    private ReservationUpdateStatusEnum reservationUpdateStatus;
+    /**
+     * This class does not get 'AdditionalProperties = false' in the schema generation, so it can be extended with arbitrary JSON properties to allow adding custom data.
+     * 
+     */
+    @JsonProperty("customData")
+    @JsonPropertyDescription("This class does not get 'AdditionalProperties = false' in the schema generation, so it can be extended with arbitrary JSON properties to allow adding custom data.")
+    @Valid
+    private CustomData customData;
+
+}

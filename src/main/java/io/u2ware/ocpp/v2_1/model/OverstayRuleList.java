@@ -1,0 +1,82 @@
+
+package io.u2ware.ocpp.v2_1.model;
+
+import java.util.List;
+import javax.annotation.processing.Generated;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyDescription;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Singular;
+import lombok.ToString;
+import lombok.experimental.Accessors;
+import lombok.experimental.SuperBuilder;
+
+
+/**
+ * Part of ISO 15118-20 price schedule.
+ * 
+ * 
+ * 
+ */
+@JsonInclude(JsonInclude.Include.ALWAYS)
+@SuperBuilder
+@ToString
+@Getter
+@Accessors(fluent = true)
+@NoArgsConstructor
+@AllArgsConstructor
+@JsonPropertyOrder({
+    "overstayPowerThreshold",
+    "overstayRule",
+    "overstayTimeThreshold",
+    "customData"
+})
+@Generated("jsonschema2pojo")
+public class OverstayRuleList {
+
+    /**
+     * Part of ISO 15118-20 price schedule.
+     * 
+     * 
+     * 
+     */
+    @JsonProperty("overstayPowerThreshold")
+    @JsonPropertyDescription("Part of ISO 15118-20 price schedule.\r\n\r\n")
+    @Valid
+    private RationalNumber overstayPowerThreshold;
+    /**
+     * 
+     * (Required)
+     * 
+     */
+    @JsonProperty("overstayRule")
+    @Singular("overstayRule")
+    @Size(min = 1, max = 5)
+    @Valid
+    @NotNull
+    private List<OverstayRule> overstayRule;
+    /**
+     * Time till overstay is applied in seconds.
+     * 
+     * 
+     */
+    @JsonProperty("overstayTimeThreshold")
+    @JsonPropertyDescription("Time till overstay is applied in seconds.\r\n")
+    private Integer overstayTimeThreshold;
+    /**
+     * This class does not get 'AdditionalProperties = false' in the schema generation, so it can be extended with arbitrary JSON properties to allow adding custom data.
+     * 
+     */
+    @JsonProperty("customData")
+    @JsonPropertyDescription("This class does not get 'AdditionalProperties = false' in the schema generation, so it can be extended with arbitrary JSON properties to allow adding custom data.")
+    @Valid
+    private CustomData customData;
+
+}
