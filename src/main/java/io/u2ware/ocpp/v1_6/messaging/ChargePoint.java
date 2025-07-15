@@ -12,26 +12,26 @@ public final class ChargePoint extends SpecificationOperations{
 
     @Override
     protected String responseType(String source) {
-       return String.format("%s.model.%sResponse", rootPackage, source);
+        return String.format("%s.model.%sResponse", rootPackage, source);
     }
 
     @Override
     protected String errorType(String source) {
-       return String.format("%s.exception.ErrorCode", rootPackage);
+        return String.format("%s.exception.ErrorCode", rootPackage);
     }
 
     @Override
     protected String usecaseType(String source) {
-       return String.format("%s.usecase.%s.ClientHandler", rootPackage, source);
+        return String.format("%s.usecase.%s.ClientHandler", rootPackage, source);
     }
 
-   @Override
-   public boolean isServer() {
-      return false;
-   }
+    @Override
+    public boolean isServer() {
+        return false;
+    }
 
-   @Override
-   public boolean isClient() {
-      return true;
-   }    
+    @Override
+    public boolean isClient() {
+        return true;
+    }    
 }

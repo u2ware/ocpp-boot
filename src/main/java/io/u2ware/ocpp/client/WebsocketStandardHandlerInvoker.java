@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.function.BiConsumer;
 
+import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpHeaders;
 import org.springframework.util.ClassUtils;
 import org.springframework.web.socket.CloseStatus;
@@ -25,44 +26,51 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class WebsocketStandardHandlerInvoker {
     
 
-    public static WebsocketStandardHandlerInvoker of(WebSocketHandler... template) {
-        return new WebsocketStandardHandlerInvoker(template);
+    public static WebsocketStandardHandlerInvoker of(ApplicationContext ac) {
+        return new WebsocketStandardHandlerInvoker(ac);
     }
     
     private Map<WebSocketHandler, WebSocketHandler> delegate = new HashMap<>();
     private Map<WebSocketSession, WebSocketHandler> session = new HashMap<>();
     private MockWebSocketSessionWorker consumer = new MockWebSocketSessionWorker(session);
 
-    private WebsocketStandardHandlerInvoker(WebSocketHandler... handlers){
-        registerDecorator(handlers);
+    private WebsocketStandardHandlerInvoker(ApplicationContext ac){
+        Map<String, WebSocketHandler> handlers = ac.getBeansOfType(WebSocketHandler.class);
+        for(WebSocketHandler h : handlers.values()) {
+            registerDecorator(h);
+        }        
     }
 
     public void connect(WebSocketHandler... handlers){
-        registerDecorator(handlers);
-        registerConnector(handlers);
+        for(WebSocketHandler h : handlers) {
+            registerDecorator(h);
+            registerConnector(h);
+        }
         startConnector();
     }
 
 
-    private void registerDecorator(WebSocketHandler... handlers){       
-        for(WebSocketHandler h : handlers) {
-            if(ClassUtils.isAssignableValue(SubProtocolWebSocketHandler.class, h)) continue;
-            if(ClassUtils.isAssignableValue(WebSocketHandlerDecorator.class, h)) {
-                WebSocketHandlerDecorator d = (WebSocketHandlerDecorator)h;
-                delegate.put(d.getDelegate(), h);
-            }
+    private void registerDecorator(WebSocketHandler h){       
+        if(ClassUtils.isAssignableValue(SubProtocolWebSocketHandler.class, h)) return;        
+        if(ClassUtils.isAssignableValue(WebSocketHandlerDecorator.class, h)) {
+            WebSocketHandlerDecorator d = (WebSocketHandlerDecorator)h;
+            delegate.put(d.getDelegate(), h);
         }
     }
 
-    private void registerConnector(WebSocketHandler... handlers){
+    private void registerConnector(WebSocketHandler h){
 
-        for(WebSocketHandler h : handlers) {
-            if(ClassUtils.isAssignableValue(SubProtocolWebSocketHandler.class, h)) continue;
-            WebSocketHandler d = delegate.get(h);
-            WebSocketSession s = new MockWebSocketSession(consumer);
-            session.put(s, d != null ? d : h);
-        }
+        if(ClassUtils.isAssignableValue(SubProtocolWebSocketHandler.class, h)) return;
+        WebSocketHandler d = delegate.get(h);
+        WebSocketSession s = new MockWebSocketSession(consumer);
+        session.put(s, d != null ? d : h);
     }
+
+
+
+
+
+
 
     private void startConnector(){
         for(WebSocketSession s : session.keySet()) {

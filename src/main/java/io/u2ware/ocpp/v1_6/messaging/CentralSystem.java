@@ -1,36 +1,36 @@
 package io.u2ware.ocpp.v1_6.messaging;
 
 public final class CentralSystem extends SpecificationOperations{
-    
-   private final String rootPackage = "io.u2ware.ocpp.v1_6";
 
-   @Override
-   protected String requestType(String source) {
-      return String.format("%s.model.%sRequest", rootPackage, source);
-   }
+    private final String rootPackage = "io.u2ware.ocpp.v1_6";
 
-   @Override
-   protected String responseType(String source) {
-      return String.format("%s.model.%sResponse", rootPackage, source);
-   }
+    @Override
+    protected String requestType(String source) {
+        return String.format("%s.model.%sRequest", rootPackage, source);
+    }
 
-   @Override
-   protected String errorType(String source) {
-      return String.format("%s.exception.ErrorCode", rootPackage);
-   }
+    @Override
+    protected String responseType(String source) {
+        return String.format("%s.model.%sResponse", rootPackage, source);
+    }
 
-   @Override
-   protected String usecaseType(String source) {
-      return String.format("%s.usecase.%s.ServerHandler", rootPackage, source);
-   }
+    @Override
+    protected String errorType(String source) {
+        return String.format("%s.exception.ErrorCode", rootPackage);
+    }
 
-   @Override
-   public boolean isServer() {
-      return true;
-   }
+    @Override
+    protected String usecaseType(String source) {
+        return String.format("%s.usecase.%s.ServerHandler", rootPackage, source);
+    }
 
-   @Override
-   public boolean isClient() {
-      return false;
-   }
+    @Override
+    public boolean isServer() {
+        return true;
+    }
+
+    @Override
+    public boolean isClient() {
+        return false;
+    }
 }

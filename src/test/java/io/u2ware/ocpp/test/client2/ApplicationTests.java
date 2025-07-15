@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.web.socket.WebSocketHandler;
+import org.springframework.context.ApplicationContext;
 
 import io.u2ware.ocpp.client.WebsocketStandardHandlerInvoker;
 import io.u2ware.ocpp.v1_6.messaging.CentralSystem;
@@ -22,7 +22,7 @@ class ApplicationTests {
     protected @LocalServerPort int port;
 
 
-	protected @Autowired WebSocketHandler[] handlers;
+	protected @Autowired ApplicationContext ac;
 	protected @Autowired SpecificationSendingTemplate clientTemplate;
 
 	@Test
@@ -30,7 +30,7 @@ class ApplicationTests {
 
 
 		CentralSystem cs = new CentralSystem();
-		cs.registerDefaultUsecase();
+		cs.registerDefaultUsecases();
 		SpecificationSendingTemplate serverTemplate = new SpecificationSendingTemplate(cs);
 
 		// ChargePoint cp = new ChargePoint();
@@ -42,7 +42,7 @@ class ApplicationTests {
 		// OCPP Test Server without I/O
 		/////////////////////////////////////
 		logger.info("2===================");	
-		WebsocketStandardHandlerInvoker.of(handlers).connect(serverTemplate, clientTemplate);
+		WebsocketStandardHandlerInvoker.of(ac).connect(serverTemplate, clientTemplate);
 		Thread.sleep(2000);
 
 	

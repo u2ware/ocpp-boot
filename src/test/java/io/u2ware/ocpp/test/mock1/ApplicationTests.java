@@ -31,11 +31,11 @@ class ApplicationTests {
 
 
 		CentralSystem cs = new CentralSystem();
-		cs.registerDefaultUsecase();
+		cs.registerDefaultUsecases();
 		SpecificationSendingOperations serverOperation = new EventBusSendingTemplate(cs, ac);
 
 		ChargePoint cp = new ChargePoint();
-		cp.registerDefaultUsecase();
+		cp.registerDefaultUsecases();
 		SpecificationSendingOperations clientOperation = new EventBusSendingTemplate(cp, ac);
 
 		

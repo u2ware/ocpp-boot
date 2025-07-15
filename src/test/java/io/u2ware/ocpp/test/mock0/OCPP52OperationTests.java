@@ -89,9 +89,9 @@ public class OCPP52OperationTests {
     public void context1Loads()  {
 
         io.u2ware.ocpp.v1_6.messaging.ChargePoint cp = new io.u2ware.ocpp.v1_6.messaging.ChargePoint();
-        cp.registerDefaultUsecase();
+        cp.registerDefaultUsecases();
         io.u2ware.ocpp.v1_6.messaging.CentralSystem cs = new io.u2ware.ocpp.v1_6.messaging.CentralSystem();
-        cs.registerDefaultUsecase();
+        cs.registerDefaultUsecases();
 
         testUsecaseV16(io.u2ware.ocpp.v1_6.messaging.Specification.offers(cp), cp, cs);
         testUsecaseV16(io.u2ware.ocpp.v1_6.messaging.Specification.offers(cs), cs, cp);
@@ -101,10 +101,10 @@ public class OCPP52OperationTests {
     public void context2Loads()  {
 
         io.u2ware.ocpp.v2_0_1.messaging.ChargingStation cp = new io.u2ware.ocpp.v2_0_1.messaging.ChargingStation();
-        cp.registerDefaultUsecase();
+        cp.registerDefaultUsecases();
 
         io.u2ware.ocpp.v2_0_1.messaging.CSMS cs = new io.u2ware.ocpp.v2_0_1.messaging.CSMS();
-        cs.registerDefaultUsecase();
+        cs.registerDefaultUsecases();
 
         testUsecaseV201(io.u2ware.ocpp.v2_0_1.messaging.Specification.offers(cp), cp, cs);
         testUsecaseV201(io.u2ware.ocpp.v2_0_1.messaging.Specification.offers(cs), cs, cp);

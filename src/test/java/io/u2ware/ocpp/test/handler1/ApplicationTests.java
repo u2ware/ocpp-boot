@@ -36,7 +36,7 @@ class ApplicationTests {
 		// SpecificationSendingTemplate serverOperations = new SpecificationSendingTemplate(cs);
 
 		ChargePoint cp = new ChargePoint();
-		cp.registerDefaultUsecase();
+		cp.registerDefaultUsecases();
 		SpecificationSendingTemplate clientOperations1 = new SpecificationSendingTemplate(cp);
 		SpecificationSendingTemplate clientOperations2 = new SpecificationSendingTemplate(cp);
 

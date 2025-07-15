@@ -27,11 +27,11 @@ class ApplicationTests {
 	void contextLoads() throws Exception {
 
 		CentralSystem cs = new CentralSystem();
-		cs.registerDefaultUsecase();
+		cs.registerDefaultUsecases();
 		WebsocketStompSendingTemplate serverOperations = new WebsocketStompSendingTemplate(cs, "/topic/test");
 
 		ChargePoint cp = new ChargePoint();
-		cp.registerDefaultUsecase();
+		cp.registerDefaultUsecases();
 		WebsocketStompSendingTemplate clientOperations = new WebsocketStompSendingTemplate(cp, "/topic/test");
 
 		////////////////////////////
