@@ -22,7 +22,7 @@ public @interface EnableOcppClient {
 
     OCPPVersion version() default OCPPVersion.V2_0_1;
     
-    String uri() default "wss://localhost:8080/ocpp";
+    String uri() default "ws://localhost:8081/ocpp";
 
     boolean allowDefaultUsecase() default false;
 }
