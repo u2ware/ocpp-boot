@@ -1,4 +1,4 @@
-package io.u2ware.ocpp.client;
+package io.u2ware.ocpp.config;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;

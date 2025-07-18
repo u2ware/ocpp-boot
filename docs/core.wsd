@@ -1,0 +1,39 @@
+@startuml
+
+title OCPP-BOOT Core Concept
+
+participant "Specification\nSending Operation" as Sending
+participant "Offer\n(Handler)" as Offer #IMPLEMENTATION
+participant "Sender\n(SpecificationOperation)" as Sender #APPLICATION
+participant "Websocket" as Newwork 
+participant "Receiver\n(SpecificationOperation)" as Receiver #APPLICATION
+participant "Answer\n(Handler)" as Answer #IMPLEMENTATION
+
+note over Sending : invoker sender
+
+Sending -> Sender : convertAndSend
+
+activate Sender
+note over Sender : (2) invoke offer 
+Sender --> Offer : send<i><b> [Action] </b></i>Request
+note over Sender : (3) make ocpp call message \nwith return value of offer
+Sender -> Receiver : \tCALL 
+deactivate Sender
+
+
+activate Receiver
+note over Receiver : (4) invoke answer
+Receiver --> Answer : received<i><b> [Action] </b></i>Request
+note over Receiver : (5) make ocpp call result or call error message\nwith return value or exception of answer
+Receiver -> Sender : \t\t\t\t\tCALL ERROR \n \t\t\t\t\t\tor \n\t\t\t\t\tCALL RESULT 
+
+activate Sender
+note over Sender : (6) invoke offer
+Sender --> Offer : received<i><b> [Action] </b></i>Response
+deactivate Sender
+
+note over Receiver : (7) invoke answer
+Receiver --> Answer : send<i><b> [Action] </b></i>Response
+deactivate Receiver
+
+@enduml
