@@ -28,11 +28,6 @@ public interface TriggerMessage {
         receivedTriggerMessageRequest,
         receivedTriggerMessageResponse,
         sendTriggerMessageResponse,
-
-        sendStatusNotificationRequest,
-        receivedStatusNotificationRequest,
-        receivedStatusNotificationResponse,
-        sendStatusNotificationResponse,
         ;
 
         Comment(String... a){ this.a = StringUtils.arrayToCommaDelimitedString(a);}
@@ -41,7 +36,7 @@ public interface TriggerMessage {
     }
 
 
-    public interface ServerHandler extends TriggerMessage, TriggerMessageOffer, StatusNotificationAnswer {
+    public interface ServerHandler extends TriggerMessage, TriggerMessageOffer {
 
         public static ServerHandler DEFAULT = new ServerHandler(){
 
@@ -57,22 +52,11 @@ public interface TriggerMessage {
             public void receivedTriggerMessageResponse(String id, TriggerMessageResponse res, ErrorCode err) {
                 logger.info(comment(this, Comment.receivedTriggerMessageResponse, id));
             }
-
-            @Override
-            public StatusNotificationResponse receivedStatusNotificationRequest(String id, StatusNotificationRequest req) {
-                logger.info(comment(this, Comment.receivedStatusNotificationRequest, id));
-                return new StatusNotificationResponse();
-            }
-
-            @Override
-            public void sendStatusNotificationResponse(String id, StatusNotificationResponse res, ErrorCode err) {
-                logger.info(comment(this, Comment.sendStatusNotificationResponse, id));
-            }            
         };
     }
 
 
-    public interface ClientHandler extends TriggerMessage, TriggerMessageAnswer, StatusNotificationOffer{
+    public interface ClientHandler extends TriggerMessage, TriggerMessageAnswer{
         
         public static ClientHandler DEFAULT = new ClientHandler(){
 
@@ -88,18 +72,6 @@ public interface TriggerMessage {
             public void sendTriggerMessageResponse(String id, TriggerMessageResponse res, ErrorCode err) {
                 logger.info(comment(this, Comment.sendTriggerMessageResponse, id));
             }
-
-
-            @Override
-            public StatusNotificationRequest sendStatusNotificationRequest(String id, Map<String, Object> req) {
-                logger.info(comment(this, Comment.sendStatusNotificationRequest, id));
-                return new StatusNotificationRequest();
-            }
-
-            @Override
-            public void receivedStatusNotificationResponse(String id, StatusNotificationResponse res, ErrorCode err) {
-                logger.info(comment(this, Comment.receivedStatusNotificationResponse, id));
-            }            
         };
     }
 }

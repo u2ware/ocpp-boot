@@ -1,16 +1,15 @@
 package io.u2ware.ocpp.v1_6.usecase;
 
-import org.springframework.util.StringUtils;
-
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.util.StringUtils;
 
 import io.u2ware.ocpp.v1_6.actions.*;
-import io.u2ware.ocpp.v1_6.exception.ErrorCode;
-import io.u2ware.ocpp.v1_6.messaging.Specification;
+import io.u2ware.ocpp.v1_6.exception.*;
 import io.u2ware.ocpp.v1_6.model.*;
+import io.u2ware.ocpp.v1_6.messaging.Specification;
 
 public interface StartTransaction {
     
@@ -29,7 +28,6 @@ public interface StartTransaction {
         receivedStartTransactionRequest,
         receivedStartTransactionResponse,
         sendStartTransactionResponse,
-
         ;
 
         Comment(String... a){ this.a = StringUtils.arrayToCommaDelimitedString(a);}
@@ -47,13 +45,15 @@ public interface StartTransaction {
             @Override
             public StartTransactionRequest sendStartTransactionRequest(String id, Map<String, Object> req) {
                 logger.info(comment(this, Comment.sendStartTransactionRequest, id));
-                return new StartTransactionRequest();
+                return StartTransactionRequest.builder().build();
             }
 
             @Override
             public void receivedStartTransactionResponse(String id, StartTransactionResponse res, ErrorCode err) {
                 logger.info(comment(this, Comment.receivedStartTransactionResponse, id));
             }
+
+
         };
     }
 
@@ -66,13 +66,15 @@ public interface StartTransaction {
             @Override
             public StartTransactionResponse receivedStartTransactionRequest(String id, StartTransactionRequest req) {
                 logger.info(comment(this, Comment.receivedStartTransactionRequest, id));
-                return new StartTransactionResponse();
+                return StartTransactionResponse.builder().build();
             }
 
             @Override
             public void sendStartTransactionResponse(String id, StartTransactionResponse res, ErrorCode err) {
                 logger.info(comment(this, Comment.sendStartTransactionResponse, id));
             }
+
+
         };        
     }
 }
