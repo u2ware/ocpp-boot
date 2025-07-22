@@ -2,12 +2,14 @@ package io.u2ware.ocpp.core;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.Collection;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.ReflectionUtils;
+import org.springframework.util.StringUtils;
 
 
 public class OCPPReflection {
@@ -102,7 +104,20 @@ public class OCPPReflection {
         }
     }
 
-
+    /////////////////////////////////////////////////////////////
+    //
+    /////////////////////////////////////////////////////////////
+    public static String extractElement(Collection<String> elements, String source) {
+        if(StringUtils.hasText(source)) { 
+            for(String element : elements){
+                // System.err.println(element+" "+source);
+                if(source.contains(element)) {
+                    return element;
+                }
+            }
+        }
+        return null;    
+    } 
 
     /////////////////////////////////////////////////////////////
     //

@@ -95,6 +95,18 @@ public class OCPP52OperationTests {
 
         testUsecaseV16(io.u2ware.ocpp.v1_6.messaging.Specification.offers(cp), cp, cs);
         testUsecaseV16(io.u2ware.ocpp.v1_6.messaging.Specification.offers(cs), cs, cp);
+
+        // io.u2ware.ocpp.v1_6.messaging.SpecificationAction a = io.u2ware.ocpp.v1_6.messaging.Specification.InitiatedByCentralSystem.Usecase.RemoteStopTransaction.message();
+        // logger.info(a);
+        // logger.info(a.getAction());
+        // logger.info(a.getUsecase());
+        // logger.info(a.getIdentifier());
+
+        // logger.info(cp.usecase(a.getIdentifier()));
+        // logger.info(cp.usecase(a.getAction()));
+        // logger.info(cs.usecase(a.getIdentifier()));
+        // logger.info(cs.usecase(a.getAction()));
+
     }
 
     @Test
@@ -108,5 +120,19 @@ public class OCPP52OperationTests {
 
         testUsecaseV201(io.u2ware.ocpp.v2_0_1.messaging.Specification.offers(cp), cp, cs);
         testUsecaseV201(io.u2ware.ocpp.v2_0_1.messaging.Specification.offers(cs), cs, cp);
+
+
+        // io.u2ware.ocpp.v2_0_1.messaging.SpecificationAction a = io.u2ware.ocpp.v2_0_1.messaging.Specification.Security.Usecase.A03.message();
+        // logger.info(a);
+        // logger.info(a.getAction());
+        // logger.info(a.getUsecase());
+        // logger.info(a.getIdentifier());
+
+        // logger.info(cp.usecase(a.getIdentifier()));
+        // logger.info(cp.usecase(a.getAction()));
+        // logger.info(cs.usecase(a.getIdentifier()));
+        // logger.info(cs.usecase(a.getAction()));
+
+
     }
 }

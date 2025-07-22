@@ -18,7 +18,7 @@ public interface Specification {
    
     default SpecificationAction message(String identifier, Map<String,Object> attributes) {
         SpecificationAction u = new SpecificationAction();
-        u.setIdentifier(identifier+usecase());
+        u.setIdentifier(identifier);
         u.setUsecase(usecase());
         u.setAction(action());
         u.setAttributes(attributes);

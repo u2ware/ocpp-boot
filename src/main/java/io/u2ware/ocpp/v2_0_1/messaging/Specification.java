@@ -85,11 +85,6 @@ public interface Specification {
     //////////////////////////////////////////////////
     public interface Security extends Specification{
 
-        public static Specification[] usecases(Boolean isClient){
-            return new Specification[]{Usecase.A01};
-        }
-
-
         public enum Usecase implements Specification, Section{ 
 
             A01("A01 - Update Charging Station Password for HTTP Basic Authentication", Security.A01.SetVariables),
