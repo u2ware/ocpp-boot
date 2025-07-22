@@ -39,8 +39,7 @@ public abstract class SpecificationOperations extends OCPPOperations{
 
     @Override
     public OCPPReflection usecase(String source) {
-        String key = OCPPReflection.extractElement(usecase.keySet(), source);
-        return usecase.get(key);
+        return usecase.get(source);
     }
 
     @Override
