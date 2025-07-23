@@ -23,18 +23,18 @@ import org.springframework.web.socket.messaging.SubProtocolWebSocketHandler;
 import org.springframework.web.util.UriComponentsBuilder;
 
 
-public class WebsocketStandardHandlerInvoker {
+public class WebSocketHandlerInvoker {
     
 
-    public static WebsocketStandardHandlerInvoker of(ApplicationContext ac) {
-        return new WebsocketStandardHandlerInvoker(ac);
+    public static WebSocketHandlerInvoker of(ApplicationContext ac) {
+        return new WebSocketHandlerInvoker(ac);
     }
     
     private Map<WebSocketHandler, WebSocketHandler> delegate = new HashMap<>();
     private Map<WebSocketSession, WebSocketHandler> session = new HashMap<>();
     private MockWebSocketSessionWorker consumer = new MockWebSocketSessionWorker(session);
 
-    private WebsocketStandardHandlerInvoker(ApplicationContext ac){
+    private WebSocketHandlerInvoker(ApplicationContext ac){
         Map<String, WebSocketHandler> handlers = ac.getBeansOfType(WebSocketHandler.class);
         for(WebSocketHandler h : handlers.values()) {
             registerDecorator(h);

@@ -8,7 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.context.ApplicationContext;
 
-import io.u2ware.ocpp.config.WebsocketStandardHandlerInvoker;
+import io.u2ware.ocpp.config.WebSocketHandlerInvoker;
 import io.u2ware.ocpp.v1_6.messaging.CentralSystem;
 import io.u2ware.ocpp.v1_6.messaging.Specification;
 import io.u2ware.ocpp.v1_6.messaging.SpecificationSendingTemplate;
@@ -42,7 +42,7 @@ class ApplicationTests {
 		// OCPP Test Server without I/O
 		/////////////////////////////////////
 		logger.info("2===================");	
-		WebsocketStandardHandlerInvoker.of(ac).connect(serverTemplate, clientTemplate);
+		WebSocketHandlerInvoker.of(ac).connect(serverTemplate, clientTemplate);
 		Thread.sleep(2000);
 
 	

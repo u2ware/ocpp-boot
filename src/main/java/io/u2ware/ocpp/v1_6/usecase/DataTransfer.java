@@ -61,7 +61,7 @@ public interface DataTransfer {
             @Override
             public DataTransferRequest sendDataTransferRequest(String id, Map<String, Object> req) {
                 logger.info(comment(this, Comment.sendDataTransferRequest, id));
-                return new DataTransferRequest();
+                return DataTransferRequest.builder().build();
             }
 
             @Override
@@ -72,7 +72,7 @@ public interface DataTransfer {
             @Override
             public DataTransferResponse receivedDataTransferRequest(String id, DataTransferRequest req) {
                 logger.info(comment(this, Comment.receivedDataTransferRequest, id));
-                return new DataTransferResponse();
+                return DataTransferResponse.builder().build();
             }
 
             @Override
@@ -91,7 +91,7 @@ public interface DataTransfer {
             @Override
             public DataTransferRequest sendDataTransferRequest(String id, Map<String, Object> req) {
                 logger.info(comment(this, Comment.sendDataTransferRequest, id));
-                return new DataTransferRequest();
+                return DataTransferRequest.builder().build();
             }
 
             @Override
@@ -103,7 +103,7 @@ public interface DataTransfer {
             @Override
             public DataTransferResponse receivedDataTransferRequest(String id, DataTransferRequest req) {
                 logger.info(comment(this, Comment.receivedDataTransferRequest, id));
-                return new DataTransferResponse();
+                return DataTransferResponse.builder().build();
             }
 
             @Override
