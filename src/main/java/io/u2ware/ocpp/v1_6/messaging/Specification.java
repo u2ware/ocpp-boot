@@ -93,7 +93,7 @@ public interface Specification {
         Heartbeat("4.6. Heartbeat",  "Core"),
         MeterValues("4.7. Meter Values",  "Core"),
         StartTransaction("4.8. Start Transaction",  "Core"),
-        StatusNotification("4.9. Status Notification",  null),
+        StatusNotification("4.9. Status Notification",  "SmartCharging"),
         StopTransaction("4.10. Stop Transaction",  "Core"),
         ;
 
@@ -310,14 +310,15 @@ public interface Specification {
 
     public enum SmartCharging implements Specification, Section{
         TriggerMessage("5.17. Trigger Message", "SmartCharging"),
+        StatusNotification("4.9. Status Notification",  "SmartCharging"),
         ;
         public static Specification[] usecases(SpecificationOperations operation){
             if(ObjectUtils.isEmpty(operation)) {
                 return values();
             }else if(operation.isServer()){
-                return values();
+                return new Specification[]{TriggerMessage};
             }else{
-                return new Specification[]{};
+                return new Specification[]{StatusNotification};
             }
         }       
 
