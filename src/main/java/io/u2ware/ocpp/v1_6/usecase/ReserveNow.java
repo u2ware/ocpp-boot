@@ -13,7 +13,7 @@ import io.u2ware.ocpp.v1_6.messaging.Specification;
 
 public interface ReserveNow {
     
-    public static Specification.Section section = Specification.InitiatedByCentralSystem.Usecase.ReserveNow;
+    public static Specification.Section section = Specification.InitiatedByCentralSystem.ReserveNow;
 
     default String comment(ClientHandler handler, Comment comment, String id) {
         return section.comment(Comment.values(), comment, id);                

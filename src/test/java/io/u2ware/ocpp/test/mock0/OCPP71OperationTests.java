@@ -17,16 +17,16 @@ public class OCPP71OperationTests {
     public void contextLoads()  throws Exception{
 
         CentralSystem cs = new CentralSystem();
-        cs.registerDefaultUsecase(Specification.InitiatedByChargePoint.Usecase.Authorize);
+        cs.registerDefaultUsecase(Specification.InitiatedByChargePoint.Authorize);
 
         ChargePoint cp = new ChargePoint();
-        cp.registerDefaultUsecase(Specification.InitiatedByChargePoint.Usecase.Authorize);
+        cp.registerDefaultUsecase(Specification.InitiatedByChargePoint.Authorize);
 
 
         //////////////////////////////////////////////
         OCPPConversion conversion = new OCPPConversion();
 
-        SpecificationAction o1 = Specification.InitiatedByChargePoint.Usecase.Authorize.message("Authorize");
+        SpecificationAction o1 = Specification.InitiatedByChargePoint.Authorize.message("Authorize");
         String o2 = conversion.comfortableWriteValue(o1);
         
         //////////////////////////////////////////////

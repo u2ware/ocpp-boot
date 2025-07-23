@@ -64,9 +64,9 @@ class ApplicationTests {
 		//
 		/////////////////////////////////////
 		logger.info("1 ===================");		
-		serverTemplate.convertAndSend(Specification.InitiatedByCentralSystem.Usecase.DataTransfer.message());
+		serverTemplate.convertAndSend(Specification.InitiatedByCentralSystem.DataTransfer.message());
 		Thread.sleep(2000);
-		serverTemplate.convertAndSend(Specification.InitiatedByChargePoint.Usecase.DataTransfer.message());
+		serverTemplate.convertAndSend(Specification.InitiatedByChargePoint.DataTransfer.message());
 		Thread.sleep(2000);
 	}
 }

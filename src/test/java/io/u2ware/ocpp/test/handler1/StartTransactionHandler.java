@@ -31,7 +31,7 @@ public class StartTransactionHandler implements StartTransaction.ServerHandler, 
         logger.info(comment(this, StartTransaction.Comment.sendStartTransactionResponse, id));
         
 
-        SpecificationAction message = Specification.InitiatedByCentralSystem.Usecase.SetChargingProfile.message("world");
+        SpecificationAction message = Specification.InitiatedByCentralSystem.SetChargingProfile.message("world");
         ocppOperations.convertAndSend(id, message);
     }
 

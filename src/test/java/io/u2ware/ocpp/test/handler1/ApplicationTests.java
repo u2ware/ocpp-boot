@@ -71,7 +71,7 @@ class ApplicationTests {
 		// 
 		////////////////////////////	
 		logger.info("===================");	
-		clientOperations1.convertAndSend(Specification.InitiatedByChargePoint.Usecase.StartTransaction.message("hello"));
+		clientOperations1.convertAndSend(Specification.InitiatedByChargePoint.StartTransaction.message("hello"));
 		Thread.sleep(3000);
 
 		

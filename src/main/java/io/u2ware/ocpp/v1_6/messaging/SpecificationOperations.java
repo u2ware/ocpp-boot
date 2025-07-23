@@ -16,7 +16,7 @@ public abstract class SpecificationOperations extends OCPPOperations{
     protected Map<String, OCPPReflection> usecase = new HashMap<>();
     
     public void registerDefaultUsecases() {
-        for(Specification u : Specification.usecases()) {
+        for(Specification u : Specification.usecases(null)) {
             registerDefaultUsecase(u);
         }
     }

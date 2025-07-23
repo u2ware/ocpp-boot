@@ -26,11 +26,11 @@ public class OCPP51OperationTests {
 
 
         CentralSystem cs = new CentralSystem();
-        cs.registerDefaultUsecase(Specification.InitiatedByChargePoint.Usecase.Authorize);
+        cs.registerDefaultUsecase(Specification.InitiatedByChargePoint.Authorize);
 
 
         ChargePoint cp = new ChargePoint();        
-        cp.registerDefaultUsecase(Specification.InitiatedByChargePoint.Usecase.Authorize);
+        cp.registerDefaultUsecase(Specification.InitiatedByChargePoint.Authorize);
         
         SimpleMessageCallback x = new SimpleMessageCallback();
 
@@ -49,7 +49,7 @@ public class OCPP51OperationTests {
         // logger.info("6: "+OCPPIdentifierBuilder.fromMessageId("XXAuthorizeYY").unique("unique").usecase("usecase").session("session").build());
         // // logger.info("7: "+OCPPIdentifierBuilder.fromMessageId("XXAuthorizeYY").unique("unique").usecase(Arrays.asList("XX")).session(Arrays.asList("YY")).build());
 
-        SpecificationAction ci = Specification.InitiatedByChargePoint.Usecase.Authorize.message(action);
+        SpecificationAction ci = Specification.InitiatedByChargePoint.Authorize.message(action);
         // OCPPAction ci = Specification.InitiatedByChargePoint.Authorize.Authorize.action(action);
 
 

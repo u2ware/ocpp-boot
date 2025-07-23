@@ -14,8 +14,8 @@ import io.u2ware.ocpp.v1_6.model.*;
 public interface DataTransfer {
     
     public static Specification.Section[] section = {
-        Specification.InitiatedByChargePoint.Usecase.DataTransfer,
-        Specification.InitiatedByCentralSystem.Usecase.DataTransfer,
+        Specification.InitiatedByChargePoint.DataTransfer,
+        Specification.InitiatedByCentralSystem.DataTransfer,
     };
 
 

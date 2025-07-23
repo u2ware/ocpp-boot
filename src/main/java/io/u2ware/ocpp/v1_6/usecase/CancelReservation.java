@@ -13,7 +13,7 @@ import io.u2ware.ocpp.v1_6.messaging.Specification;
 
 public interface CancelReservation {
 
-    public static Specification.Section section = Specification.InitiatedByCentralSystem.Usecase.CancelReservation;
+    public static Specification.Section section = Specification.InitiatedByCentralSystem.CancelReservation;
 
     default String comment(ClientHandler handler, Comment comment, String id) {
         return section.comment(Comment.values(), comment, id);                

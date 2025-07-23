@@ -13,7 +13,7 @@ import io.u2ware.ocpp.v1_6.model.*;
 
 public interface SetChargingProfile {
     
-    public static Specification.Section section = Specification.InitiatedByCentralSystem.Usecase.SetChargingProfile;
+    public static Specification.Section section = Specification.InitiatedByCentralSystem.SetChargingProfile;
 
     default String comment(ClientHandler handler, Comment comment, String id) {
         return section.comment(Comment.values(), comment, id);                

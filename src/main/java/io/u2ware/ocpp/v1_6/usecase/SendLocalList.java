@@ -13,7 +13,7 @@ import io.u2ware.ocpp.v1_6.model.*;
 
 public interface SendLocalList {
     
-    public static Specification.Section section = Specification.InitiatedByCentralSystem.Usecase.SendLocalList;
+    public static Specification.Section section = Specification.InitiatedByCentralSystem.SendLocalList;
 
     default String comment(ClientHandler handler, Comment comment, String id) {
         return section.comment(Comment.values(), comment, id);                

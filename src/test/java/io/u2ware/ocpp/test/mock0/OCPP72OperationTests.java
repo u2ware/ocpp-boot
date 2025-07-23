@@ -30,17 +30,17 @@ public class OCPP72OperationTests {
 
 
         ServerHanlder serverHanlder = new ServerHanlder(cs, transfer.getServerCallback());
-        cs.registerUsecase(Specification.InitiatedByCentralSystem.Usecase.GetDiagnostics, serverHanlder);
-        cs.registerUsecase(Specification.InitiatedByChargePoint.Usecase.DiagnosticsStatusNotification, serverHanlder);
+        cs.registerUsecase(Specification.InitiatedByCentralSystem.GetDiagnostics, serverHanlder);
+        cs.registerUsecase(Specification.InitiatedByChargePoint.DiagnosticsStatusNotification, serverHanlder);
 
 
         ClientHandler clientHandler = new ClientHandler(cp, transfer.getClientCallback());
-        cp.registerUsecase(Specification.InitiatedByCentralSystem.Usecase.GetDiagnostics, clientHandler);
-        cp.registerUsecase(Specification.InitiatedByChargePoint.Usecase.DiagnosticsStatusNotification, clientHandler);
+        cp.registerUsecase(Specification.InitiatedByCentralSystem.GetDiagnostics, clientHandler);
+        cp.registerUsecase(Specification.InitiatedByChargePoint.DiagnosticsStatusNotification, clientHandler);
 
 
         //////////////////////////////////////////////
-        SpecificationAction ca = Specification.InitiatedByCentralSystem.Usecase.GetDiagnostics.message();
+        SpecificationAction ca = Specification.InitiatedByCentralSystem.GetDiagnostics.message();
         logger.info(ca);
 
         cs.offer(ca, transfer.getServerCallback()); 
@@ -108,7 +108,7 @@ public class OCPP72OperationTests {
             logger.info(comment(this, GetDiagnostics.Comment.sendGetDiagnosticsResponse, id));
 
 
-            SpecificationAction a = Specification.InitiatedByChargePoint.Usecase.DiagnosticsStatusNotification.message("aaa");
+            SpecificationAction a = Specification.InitiatedByChargePoint.DiagnosticsStatusNotification.message("aaa");
             operation.offer(a, callback);
         }
 

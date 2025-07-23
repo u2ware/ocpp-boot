@@ -57,20 +57,20 @@ class ApplicationTests {
 		// 
 		////////////////////////////		
 		logger.info("===================");	
-		clientOperations.convertAndSend(Specification.InitiatedByChargePoint.Usecase.Authorize.message("hello"));
+		clientOperations.convertAndSend(Specification.InitiatedByChargePoint.Authorize.message("hello"));
 		Thread.sleep(2000);
 
 		logger.info("2 ===================");	
-		serverOperations.convertAndSend(Specification.InitiatedByCentralSystem.Usecase.TriggerMessage.message("hello"));
+		serverOperations.convertAndSend(Specification.InitiatedByCentralSystem.TriggerMessage.message("hello"));
 		Thread.sleep(2000);
 
 
 		logger.info("3 ===================");	
-		clientOperations.convertAndSend(Specification.InitiatedByChargePoint.Usecase.DataTransfer.message("hello"));
+		clientOperations.convertAndSend(Specification.InitiatedByChargePoint.DataTransfer.message("hello"));
 		Thread.sleep(2000);
 
 		logger.info("4 ===================");	
-		serverOperations.convertAndSend(Specification.InitiatedByCentralSystem.Usecase.DataTransfer.message("hello"));
+		serverOperations.convertAndSend(Specification.InitiatedByCentralSystem.DataTransfer.message("hello"));
 		Thread.sleep(2000);
 
 

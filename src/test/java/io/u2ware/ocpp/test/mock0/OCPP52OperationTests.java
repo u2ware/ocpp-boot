@@ -93,8 +93,8 @@ public class OCPP52OperationTests {
         io.u2ware.ocpp.v1_6.messaging.CentralSystem cs = new io.u2ware.ocpp.v1_6.messaging.CentralSystem();
         cs.registerDefaultUsecases();
 
-        testUsecaseV16(io.u2ware.ocpp.v1_6.messaging.Specification.offers(cp), cp, cs);
-        testUsecaseV16(io.u2ware.ocpp.v1_6.messaging.Specification.offers(cs), cs, cp);
+        testUsecaseV16(io.u2ware.ocpp.v1_6.messaging.Specification.usecases(cp), cp, cs);
+        testUsecaseV16(io.u2ware.ocpp.v1_6.messaging.Specification.usecases(cs), cs, cp);
 
         // io.u2ware.ocpp.v1_6.messaging.SpecificationAction a = io.u2ware.ocpp.v1_6.messaging.Specification.InitiatedByCentralSystem.Usecase.RemoteStopTransaction.message();
         // logger.info(a);

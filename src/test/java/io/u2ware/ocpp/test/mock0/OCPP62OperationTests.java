@@ -22,14 +22,14 @@ public class OCPP62OperationTests {
         SimpleMessageCallback x = new SimpleMessageCallback();
 
         ChargePoint cp = new ChargePoint();
-        cp.registerUsecase(Specification.InitiatedByChargePoint.Usecase.Authorize, new SimpleAuthorizeOffer("cp1", SimpleAuthorizeOffer.Test.OK));
+        cp.registerUsecase(Specification.InitiatedByChargePoint.Authorize, new SimpleAuthorizeOffer("cp1", SimpleAuthorizeOffer.Test.OK));
 
 
         CentralSystem cs = new CentralSystem();
-        cs.registerUsecase(Specification.InitiatedByChargePoint.Usecase.Authorize, new SimpleAuthorizeAnswer("cp1", SimpleAuthorizeAnswer.Test.OK));
+        cs.registerUsecase(Specification.InitiatedByChargePoint.Authorize, new SimpleAuthorizeAnswer("cp1", SimpleAuthorizeAnswer.Test.OK));
 
 
-        SpecificationAction ca = Specification.InitiatedByChargePoint.Usecase.Authorize.message(action);
+        SpecificationAction ca = Specification.InitiatedByChargePoint.Authorize.message(action);
 
         cp.offer(ca, x); x.sleep(500);
         Assertions.assertNotNull(x.getMsg());

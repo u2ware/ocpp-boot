@@ -13,7 +13,7 @@ import io.u2ware.ocpp.v1_6.messaging.Specification;
 
 public interface GetConfiguration {
     
-    public static Specification.Section section = Specification.InitiatedByCentralSystem.Usecase.GetConfiguration;
+    public static Specification.Section section = Specification.InitiatedByCentralSystem.GetConfiguration;
 
     default String comment(ClientHandler handler, Comment comment, String id) {
         return section.comment(Comment.values(), comment, id);                

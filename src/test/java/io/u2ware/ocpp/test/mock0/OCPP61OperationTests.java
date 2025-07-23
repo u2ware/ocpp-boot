@@ -21,18 +21,18 @@ public class OCPP61OperationTests {
         String action = "Authorize";
 
         SimpleMessageCallback x = new SimpleMessageCallback();
-        SpecificationAction y = Specification.InitiatedByChargePoint.Usecase.Authorize.message(action);
+        SpecificationAction y = Specification.InitiatedByChargePoint.Authorize.message(action);
 
 
         ///////////////////////////////////////////
         ChargePoint cp0 = new ChargePoint();
-        cp0.registerDefaultUsecase(Specification.InitiatedByChargePoint.Usecase.Authorize);
+        cp0.registerDefaultUsecase(Specification.InitiatedByChargePoint.Authorize);
 
         ChargePoint cp1 = new ChargePoint();
-        cp1.registerUsecase(Specification.InitiatedByChargePoint.Usecase.Authorize, new SimpleAuthorizeOffer("cp1", SimpleAuthorizeOffer.Test.CALLERROR));
+        cp1.registerUsecase(Specification.InitiatedByChargePoint.Authorize, new SimpleAuthorizeOffer("cp1", SimpleAuthorizeOffer.Test.CALLERROR));
 
         ChargePoint cp2 = new ChargePoint();
-        cp2.registerUsecase(Specification.InitiatedByChargePoint.Usecase.Authorize, new SimpleAuthorizeOffer("cp1", SimpleAuthorizeOffer.Test.EXCEPTION));
+        cp2.registerUsecase(Specification.InitiatedByChargePoint.Authorize, new SimpleAuthorizeOffer("cp1", SimpleAuthorizeOffer.Test.EXCEPTION));
 
 
         ///////////////////////////////////////////        
