@@ -18,7 +18,7 @@ import org.springframework.web.socket.sockjs.client.Transport;
 import org.springframework.web.socket.sockjs.client.WebSocketTransport;
 
 import io.u2ware.ocpp.client.WebsocketStandardConnectionManager;
-import io.u2ware.ocpp.core.OCPPWebsocketHandler;
+import io.u2ware.ocpp.core.OCPPSessionHandler;
 
 
 @Configuration
@@ -28,7 +28,7 @@ public class WebSocketStandardClientConfiguration {
 	protected Log logger = LogFactory.getLog(getClass());
 
     protected @Autowired OcppAttributes ocppAttributes;
-    protected @Autowired OCPPWebsocketHandler<?> websocketHandler;
+    protected @Autowired OCPPSessionHandler<?> websocketHandler;
 
 
     @Bean

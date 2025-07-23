@@ -43,11 +43,14 @@ public abstract class AbstractEventBusTemplate<T extends OCPPOperations> {
     }
 
 
-    protected void answer(String e){        
+    protected void answer(String json){        
+
+        OCPPMessage<?> e = conversion.convertMessage(json);
+
         if(operations.isServer()) {
-            operations.answer(e, new ServerEventPublisher2());
+            operations.answer(e, new ServerEventPublisher());
         }else{
-            operations.answer(e, new ClientEventPublisher2());
+            operations.answer(e, new ClientEventPublisher());
         }        
     }
 
@@ -96,17 +99,6 @@ public abstract class AbstractEventBusTemplate<T extends OCPPOperations> {
         }
     }
 
-    public class ClientEventPublisher2 implements OCPPConsumer<String> {
-        public void accept(String t, Throwable u) {
-            publish(t, u);
-        }
-    }
-
-    public class ServerEventPublisher2 implements OCPPConsumer<String> {
-        public void accept(String t, Throwable u) {
-            publish(t, u);
-        }
-    }
     
     public static class ServerEvent extends ApplicationEvent{
         public ServerEvent(String source) {

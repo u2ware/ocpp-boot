@@ -4,9 +4,9 @@ import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.web.socket.WebSocketSession;
 
 import io.u2ware.ocpp.core.OCPPReflection;
-import io.u2ware.ocpp.core.OCPPWebsocketTemplate;
+import io.u2ware.ocpp.core.OCPPSessionTemplate;
 
-public class SpecificationSendingTemplate extends OCPPWebsocketTemplate<SpecificationOperations> implements SpecificationSendingOperations {
+public class SpecificationSendingTemplate extends OCPPSessionTemplate<SpecificationOperations> implements SpecificationSendingOperations {
 
     public SpecificationSendingTemplate(SpecificationOperations operations) {
         super(operations, null);
@@ -38,9 +38,7 @@ public class SpecificationSendingTemplate extends OCPPWebsocketTemplate<Specific
         if(! payload.getIdentifier().contains(session.getId())) {
             payload.setIdentifier(payload.getIdentifier()+""+session.getId());
         }
-        operations.offer(payload, (m,e)->{ send(session, m, e);});
+
+        operations.offer(payload, super.handleTextMessage(session));
     }
-
-
-
 }

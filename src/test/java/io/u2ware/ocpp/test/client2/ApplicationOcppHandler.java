@@ -5,8 +5,11 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
-import io.u2ware.ocpp.core.OCPPWebsocketTemplate.WebSocketSessionConnectEvent;
-import io.u2ware.ocpp.core.OCPPWebsocketTemplate.WebSocketSessionDisconnectEvent;
+import io.u2ware.ocpp.core.OCPPSessionConnectEvent;
+import io.u2ware.ocpp.core.OCPPSessionDisconnectEvent;
+import io.u2ware.ocpp.core.OCPPSessionErrorEvent;
+import io.u2ware.ocpp.core.OCPPSessionReceivedEvent;
+import io.u2ware.ocpp.core.OCPPSessionSendEvent;
 
 @Component
 public class ApplicationOcppHandler {
@@ -15,13 +18,27 @@ public class ApplicationOcppHandler {
 
 
     @EventListener
-    public void handle(WebSocketSessionConnectEvent e) {
-        logger.info("ApplicationOcppHandler StandardSessionConnectEvent: ");
+    public void handle(OCPPSessionConnectEvent e) {
+        logger.info("ApplicationOcppHandler OCPPSessionConnectEvent: ");
     }
 
     @EventListener
-    public void handle(WebSocketSessionDisconnectEvent e) {
-        logger.info("ApplicationOcppHandler StandardSessionDisconnectEvent: ");
+    public void handle(OCPPSessionDisconnectEvent e) {
+        logger.info("ApplicationOcppHandler OCPPSessionDisconnectEvent: ");
+    }
 
+    @EventListener
+    public void handle(OCPPSessionSendEvent e) {
+        logger.info("ApplicationOcppHandler OCPPSessionSendEvent: ");
+    }
+
+    @EventListener
+    public void handle(OCPPSessionReceivedEvent e) {
+        logger.info("ApplicationOcppHandler OCPPSessionReceivedEvent: ");
+    }
+
+    @EventListener
+    public void handle(OCPPSessionErrorEvent e) {
+        logger.info("ApplicationOcppHandler OCPPSessionErrorEvent: ");
     }
 }

@@ -13,7 +13,7 @@ import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 import org.springframework.web.socket.server.HandshakeInterceptor;
 
-import io.u2ware.ocpp.core.OCPPWebsocketHandler;
+import io.u2ware.ocpp.core.OCPPSessionHandler;
 
 @EnableWebSocket
 class WebSocketStandardServerConfiguration implements WebSocketConfigurer {
@@ -23,7 +23,7 @@ class WebSocketStandardServerConfiguration implements WebSocketConfigurer {
 	public static final String ENDPOINT = "/ocpp";  //"Invalid SockJS path '/websocket/info' - required to have 3 path segments"
 
     protected @Autowired OcppAttributes ocppAttributes;
-    protected @Autowired OCPPWebsocketHandler<?> websocketHandler;
+    protected @Autowired OCPPSessionHandler<?> websocketHandler;
 
 
 	@Override

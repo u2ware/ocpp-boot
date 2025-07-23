@@ -296,29 +296,29 @@ public abstract class OCPPOperations {
     }
 
 
-    public void answer(String source, OCPPConsumer<String> consumer) {
-        final AtomicReference<Long> start = new AtomicReference<>(System.currentTimeMillis());
-        final AtomicReference<String> messageId = new AtomicReference<>(source);
+    // public void answer(String source, OCPPConsumer<String> consumer) {
+    //     final AtomicReference<Long> start = new AtomicReference<>(System.currentTimeMillis());
+    //     final AtomicReference<String> messageId = new AtomicReference<>(source);
 
-        CompletableFuture.supplyAsync(()->{
-            return conversion.convertMessage(source);
-        }).whenCompleteAsync((node, err)->{
-            if(err != null) {
-                String id = messageId.get(); 
-                String r = "failure";
-                long d = System.currentTimeMillis() - start.get();
-                Throwable t = err.getCause();
+    //     CompletableFuture.supplyAsync(()->{
+    //         return conversion.convertMessage(source);
+    //     }).whenCompleteAsync((node, err)->{
+    //         if(err != null) {
+    //             String id = messageId.get(); 
+    //             String r = "failure";
+    //             long d = System.currentTimeMillis() - start.get();
+    //             Throwable t = err.getCause();
 
-                String x = String.format("%s offer(%s) %s. [%d]ms.", name(), id, r, d);
-                logger.info(x, t);
-                consumer.accept(null, err != null ? err.getCause() : null);
+    //             String x = String.format("%s offer(%s) %s. [%d]ms.", name(), id, r, d);
+    //             logger.info(x, t);
+    //             consumer.accept(null, err != null ? err.getCause() : null);
 
-            }else {
-                answer(node, (t, u)->{
-                    String result = t != null ? conversion.convertMessage(t) : null;
-                    consumer.accept(result, u);
-                });
-            }
-        });
-    }    
+    //         }else {
+    //             answer(node, (t, u)->{
+    //                 String result = t != null ? conversion.convertMessage(t) : null;
+    //                 consumer.accept(result, u);
+    //             });
+    //         }
+    //     });
+    // }    
 }

@@ -43,20 +43,22 @@ public class SimpleMessageTransfer {
 
     public class ServerEventListener implements ApplicationListener<ServerEvent>{
         public void onApplicationEvent(ServerEvent event) {
-            String t = (String)event.getSource();
+            String json = (String)event.getSource();
+            OCPPMessage<?> t = conversion.convertMessage(json);
             client.answer(t, (r, u)->{
                 if(r == null) return;
-                messages.publishClient(new ClientEvent(r));
+                messages.publishClient(new ClientEvent(conversion.convertMessage(r)));
             });
         }
     }
 
     public class ClientEventListener implements ApplicationListener<ClientEvent>{
         public void onApplicationEvent(ClientEvent event) {
-            String t = (String)event.getSource();
-            server.answer(t, (r1, u1)->{
-                if(r1 == null) return;
-                messages.publishServer(new ServerEvent(r1));
+            String json = (String)event.getSource();
+            OCPPMessage<?> t = conversion.convertMessage(json);
+            server.answer(t, (r, u)->{
+                if(r == null) return;
+                messages.publishServer(new ServerEvent(conversion.convertMessage(r)));
             });
         }
     }

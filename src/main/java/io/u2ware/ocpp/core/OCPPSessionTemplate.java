@@ -1,11 +1,8 @@
 package io.u2ware.ocpp.core;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.springframework.context.ApplicationEvent;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.util.ClassUtils;
 import org.springframework.web.socket.WebSocketSession;
@@ -15,15 +12,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-public abstract class OCPPWebsocketTemplate<T extends OCPPOperations> extends OCPPWebsocketHandler<T> implements ApplicationContextAware{
+public abstract class OCPPSessionTemplate<T extends OCPPOperations> extends OCPPSessionHandler<T> implements ApplicationContextAware{
     
-	protected Log logger = LogFactory.getLog(getClass());
-
     protected SimpMessageSendingOperations simpOperations; 
     protected ApplicationContext applicationContext;
     protected ObjectMapper mapper = new ObjectMapper();
 
-    protected OCPPWebsocketTemplate(T operation, SimpMessageSendingOperations simpOperations) {
+    protected OCPPSessionTemplate(T operation, SimpMessageSendingOperations simpOperations) {
         super(operation);
         this.simpOperations = simpOperations;
     }
@@ -35,25 +30,37 @@ public abstract class OCPPWebsocketTemplate<T extends OCPPOperations> extends OC
     
     @Override
     protected void connect(WebSocketSession session){
+        brodcast(session, "CONNECT", "{}");
         if(applicationContext == null) return;
-        applicationContext.publishEvent(new WebSocketSessionConnectEvent(session));
+        applicationContext.publishEvent(new OCPPSessionConnectEvent(session));
 
     }
 
     @Override
     protected void disconnect(WebSocketSession session){
+        brodcast(session, "DISCONNECT", "{}");
         if(applicationContext == null) return;
-        applicationContext.publishEvent(new WebSocketSessionDisconnectEvent(session));
+        applicationContext.publishEvent(new OCPPSessionDisconnectEvent(session));
     }
 
-    @Override
-    protected void brodcast(WebSocketSession session, String action, Object resource){
+    protected void received(WebSocketSession session, String text){
+        brodcast(session, "RECEIVED", text);
+        if(applicationContext == null) return;
+        applicationContext.publishEvent(new OCPPSessionSendEvent(session, text));
+    }
+    protected void send(WebSocketSession session, String text){
+        brodcast(session, "SEND", text);
+        if(applicationContext == null) return;
+        applicationContext.publishEvent(new OCPPSessionReceivedEvent(session, text));
+    }
+    protected void error(WebSocketSession session, String text, Throwable exception){
+        brodcast(session, text, exception);
+        if(applicationContext == null) return;
+        applicationContext.publishEvent(new OCPPSessionErrorEvent(session, text, exception));
+    }
 
-        if(ClassUtils.isAssignableValue(Throwable.class, resource)) {
-            logger.info(action+": ", (Throwable)resource);
-        }else{
-            logger.info(action+": "+resource);
-        }
+
+    protected void brodcast(WebSocketSession session, String action, Object resource){
 
         if(simpOperations == null) return;
         String destination = "/topic/console";
@@ -110,30 +117,6 @@ public abstract class OCPPWebsocketTemplate<T extends OCPPOperations> extends OC
             e.printStackTrace();
             return "{}";
         }
-    }
-
-
-    public static class WebSocketSessionConnectEvent extends ApplicationEvent{
-
-        public WebSocketSessionConnectEvent(WebSocketSession source) {
-            super(source);
-        }
-
-        public WebSocketSession getWebSocketSession(){
-            return (WebSocketSession)getSource();
-        }    
-    }
-
-
-    public static class WebSocketSessionDisconnectEvent extends ApplicationEvent{
-
-        public WebSocketSessionDisconnectEvent(WebSocketSession source) {
-            super(source);
-        }
-
-        public WebSocketSession getWebSocketSession(){
-            return (WebSocketSession)getSource();
-        }    
     }
 
 }
