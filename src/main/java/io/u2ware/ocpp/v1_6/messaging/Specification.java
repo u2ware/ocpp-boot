@@ -30,7 +30,6 @@ public interface Specification {
     //////////////////////////////////////////////////
     //
     //////////////////////////////////////////////////
-
     public interface Section {
 
         public String category();
@@ -128,7 +127,7 @@ public interface Specification {
         ChangeConfiguration("5.3. Change Configuration", "Core"),
         ClearCache("5.4. Clear Cache", "Core"),
         ClearChargingProfile("5.5. Clear Charging Profile", "Reservation"),
-        DataTransfer("5.6. Data Transfer", null),
+        DataTransfer("5.6. Data Transfer", "Core"),
         GetCompositeSchedule("5.7. Get Composite Schedule", "Reservation"),
         GetConfiguration("5.8. Get Configuration", "Core"),
         GetDiagnostics("5.9. Get Diagnostics", "FirmwareManagement"),
@@ -169,19 +168,19 @@ public interface Specification {
 
         Authorize("4.1. Authorize", "Core"),
         BootNotification("4.2. Boot Notification", "Core"),
-            ChangeAvailability("5.2. Change Availability", "Core"),
-            ChangeConfiguration("5.3. Change Configuration", "Core"),
-            ClearCache("5.4. Clear Cache", "Core"),
+        ChangeAvailability("5.2. Change Availability", "Core"),
+        ChangeConfiguration("5.3. Change Configuration", "Core"),
+        ClearCache("5.4. Clear Cache", "Core"),
         DataTransfer("4.3. Data Transfer", "Core"),
-            GetConfiguration("5.8. Get Configuration", "Core"),
+        GetConfiguration("5.8. Get Configuration", "Core"),
         Heartbeat("4.6. Heartbeat",  "Core"),
         MeterValues("4.7. Meter Values",  "Core"),
-            RemoteStartTransaction("5.11. Remote Start Transaction", "Core"),
-            RemoteStopTransaction("5.12. Remote Stop Transaction", "Core"),
-            Reset("5.14. Reset", "Core"),
+        RemoteStartTransaction("5.11. Remote Start Transaction", "Core"),
+        RemoteStopTransaction("5.12. Remote Stop Transaction", "Core"),
+        Reset("5.14. Reset", "Core"),
         StartTransaction("4.8. Start Transaction",  "Core"),
         StopTransaction("4.10. Stop Transaction",  "Core"),
-            UnlockConnector("5.18. Unlock Connector", "Core"),
+        UnlockConnector("5.18. Unlock Connector", "Core"),
         ;
 
         public static Specification[] usecases(SpecificationOperations operation){
@@ -199,7 +198,7 @@ public interface Specification {
         Core(String t, String p){this.t = t; this.p = p;} 
         private String t; 
         private String p; 
-        public String category(){return "3.3. Feature Profiles";} 
+        public String category(){return "Core : Basic Charge Point functionality comparable with OCPP";} 
         public String section(){return t;}
         public String profile(){return p;}
         public String usecase() {return name();}
@@ -226,7 +225,7 @@ public interface Specification {
         FirmwareManagement(String t, String p){this.t = t; this.p = p;} 
         private String t; 
         private String p; 
-        public String category(){return "3.3. Feature Profiles";} 
+        public String category(){return "Firmware Management : Support for firmware update management and diagnostic log file download";} 
         public String section(){return t;}
         public String profile(){return p;}
         public String usecase() {return name();}
@@ -251,7 +250,7 @@ public interface Specification {
         LocalAuthListManagement(String t, String p){this.t = t; this.p = p;} 
         private String t; 
         private String p; 
-        public String category(){return "3.3. Feature Profiles";} 
+        public String category(){return "Local Auth List Management : Features to manage the local authorization list in Charge Points.";} 
         public String section(){return t;}
         public String profile(){return p;}
         public String usecase() {return name();}
@@ -275,7 +274,7 @@ public interface Specification {
         RemoteTrigger(String t, String p){this.t = t; this.p = p;} 
         private String t; 
         private String p; 
-        public String category(){return "3.3. Feature Profiles";} 
+        public String category(){return "Remote Trigger : Support for remote triggering of Charge Point initiated messages";} 
         public String section(){return t;}
         public String profile(){return p;}
         public String usecase() {return name();}
@@ -301,7 +300,7 @@ public interface Specification {
         Reservation(String t, String p){this.t = t; this.p = p;} 
         private String t; 
         private String p; 
-        public String category(){return "3.3. Feature Profiles";} 
+        public String category(){return "Reservation : Support for reservation of a Charge Point.";} 
         public String section(){return t;}
         public String profile(){return p;}
         public String usecase() {return name();}
@@ -325,13 +324,10 @@ public interface Specification {
         SmartCharging(String t, String p){this.t = t; this.p = p;} 
         private String t; 
         private String p; 
-        public String category(){return "3.3. Feature Profiles";} 
+        public String category(){return "Smart Charging : Support for basic Smart Charging, for instance using control pilot.";} 
         public String section(){return t;}
         public String profile(){return p;}
         public String usecase() {return name();}
         public String action() {return name();}
     }
-
-
-
 }
