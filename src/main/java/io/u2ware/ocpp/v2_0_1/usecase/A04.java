@@ -13,7 +13,7 @@ import io.u2ware.ocpp.v2_0_1.model.*;
 
 public interface A04 {
     
-    public static Specification.Section section = Specification.Security.Usecase.A04;
+    public static Specification.Section section = Specification.Security.A04;
 
     default String comment(ClientHandler handler, Comment comment, String id) {
         return section.comment(Comment.values(), comment, id);                

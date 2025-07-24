@@ -24,7 +24,7 @@ public class SpecificationOperationsInitializer implements InitializingBean, App
     @Override
     public void afterPropertiesSet() throws Exception {
 
-        Specification[] usecase = Specification.usecases();
+        Specification[] usecase = Specification.usecases(null);
         for(Specification u : usecase) {
 
             Class<?> type = operations.usecaseClass(u.usecase());

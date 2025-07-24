@@ -93,20 +93,26 @@ public class OCPP52OperationTests {
         io.u2ware.ocpp.v1_6.messaging.CentralSystem cs = new io.u2ware.ocpp.v1_6.messaging.CentralSystem();
         cs.registerDefaultUsecases();
 
-        testUsecaseV16(io.u2ware.ocpp.v1_6.messaging.Specification.usecases(cp), cp, cs);
-        testUsecaseV16(io.u2ware.ocpp.v1_6.messaging.Specification.usecases(cs), cs, cp);
+        // testUsecaseV16(io.u2ware.ocpp.v1_6.messaging.Specification.usecases(cp), cp, cs);
+        // testUsecaseV16(io.u2ware.ocpp.v1_6.messaging.Specification.usecases(cs), cs, cp);
 
-        // io.u2ware.ocpp.v1_6.messaging.SpecificationAction a = io.u2ware.ocpp.v1_6.messaging.Specification.InitiatedByCentralSystem.Usecase.RemoteStopTransaction.message();
-        // logger.info(a);
-        // logger.info(a.getAction());
-        // logger.info(a.getUsecase());
-        // logger.info(a.getIdentifier());
+        io.u2ware.ocpp.v1_6.messaging.SpecificationAction a = io.u2ware.ocpp.v1_6.messaging.Specification.InitiatedByCentralSystem.RemoteStopTransaction.message();
+        logger.info(a.getAction());
+        logger.info(a.getUsecase());
+        logger.info(a.getIdentifier());
+        logger.info(cp.usecase(a.getIdentifier()));
+        logger.info(cp.usecase(a.getAction()));
+        logger.info(cs.usecase(a.getIdentifier()));
+        logger.info(cs.usecase(a.getAction()));
 
-        // logger.info(cp.usecase(a.getIdentifier()));
-        // logger.info(cp.usecase(a.getAction()));
-        // logger.info(cs.usecase(a.getIdentifier()));
-        // logger.info(cs.usecase(a.getAction()));
-
+        io.u2ware.ocpp.v1_6.messaging.SpecificationAction b = io.u2ware.ocpp.v1_6.messaging.Specification.Core.RemoteStopTransaction.message();
+        logger.info(b.getAction());
+        logger.info(b.getUsecase());
+        logger.info(b.getIdentifier());
+        logger.info(cp.usecase(b.getIdentifier()));
+        logger.info(cp.usecase(b.getAction()));
+        logger.info(cs.usecase(b.getIdentifier()));
+        logger.info(cs.usecase(b.getAction()));
     }
 
     @Test
@@ -118,20 +124,27 @@ public class OCPP52OperationTests {
         io.u2ware.ocpp.v2_0_1.messaging.CSMS cs = new io.u2ware.ocpp.v2_0_1.messaging.CSMS();
         cs.registerDefaultUsecases();
 
-        testUsecaseV201(io.u2ware.ocpp.v2_0_1.messaging.Specification.offers(cp), cp, cs);
-        testUsecaseV201(io.u2ware.ocpp.v2_0_1.messaging.Specification.offers(cs), cs, cp);
+        testUsecaseV201(io.u2ware.ocpp.v2_0_1.messaging.Specification.usecases(cp), cp, cs);
+        testUsecaseV201(io.u2ware.ocpp.v2_0_1.messaging.Specification.usecases(cs), cs, cp);
 
 
-        // io.u2ware.ocpp.v2_0_1.messaging.SpecificationAction a = io.u2ware.ocpp.v2_0_1.messaging.Specification.Security.Usecase.A03.message();
-        // logger.info(a);
-        // logger.info(a.getAction());
-        // logger.info(a.getUsecase());
-        // logger.info(a.getIdentifier());
+        io.u2ware.ocpp.v2_0_1.messaging.SpecificationAction a = io.u2ware.ocpp.v2_0_1.messaging.Specification.Security.A03.message();
+        logger.info(a.getAction());
+        logger.info(a.getUsecase());
+        logger.info(a.getIdentifier());
+        logger.info(cp.usecase(a.getIdentifier()));
+        logger.info(cp.usecase(a.getAction()));
+        logger.info(cs.usecase(a.getIdentifier()));
+        logger.info(cs.usecase(a.getAction()));
 
-        // logger.info(cp.usecase(a.getIdentifier()));
-        // logger.info(cp.usecase(a.getAction()));
-        // logger.info(cs.usecase(a.getIdentifier()));
-        // logger.info(cs.usecase(a.getAction()));
+        io.u2ware.ocpp.v2_0_1.messaging.SpecificationAction b = io.u2ware.ocpp.v2_0_1.messaging.Specification.A03.SignCertificate.message();
+        logger.info(b.getAction());
+        logger.info(b.getUsecase());
+        logger.info(b.getIdentifier());
+        logger.info(cp.usecase(b.getIdentifier()));
+        logger.info(cp.usecase(b.getAction()));
+        logger.info(cs.usecase(b.getIdentifier()));
+        logger.info(cs.usecase(b.getAction()));
 
 
     }

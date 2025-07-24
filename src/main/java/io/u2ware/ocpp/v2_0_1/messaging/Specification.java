@@ -1,7 +1,11 @@
 package io.u2ware.ocpp.v2_0_1.messaging;
 
+
 import java.util.HashMap;
 import java.util.Map;
+
+import org.springframework.util.ObjectUtils;
+
 
 public interface Specification {
     
@@ -65,85 +69,92 @@ public interface Specification {
         return r;
     }
 
-    public static Specification[] usecases(){
-        return arraycopy(Security.Usecase.values());
-    }
-    public static Specification[] offers(SpecificationOperations actor){
-        if(actor.isServer()) {
-            return arraycopy(new Specification[]{Security.Usecase.A01, Security.Usecase.A02 , Security.Usecase.A05});
-        }else if(actor.isClient()) {
-            return arraycopy(new Specification[]{Security.Usecase.A03, Security.Usecase.A04 });
-        }else{
-            return arraycopy();
-        }
-    }
+    public static Specification[] usecases(SpecificationOperations operation){
+        return arraycopy(
+            Security.usecases(operation)
+        );
+    }  
 
 
 
     //////////////////////////////////////////////////
     //
     //////////////////////////////////////////////////
-    public interface Security extends Specification{
+    public enum Security implements Specification, Section{
 
-        public enum Usecase implements Specification, Section{ 
+        A01("A01 - Update Charging Station Password for HTTP Basic Authentication", Specification.A01.SetVariables),
+        A02("A02 - Update Charging Station Certificate by request of CSMS", Specification.A02.TriggerMessage),
+        A03("A03 - Update Charging Station Certificate initiated by the Charging Station", Specification.A03.SignCertificate),
+        A04("A04 - Security Event Notification", Specification.A04.SecurityEventNotification),
+        A05("A05 - Upgrade Charging Station Security Profile", Specification.A05.SetVariables),
+        ;
 
-            A01("A01 - Update Charging Station Password for HTTP Basic Authentication", Security.A01.SetVariables),
-            A02("A02 - Update Charging Station Certificate by request of CSMS", Security.A02.TriggerMessage),
-            A03("A03 - Update Charging Station Certificate initiated by the Charging Station", Security.A03.SignCertificate),
-            A04("A04 - Security Event Notification", Security.A04.SecurityEventNotification),
-            A05("A05 - Upgrade Charging Station Security Profile", Security.A05.SetVariables),
-            ;
-
-            Usecase(String t, Specification s){this.t = t; this.s = s;} 
-            private String t; 
-            private Specification s; 
-            public String section(){return t;}
-            public String category(){return "A. Security";} 
-            public String usecase(){return name();}
-            public String action(){return s != null ? s.action() : null;}
-            public SpecificationAction message(String i, Map<String, Object> a) { return  s != null ? s.message(i, a): null;}
+        public static Specification[] usecases(SpecificationOperations operation){
+            if(ObjectUtils.isEmpty(operation)) {
+                return values();                    
+            }else if(operation.isServer()) {
+                return new Specification[]{A01, A02, A05};
+            }else{
+                return new Specification[]{A03, A04 };
+            }
         }
 
-        public enum A01 implements Specification{ 
-            SetVariables
-            ;
-            public String usecase() {return "A01";}
-            public String action() {return name();}
-        }
-
-        public enum A02 implements Security{ 
-            TriggerMessage,
-            SignCertificate,
-            CertificateSigned,
-            ;
-            public String usecase() {return "A02";}
-            public String action() {return name();}
-        }
-
-        public enum A03 implements Security{ 
-            SignCertificate,
-            CertificateSigned,
-            ;
-            public String usecase() {return "A03";}
-            public String action() {return name();}
-        }
-        
-        public enum A04 implements Security{ 
-            SecurityEventNotification,            
-            ;
-            public String usecase() {return "A04";}
-            public String action() {return name();}
-        }
-
-        public enum A05 implements Specification{ 
-            SetVariables,
-            Reset,
-            BootNotification,             
-            ;
-            public String usecase() {return "A05";}
-            public String action() {return name();}
-        }
+        Security(String t, Specification s){this.t = t; this.s = s;} 
+        private String t; 
+        private Specification s; 
+        public String section(){return t;}
+        public String category(){return "A. Security";} 
+        public String usecase(){return name();}
+        public String action(){return s != null ? s.action() : null;}
+        public SpecificationAction message(String i, Map<String, Object> a) { return  s != null ? s.message(i, a): null;}
     }
+
+    public enum A01 implements Specification{ 
+        SetVariables
+        ;
+        public String usecase() {return "A01";}
+        public String action() {return name();}
+    }
+
+    public enum A02 implements Specification{ 
+        TriggerMessage,
+        SignCertificate,
+        CertificateSigned,
+        ;
+        public String usecase() {return "A02";}
+        public String action() {return name();}
+    }
+
+    public enum A03 implements Specification{ 
+        SignCertificate,
+        CertificateSigned,
+        ;
+        public String usecase() {return "A03";}
+        public String action() {return name();}
+    }
+    
+    public enum A04 implements Specification{ 
+        SecurityEventNotification,            
+        ;
+        public String usecase() {return "A04";}
+        public String action() {return name();}
+    }
+
+    public enum A05 implements Specification{ 
+        SetVariables,
+        Reset,
+        BootNotification,             
+        ;
+        public String usecase() {return "A05";}
+        public String action() {return name();}
+    }
+
+
+    //////////////////////////////////////////////////
+    //
+    //////////////////////////////////////////////////
+
+
 
 
     //     B_Provisioning("B. Provisioning"),

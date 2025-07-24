@@ -8,6 +8,10 @@ import io.u2ware.ocpp.core.OCPPSessionTemplate;
 
 public class SpecificationSendingTemplate extends OCPPSessionTemplate<SpecificationOperations> implements SpecificationSendingOperations {
 
+    public SpecificationSendingTemplate(SpecificationOperations operations) {
+        super(operations, null);
+    }
+
     public SpecificationSendingTemplate(SpecificationOperations operations, SimpMessageSendingOperations simpOperations) {
         super(operations, simpOperations);
     }
