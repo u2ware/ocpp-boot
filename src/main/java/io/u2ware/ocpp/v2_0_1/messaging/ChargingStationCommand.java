@@ -81,72 +81,32 @@ public class ChargingStationCommand implements OCPPCommand{
     }
 
 
-    public enum InitiatedBy implements Builder {
-//Authorize
-//BootNotification
-//CancelReservation
-//CertificateSigned
-//ChangeAvailability
-//ClearCache
-//ClearChargingProfile
-//ClearDisplayMessage
-//ClearVariableMonitoring
-//ClearedChargingLimit
-//CostUpdated
-//CustomerInformation
-//DataTransfer
-//DeleteCertificate
-//FirmwareStatusNotification
-//Get15118EVCertificate
-//GetBaseReport
-//GetCertificateStatus
-//GetChargingProfiles
-//GetCompositeSchedule
-//GetDisplayMessages
-//GetInstalledCertificateIds
-//GetLocalListVersion
-//GetLog
-//GetMonitoringReport
-//GetReport
-//GetTransactionStatus
-//GetVariables
-//Heartbeat
-//InstallCertificate
-//LogStatusNotification
-//MeterValues
-//NotifyChargingLimit
-//NotifyCustomerInformation
-//NotifyDisplayMessages
-//NotifyEVChargingNeeds
-//NotifyEVChargingSchedule
-//NotifyEvent
-//NotifyMonitoringReport
-//NotifyReport
-//PublishFirmware
-//PublishFirmwareStatusNotification
-//ReportChargingProfiles
-//RequestStartTransaction
-//RequestStopTransaction
-//ReservationStatusUpdate
-//ReserveNow
-//Reset
-//SecurityEventNotification
-//SendLocalList
-//SetChargingProfile
-//SetDisplayMessage
-//SetMonitoringBase
-//SetMonitoringLevel
-//SetNetworkProfile
-//SetVariableMonitoring
-//SetVariables
-//SignCertificate
-//StatusNotification
-//TransactionEvent
-//TriggerMessage
-//UnlockConnector
-//UnpublishFirmware
-//UpdateFirmware
-
+    public enum ALL implements Builder {
+        Authorize,
+        BootNotification,
+        ClearedChargingLimit,
+        DataTransfer,
+        FirmwareStatusNotification,
+        Get15118EVCertificate,
+        GetCertificateStatus,
+        Heartbeat,
+        LogStatusNotification,
+        MeterValues,
+        NotifyChargingLimit,
+        NotifyCustomerInformation,
+        NotifyDisplayMessages,
+        NotifyEVChargingNeeds,
+        NotifyEVChargingSchedule,
+        NotifyEvent,
+        NotifyMonitoringReport,
+        NotifyReport,
+        PublishFirmwareStatusNotification,
+        ReportChargingProfiles,
+        ReservationStatusUpdate,
+        SecurityEventNotification,
+        SignCertificate,
+        StatusNotification,
+        TransactionEvent,
         ;
 
         @Override

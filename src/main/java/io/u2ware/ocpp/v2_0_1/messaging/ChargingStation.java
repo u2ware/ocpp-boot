@@ -3,9 +3,12 @@ package io.u2ware.ocpp.v2_0_1.messaging;
 import org.springframework.util.ClassUtils;
 
 import io.u2ware.ocpp.OCPPConsumer;
+import io.u2ware.ocpp.OCPPFeature;
 import io.u2ware.ocpp.OCPPFeatureTemplate;
 import io.u2ware.ocpp.OCPPMessage;
 import io.u2ware.ocpp.OCPPVersion;
+import io.u2ware.ocpp.v1_6.messaging.CentralSystemCommand;
+import io.u2ware.ocpp.v1_6.messaging.ChargePointCommand;
 
 public final class ChargingStation extends OCPPFeatureTemplate<ChargingStationCommand>{
     
@@ -58,5 +61,18 @@ public final class ChargingStation extends OCPPFeatureTemplate<ChargingStationCo
     public void registerFeature(ChargingStationHandler handler) {
         super.registerFeature(handler);
     }    
+
+    public void registerDefaultFeatures() {
+        for(ChargingStationCommand.Builder e :  ChargingStationCommand.ALL.values()){
+            Class<?> c = handlerClass(e.action());
+            ChargingStationHandler h = (ChargingStationHandler)OCPPFeature.invokeField(c, "DEFAULT");
+            super.registerFeature(h);
+        }
+        for(CSMSCommand.Builder e :  CSMSCommand.ALL.values()){
+            Class<?> c = handlerClass(e.action());
+            ChargingStationHandler h = (ChargingStationHandler)OCPPFeature.invokeField(c, "DEFAULT");
+            super.registerFeature(h);
+        }
+    }
 
 }
