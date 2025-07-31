@@ -14,7 +14,7 @@ import io.u2ware.ocpp.OCPPConversion;
 import io.u2ware.ocpp.OCPPFeatureOperations;
 import io.u2ware.ocpp.OCPPMessage;
 
-public abstract class AbstractEventBusTemplate<T extends OCPPFeatureOperations> {
+public abstract class AbstractEventBusTemplate<T extends OCPPFeatureOperations<?>> {
     
 	protected Log logger = LogFactory.getLog(getClass());
 

@@ -37,9 +37,7 @@ class ApplicationTests {
 		/////////////////////////////////////
 		CentralSystem server = new CentralSystem();
 		CentralSystemCommandTemplate serverTemplate = new CentralSystemCommandTemplate(server);
-
-		OcppServerHandler handler = new OcppServerHandler();
-        server.registerFeature(handler);
+        server.registerDefaultFeatures();
 
 		/////////////////////////////////////
 		// OCPP Client Test  without I/O
@@ -51,16 +49,12 @@ class ApplicationTests {
 		// 
 		/////////////////////////////////////
 		Assertions.assertNull(client.resolveFeature("Authorize"));
-		Assertions.assertNotNull(client.resolveFeature("Heartbeat"));
-		Assertions.assertNotNull(client.resolveFeature("StartTransaction"));
-
-		Assertions.assertNull(server.resolveFeature("Authorize"));
-		Assertions.assertNotNull(server.resolveFeature("Heartbeat"));
-		Assertions.assertNotNull(server.resolveFeature("StartTransaction"));
+		Assertions.assertNotNull(client.resolveFeature("DataTransfer"));
+		Assertions.assertNotNull(client.resolveFeature("MyCustomHandler"));
 
 
 		logger.info("===================");	
-		clientTemplate.send(ChargePointCommand.ALL.Heartbeat.build());
+		clientTemplate.send(ChargePointCommand.ALL.Heartbeat.buildWith("MyCustomHandler"));
 		Thread.sleep(1000);		
 	}
 }

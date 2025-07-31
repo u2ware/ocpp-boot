@@ -38,9 +38,7 @@ class ApplicationTests {
 		/////////////////////////////////////
 		ChargePoint client = new ChargePoint();
 		ChargePointCommandTemplate clientTemplate = new ChargePointCommandTemplate(client);
-		
-		OcppClientHandler handler = new OcppClientHandler(clientTemplate);
-        client.registerFeature(handler);
+        client.registerDefaultFeatures();
 
 		/////////////////////////////////////
 		// OCPP Client Test  without I/O
@@ -52,21 +50,11 @@ class ApplicationTests {
 		// 
 		/////////////////////////////////////
 		Assertions.assertNull(server.resolveFeature("Authorize"));
-		Assertions.assertNull(server.resolveFeature("StartTransaction"));
-		Assertions.assertNull(server.resolveFeature("StopTransaction"));
-		Assertions.assertNull(server.resolveFeature("RemoteStartTransaction"));
-		Assertions.assertNull(server.resolveFeature("RemoteStopTransaction"));
-		Assertions.assertNotNull(server.resolveFeature("myModule"));
-
-		Assertions.assertNull(client.resolveFeature("Authorize"));
-		Assertions.assertNull(client.resolveFeature("StartTransaction"));
-		Assertions.assertNull(client.resolveFeature("StopTransaction"));
-		Assertions.assertNull(client.resolveFeature("RemoteStartTransaction"));
-		Assertions.assertNull(client.resolveFeature("RemoteStopTransaction"));
-		Assertions.assertNotNull(client.resolveFeature("myModule"));
+		Assertions.assertNotNull(server.resolveFeature("DataTransfer"));
+		Assertions.assertNotNull(server.resolveFeature("MyCustomHandler"));
 
 		logger.info("===================");	
-		serverTemplate.send(CentralSystemCommand.ALL.RemoteStartTransaction.buildWith("myModule"));
+		serverTemplate.send(CentralSystemCommand.ALL.UnlockConnector.buildWith("MyCustomHandler"));
 		Thread.sleep(1000);
 	}
 }
