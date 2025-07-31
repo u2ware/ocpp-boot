@@ -7,8 +7,6 @@ import io.u2ware.ocpp.OCPPFeature;
 import io.u2ware.ocpp.OCPPFeatureTemplate;
 import io.u2ware.ocpp.OCPPMessage;
 import io.u2ware.ocpp.OCPPVersion;
-import io.u2ware.ocpp.v1_6.messaging.CentralSystemCommand;
-import io.u2ware.ocpp.v1_6.messaging.ChargePointCommand;
 
 public final class ChargingStation extends OCPPFeatureTemplate<ChargingStationCommand>{
     
