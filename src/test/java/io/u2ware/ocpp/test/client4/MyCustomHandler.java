@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import io.u2ware.ocpp.v1_6.exception.ErrorCode;
-import io.u2ware.ocpp.v1_6.handlers.Heartbeat;
+import io.u2ware.ocpp.v1_6.handlers.Heartbeat; // 2.
 import io.u2ware.ocpp.v1_6.handlers.StartTransaction; // 2.
 import io.u2ware.ocpp.v1_6.messaging.ChargePointCommand;
 import io.u2ware.ocpp.v1_6.messaging.ChargePointCommandOperations; // 4.
