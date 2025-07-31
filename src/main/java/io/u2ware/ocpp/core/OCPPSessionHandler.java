@@ -9,7 +9,7 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-public abstract class OCPPSessionHandler<T extends OCPPOperations> extends TextWebSocketHandler{
+public abstract class OCPPSessionHandler<T extends OCPPFeatureOperations> extends TextWebSocketHandler{
 
 
     protected OCPPConversion conversion = new OCPPConversion();
@@ -41,7 +41,6 @@ public abstract class OCPPSessionHandler<T extends OCPPOperations> extends TextW
 
     @Override
     public void handleTextMessage(WebSocketSession session, TextMessage text) throws Exception {
-
         String received = text.getPayload();
         OCPPMessage<?> message = null;
         try{
@@ -57,7 +56,10 @@ public abstract class OCPPSessionHandler<T extends OCPPOperations> extends TextW
     /////////////////////////////////////////////////////////////////////
     protected OCPPConsumer<OCPPMessage<?>> handleTextMessage(WebSocketSession session){
         return (m,t)->{
-            if(m == null) {
+            if(m == null && t == null) {
+                return;
+            }
+            if(m == null && t != null) {
                 error(session, "ERROR02",  t);
                 return;
             }

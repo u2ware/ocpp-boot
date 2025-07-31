@@ -27,16 +27,15 @@ class OcppServerConfiguration implements ImportBeanDefinitionRegistrar{
                 
                 
                 registry.registerBeanDefinition("ocppTemplate", BeanDefinitionBuilder
-                    .genericBeanDefinition(io.u2ware.ocpp.v1_6.messaging.SpecificationSendingTemplate.class)
+                    .genericBeanDefinition(io.u2ware.ocpp.v1_6.messaging.CentralSystemCommandTemplate.class)
                     .addConstructorArgReference("ocppOperations")
                     .addConstructorArgReference("brokerMessagingTemplate")
                     .getBeanDefinition());
 
 
                 registry.registerBeanDefinition("ocppInitializer", BeanDefinitionBuilder
-                    .genericBeanDefinition(io.u2ware.ocpp.v1_6.messaging.SpecificationOperationsInitializer.class)
+                    .genericBeanDefinition(io.u2ware.ocpp.v1_6.messaging.CentralSystemInitializer.class)
                     .addConstructorArgReference("ocppOperations")
-                    .addConstructorArgValue(a.getAllowDefaultUsecase())
                     .getBeanDefinition());
 
 
@@ -49,16 +48,15 @@ class OcppServerConfiguration implements ImportBeanDefinitionRegistrar{
                 
                 
                 registry.registerBeanDefinition("ocppTemplate", BeanDefinitionBuilder
-                    .genericBeanDefinition(io.u2ware.ocpp.v2_0_1.messaging.SpecificationSendingTemplate.class)
+                    .genericBeanDefinition(io.u2ware.ocpp.v2_0_1.messaging.CSMSCommandTemplate.class)
                     .addConstructorArgReference("ocppOperations")
                     .addConstructorArgReference("brokerMessagingTemplate")
                     .getBeanDefinition());
 
 
                 registry.registerBeanDefinition("ocppInitializer", BeanDefinitionBuilder
-                    .genericBeanDefinition(io.u2ware.ocpp.v2_0_1.messaging.SpecificationOperationsInitializer.class)
+                    .genericBeanDefinition(io.u2ware.ocpp.v2_0_1.messaging.CSMSInitializer.class)
                     .addConstructorArgReference("ocppOperations")
-                    .addConstructorArgValue(a.getAllowDefaultUsecase())
                     .getBeanDefinition());
 
                 return;

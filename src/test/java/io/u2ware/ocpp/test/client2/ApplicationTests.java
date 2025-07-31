@@ -10,8 +10,11 @@ import org.springframework.context.ApplicationContext;
 
 import io.u2ware.ocpp.config.WebSocketHandlerInvoker;
 import io.u2ware.ocpp.v1_6.messaging.CentralSystem;
-import io.u2ware.ocpp.v1_6.messaging.Specification;
-import io.u2ware.ocpp.v1_6.messaging.SpecificationSendingTemplate;
+import io.u2ware.ocpp.v1_6.messaging.CentralSystemCommand;
+import io.u2ware.ocpp.v1_6.messaging.CentralSystemCommandTemplate;
+import io.u2ware.ocpp.v1_6.messaging.ChargePoint;
+import io.u2ware.ocpp.v1_6.messaging.ChargePointCommand;
+import io.u2ware.ocpp.v1_6.messaging.ChargePointCommandTemplate;
 
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -19,35 +22,35 @@ class ApplicationTests {
 
 	protected Log logger = LogFactory.getLog(getClass());
 
+	protected @Autowired ApplicationContext ac;
     protected @LocalServerPort int port;
 
-
-	protected @Autowired ApplicationContext ac;
-	protected @Autowired SpecificationSendingTemplate clientTemplate;
+	protected @Autowired ChargePoint client;
+	protected @Autowired ChargePointCommandTemplate clientTemplate;
 
 	@Test
 	void contextLoads() throws Exception {
 
+		client.registerDefaultFeatures();
 
-		CentralSystem cs = new CentralSystem();
-		cs.registerDefaultUsecases();
-		SpecificationSendingTemplate serverTemplate = new SpecificationSendingTemplate(cs);
-
-		// ChargePoint cp = new ChargePoint();
-		// cp.registerDefaultUsecase();
-		// SpecificationSendingTemplate clientTemplate = new SpecificationSendingTemplate(cp);
+		/////////////////////////////////////
+		// Create Mock Server
+		/////////////////////////////////////
+		CentralSystem server = new CentralSystem();
+		CentralSystemCommandTemplate serverTemplate = new CentralSystemCommandTemplate(server);
+		
+        server.registerDefaultFeatures();
 
 
 		/////////////////////////////////////
-		// OCPP Test Server without I/O
+		// OCPP Client Test without I/O
 		/////////////////////////////////////
-		logger.info("2===================");	
-		WebSocketHandlerInvoker.of(ac).connect(serverTemplate, clientTemplate);
-		Thread.sleep(2000);
+		WebSocketHandlerInvoker.of(ac).connect(clientTemplate, serverTemplate);
+		Thread.sleep(1000);
 
 	
 		/////////////////////////////////////
-		// OCPP Test Server with I/O
+		// OCPP Client Test with I/O
 		/////////////////////////////////////
 		// logger.info("2===================");	
 
@@ -57,9 +60,11 @@ class ApplicationTests {
 		//
 		/////////////////////////////////////
 		logger.info("1 ===================");		
-		clientTemplate.convertAndSend(Specification.InitiatedByChargePoint.DataTransfer.message());
-		Thread.sleep(2000);		
-		clientTemplate.convertAndSend(Specification.InitiatedByCentralSystem.DataTransfer.message());
-		Thread.sleep(2000);		
+		clientTemplate.send(ChargePointCommand.ALL.DataTransfer.build());
+		Thread.sleep(1000);
+
+		logger.info("2 ===================");		
+		serverTemplate.send(CentralSystemCommand.ALL.DataTransfer.build());
+		Thread.sleep(1000);		
 	}
 }

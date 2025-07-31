@@ -23,5 +23,5 @@ public @interface EnableOcppServer {
     
     String uri() default "/ocpp";
 
-    boolean allowDefaultUsecase() default false;
+    // boolean allowDefaultUsecase() default false;
 }

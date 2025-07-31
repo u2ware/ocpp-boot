@@ -25,16 +25,15 @@ class OcppClientConfiguration implements ImportBeanDefinitionRegistrar{
                     .getBeanDefinition());
                 
                 registry.registerBeanDefinition("ocppTemplate", BeanDefinitionBuilder
-                    .genericBeanDefinition(io.u2ware.ocpp.v1_6.messaging.SpecificationSendingTemplate.class)
+                    .genericBeanDefinition(io.u2ware.ocpp.v1_6.messaging.ChargePointCommandTemplate.class)
                     .addConstructorArgReference("ocppOperations")
                     .addConstructorArgReference("brokerMessagingTemplate")
                     .getBeanDefinition());
 
 
                 registry.registerBeanDefinition("ocppInitializer", BeanDefinitionBuilder
-                    .genericBeanDefinition(io.u2ware.ocpp.v1_6.messaging.SpecificationOperationsInitializer.class)
+                    .genericBeanDefinition(io.u2ware.ocpp.v1_6.messaging.ChargePointInitializer.class)
                     .addConstructorArgReference("ocppOperations")
-                    .addConstructorArgValue(a.getAllowDefaultUsecase())
                     .getBeanDefinition());
 
 
@@ -48,16 +47,15 @@ class OcppClientConfiguration implements ImportBeanDefinitionRegistrar{
                 
                 
                 registry.registerBeanDefinition("ocppTemplate", BeanDefinitionBuilder
-                    .genericBeanDefinition(io.u2ware.ocpp.v2_0_1.messaging.SpecificationSendingTemplate.class)
+                    .genericBeanDefinition(io.u2ware.ocpp.v2_0_1.messaging.ChargingStationCommandTemplate.class)
                     .addConstructorArgReference("ocppOperations")
                     .addConstructorArgReference("brokerMessagingTemplate")
                     .getBeanDefinition());
 
 
                 registry.registerBeanDefinition("ocppInitializer", BeanDefinitionBuilder
-                    .genericBeanDefinition(io.u2ware.ocpp.v2_0_1.messaging.SpecificationOperationsInitializer.class)
+                    .genericBeanDefinition(io.u2ware.ocpp.v2_0_1.messaging.ChargingStationInitializer.class)
                     .addConstructorArgReference("ocppOperations")
-                    .addConstructorArgValue(a.getAllowDefaultUsecase())
                     .getBeanDefinition());
                     
                     

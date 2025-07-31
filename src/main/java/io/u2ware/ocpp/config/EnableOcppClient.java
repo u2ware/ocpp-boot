@@ -24,5 +24,5 @@ public @interface EnableOcppClient {
     
     String uri() default "ws://localhost:8081/ocpp";
 
-    boolean allowDefaultUsecase() default false;
+    // boolean allowDefaultUsecase() default false;
 }

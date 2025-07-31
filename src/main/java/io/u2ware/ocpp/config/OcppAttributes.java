@@ -22,9 +22,9 @@ public class OcppAttributes {
         return attributes.getString("uri");
     }
 
-    public boolean getAllowDefaultUsecase(){
-        return attributes.getBoolean("allowDefaultUsecase");
-    }    
+    // public boolean getAllowDefaultUsecase(){
+    //     return attributes.getBoolean("allowDefaultUsecase");
+    // }    
 
     public OCPPVersion getVersion(){
         return (OCPPVersion)attributes.get("version");

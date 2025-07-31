@@ -28,13 +28,23 @@ class ApplicationTests {
 	private @Autowired ApplicationContext ac;
 	private @Autowired SimpMessageSendingOperations simpOperations;
 
+	
 	private @Autowired(required = false) io.u2ware.ocpp.v1_6.messaging.ChargePoint chargePoint16;
+	private @Autowired(required = false) io.u2ware.ocpp.v1_6.messaging.ChargePointCommandOperations chargePoint16Operations;	
+	private @Autowired(required = false) io.u2ware.ocpp.v1_6.messaging.ChargePointInitializer chargePoint16Initializer;	
+
 	private @Autowired(required = false) io.u2ware.ocpp.v1_6.messaging.CentralSystem centralSystem16;
-	private @Autowired(required = false) io.u2ware.ocpp.v1_6.messaging.SpecificationSendingOperations ocppOperations16;	
+	private @Autowired(required = false) io.u2ware.ocpp.v1_6.messaging.CentralSystemCommandOperations centralSystem16Operations;
+	private @Autowired(required = false) io.u2ware.ocpp.v1_6.messaging.CentralSystemInitializer centralSystem16Initializer;	
 
 	private @Autowired(required = false) io.u2ware.ocpp.v2_0_1.messaging.ChargingStation chargingStation201;
+	private @Autowired(required = false) io.u2ware.ocpp.v2_0_1.messaging.ChargingStationCommandOperations chargingStation201Operations;
+	private @Autowired(required = false) io.u2ware.ocpp.v2_0_1.messaging.ChargingStationInitializer chargingStation201Initializer;	
+	
+
 	private @Autowired(required = false) io.u2ware.ocpp.v2_0_1.messaging.CSMS csms201;
-	private @Autowired(required = false) io.u2ware.ocpp.v2_0_1.messaging.SpecificationSendingOperations ocppOperations201;	
+	private @Autowired(required = false) io.u2ware.ocpp.v2_0_1.messaging.CSMSCommandOperations csms201Operations;
+	private @Autowired(required = false) io.u2ware.ocpp.v2_0_1.messaging.CSMSInitializer csms201Initializer;	
 	
 
 	@Test
@@ -45,13 +55,22 @@ class ApplicationTests {
 		logger.info(StringUtils.arrayToCommaDelimitedString(ac.getBeanNamesForType(SimpMessageSendingOperations.class)));
 		logger.info("SimpMessageSendingOperations: "+simpOperations);
 
-		logger.info("(v1.6)chargePoint: "+chargePoint16);
-		logger.info("(v1.6)centralSystem: "+centralSystem16);
-		logger.info("(v1.6)SpecificationSendingOperations: "+ocppOperations16);
+		logger.info("(v1.6)chargePoint16            : "+chargePoint16);
+		logger.info("(v1.6)chargePoint16Operations  : "+chargePoint16Operations);
+		logger.info("(v1.6)chargePoint16Initializer : "+chargePoint16Initializer);
 
-		logger.info("(v2.1)chargingStation: "+chargingStation201);
-		logger.info("(v2.1)csms: "+csms201);
-		logger.info("(v2.1)SpecificationSendingOperations: "+ocppOperations201);
+		logger.info("(v1.6)centralSystem16            : "+centralSystem16);
+		logger.info("(v1.6)centralSystem16Operations  : "+centralSystem16Operations);
+		logger.info("(v1.6)centralSystem16Initializer : "+centralSystem16Initializer);
+
+
+		logger.info("(v2.0.1)chargingStation201            : "+chargingStation201);
+		logger.info("(v2.0.1)chargingStation201Operations  : "+chargingStation201Operations);
+		logger.info("(v2.0.1)chargingStation201Initializer : "+chargingStation201Initializer);
+
+		logger.info("(v2.0.1)csms201            : "+csms201);
+		logger.info("(v2.0.1)csms201Operations  : "+csms201Operations);
+		logger.info("(v2.0.1)csms201Initializer : "+csms201Initializer);
 		logger.info("===================");		
 
 

@@ -1,7 +1,14 @@
 package io.u2ware.ocpp.v1_6.messaging;
 
+import org.springframework.util.ClassUtils;
 
-public final class ChargePoint extends SpecificationOperations{
+import io.u2ware.ocpp.core.OCPPConsumer;
+import io.u2ware.ocpp.core.OCPPFeature;
+import io.u2ware.ocpp.core.OCPPFeatureOperations;
+import io.u2ware.ocpp.core.OCPPMessage;
+import io.u2ware.ocpp.core.OCPPVersion;
+
+public final class ChargePoint extends OCPPFeatureOperations{
 
     private final String rootPackage = "io.u2ware.ocpp.v1_6";
 
@@ -21,8 +28,8 @@ public final class ChargePoint extends SpecificationOperations{
     }
 
     @Override
-    protected String usecaseType(String source) {
-        return String.format("%s.usecase.%s.ClientHandler", rootPackage, source);
+    protected String handlerType(String source) {
+        return String.format("%s.handlers.%s.ChargePointHandler", rootPackage, source);
     }
 
     @Override
@@ -34,4 +41,36 @@ public final class ChargePoint extends SpecificationOperations{
     public boolean isClient() {
         return true;
     }    
+
+    @Override
+    public String name() {
+        return ClassUtils.getShortName(getClass());
+    }
+
+    @Override
+    public OCPPVersion version() {
+        return OCPPVersion.V1_6;
+    }
+
+    public void offer(ChargePointCommand command, OCPPConsumer<OCPPMessage<?>> consumer) {
+        super.offer(()->{ return command;}, consumer);
+    }
+
+    public void registerFeature(ChargePointHandler handler) {
+        super.registerFeature(handler);
+    }
+
+    public void registerDefaultFeatures() {
+        for(ChargePointCommand.Builder e :  ChargePointCommand.ALL.values()){
+            Class<?> c = handlerClass(e.action());
+            ChargePointHandler h = (ChargePointHandler)OCPPFeature.invokeField(c, "DEFAULT");
+            super.registerFeature(h);
+        }
+        for(CentralSystemCommand.Builder e :  CentralSystemCommand.ALL.values()){
+            Class<?> c = handlerClass(e.action());
+            ChargePointHandler h = (ChargePointHandler)OCPPFeature.invokeField(c, "DEFAULT");
+            super.registerFeature(h);
+        }
+    }
+
 }

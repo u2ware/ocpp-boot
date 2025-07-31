@@ -1,9 +1,16 @@
 package io.u2ware.ocpp.v2_0_1.messaging;
 
-public final class CSMS extends SpecificationOperations{
+import org.springframework.util.ClassUtils;
+
+import io.u2ware.ocpp.core.OCPPConsumer;
+import io.u2ware.ocpp.core.OCPPFeature;
+import io.u2ware.ocpp.core.OCPPFeatureOperations;
+import io.u2ware.ocpp.core.OCPPMessage;
+import io.u2ware.ocpp.core.OCPPVersion;
+
+public final class CSMS extends OCPPFeatureOperations{
     
     private final String rootPackage = "io.u2ware.ocpp.v2_0_1";
-
 
     @Override
     protected String requestType(String source) {
@@ -21,8 +28,8 @@ public final class CSMS extends SpecificationOperations{
     }
 
     @Override
-    protected String usecaseType(String source) {
-        return String.format("%s.usecase.%s.ServerHandler", rootPackage, source);
+    protected String handlerType(String source) {
+        return String.format("%s.handlers.%s.CSMSHandler", rootPackage, source);
     }
 
     @Override
@@ -34,4 +41,23 @@ public final class CSMS extends SpecificationOperations{
     public boolean isClient() {
         return false;
     }      
+
+    @Override
+    public String name() {
+        return ClassUtils.getShortName(getClass());
+    }
+
+    @Override
+    public OCPPVersion version() {
+        return OCPPVersion.V1_6;
+    }
+
+    public void offer(CSMSCommand command, OCPPConsumer<OCPPMessage<?>> consumer) {
+        super.offer(()->{ return command;}, consumer);
+    }
+
+    public void registerFeature(CSMSHandler handler) {
+        super.registerFeature(handler);
+    }  
+
 }
