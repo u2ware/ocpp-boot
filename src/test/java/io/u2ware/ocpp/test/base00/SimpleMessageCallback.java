@@ -3,8 +3,8 @@ package io.u2ware.ocpp.test.base00;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import io.u2ware.ocpp.core.OCPPConsumer;
-import io.u2ware.ocpp.core.OCPPMessage;
+import io.u2ware.ocpp.OCPPConsumer;
+import io.u2ware.ocpp.OCPPMessage;
 
 
 public class SimpleMessageCallback implements OCPPConsumer<OCPPMessage<?>>{

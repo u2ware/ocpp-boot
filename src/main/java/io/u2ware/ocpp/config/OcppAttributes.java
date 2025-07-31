@@ -6,7 +6,7 @@ import java.util.Map;
 import org.springframework.core.annotation.AnnotationAttributes;
 import org.springframework.core.type.AnnotationMetadata;
 
-import io.u2ware.ocpp.core.OCPPVersion;
+import io.u2ware.ocpp.OCPPVersion;
     
     
 public class OcppAttributes {

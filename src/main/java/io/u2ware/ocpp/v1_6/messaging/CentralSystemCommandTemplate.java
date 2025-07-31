@@ -3,8 +3,8 @@ package io.u2ware.ocpp.v1_6.messaging;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.web.socket.WebSocketSession;
 
-import io.u2ware.ocpp.core.OCPPFeature;
-import io.u2ware.ocpp.core.OCPPSessionHandlerTemplate;
+import io.u2ware.ocpp.OCPPFeature;
+import io.u2ware.ocpp.OCPPSessionHandlerTemplate;
 
 public class CentralSystemCommandTemplate extends OCPPSessionHandlerTemplate<CentralSystem> implements CentralSystemCommandOperations {
 

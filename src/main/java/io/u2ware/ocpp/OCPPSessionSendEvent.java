@@ -1,14 +1,13 @@
-package io.u2ware.ocpp.core;
+package io.u2ware.ocpp;
 
 import org.springframework.context.ApplicationEvent;
 import org.springframework.web.socket.WebSocketSession;
 
-
-public class OCPPSessionReceivedEvent extends ApplicationEvent{
+public class OCPPSessionSendEvent extends ApplicationEvent{
 
     private String payload;
 
-    public OCPPSessionReceivedEvent(WebSocketSession source, String payload) {
+    public OCPPSessionSendEvent(WebSocketSession source, String payload) {
         super(source);
         this.payload = payload;
     }

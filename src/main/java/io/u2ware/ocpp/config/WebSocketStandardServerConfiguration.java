@@ -13,7 +13,7 @@ import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 import org.springframework.web.socket.server.HandshakeInterceptor;
 
-import io.u2ware.ocpp.core.OCPPSessionHandler;
+import io.u2ware.ocpp.OCPPSessionHandler;
 
 @EnableWebSocket
 class WebSocketStandardServerConfiguration implements WebSocketConfigurer {

@@ -14,11 +14,11 @@ import org.springframework.messaging.simp.stomp.StompSessionHandler;
 import org.springframework.util.Assert;
 import org.springframework.util.ClassUtils;
 
-import io.u2ware.ocpp.core.OCPPConversion;
-import io.u2ware.ocpp.core.OCPPMessage;
-import io.u2ware.ocpp.core.OCPPFeatureOperations;
+import io.u2ware.ocpp.OCPPConversion;
+import io.u2ware.ocpp.OCPPFeatureOperations;
+import io.u2ware.ocpp.OCPPMessage;
 
-public class AbstractWebsocketStompTemplate<T extends OCPPFeatureOperations> implements StompSessionHandler {
+public class AbstractWebsocketStompTemplate<T extends OCPPFeatureOperations<?>> implements StompSessionHandler {
     
 
 	protected Log logger = LogFactory.getLog(getClass());

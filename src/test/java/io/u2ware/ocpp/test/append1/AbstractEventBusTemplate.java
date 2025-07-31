@@ -9,10 +9,10 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.util.Assert;
 import org.springframework.util.ClassUtils;
 
-import io.u2ware.ocpp.core.OCPPFeatureOperations;
-import io.u2ware.ocpp.core.OCPPConsumer;
-import io.u2ware.ocpp.core.OCPPConversion;
-import io.u2ware.ocpp.core.OCPPMessage;
+import io.u2ware.ocpp.OCPPConsumer;
+import io.u2ware.ocpp.OCPPConversion;
+import io.u2ware.ocpp.OCPPFeatureOperations;
+import io.u2ware.ocpp.OCPPMessage;
 
 public abstract class AbstractEventBusTemplate<T extends OCPPFeatureOperations> {
     

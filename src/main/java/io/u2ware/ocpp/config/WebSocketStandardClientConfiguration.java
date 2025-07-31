@@ -17,8 +17,8 @@ import org.springframework.web.socket.sockjs.client.SockJsClient;
 import org.springframework.web.socket.sockjs.client.Transport;
 import org.springframework.web.socket.sockjs.client.WebSocketTransport;
 
+import io.u2ware.ocpp.OCPPSessionHandler;
 import io.u2ware.ocpp.client.WebsocketStandardConnectionManager;
-import io.u2ware.ocpp.core.OCPPSessionHandler;
 
 
 @Configuration

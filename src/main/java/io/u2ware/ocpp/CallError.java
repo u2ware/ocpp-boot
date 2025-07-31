@@ -1,4 +1,4 @@
-package io.u2ware.ocpp.core;
+package io.u2ware.ocpp;
 
 public class CallError<T extends CallException> extends OCPPMessage<T>  {
  

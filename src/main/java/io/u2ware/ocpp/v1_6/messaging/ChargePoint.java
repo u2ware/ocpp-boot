@@ -2,13 +2,13 @@ package io.u2ware.ocpp.v1_6.messaging;
 
 import org.springframework.util.ClassUtils;
 
-import io.u2ware.ocpp.core.OCPPConsumer;
-import io.u2ware.ocpp.core.OCPPFeature;
-import io.u2ware.ocpp.core.OCPPFeatureOperations;
-import io.u2ware.ocpp.core.OCPPMessage;
-import io.u2ware.ocpp.core.OCPPVersion;
+import io.u2ware.ocpp.OCPPConsumer;
+import io.u2ware.ocpp.OCPPFeature;
+import io.u2ware.ocpp.OCPPFeatureTemplate;
+import io.u2ware.ocpp.OCPPMessage;
+import io.u2ware.ocpp.OCPPVersion;
 
-public final class ChargePoint extends OCPPFeatureOperations{
+public final class ChargePoint extends OCPPFeatureTemplate<ChargePointCommand>{
 
     private final String rootPackage = "io.u2ware.ocpp.v1_6";
 

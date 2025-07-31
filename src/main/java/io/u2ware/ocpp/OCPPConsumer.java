@@ -1,4 +1,4 @@
-package io.u2ware.ocpp.core;
+package io.u2ware.ocpp;
 
 import java.util.function.BiConsumer;
 

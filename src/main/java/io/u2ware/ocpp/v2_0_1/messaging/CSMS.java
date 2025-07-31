@@ -2,12 +2,12 @@ package io.u2ware.ocpp.v2_0_1.messaging;
 
 import org.springframework.util.ClassUtils;
 
-import io.u2ware.ocpp.core.OCPPConsumer;
-import io.u2ware.ocpp.core.OCPPFeatureOperations;
-import io.u2ware.ocpp.core.OCPPMessage;
-import io.u2ware.ocpp.core.OCPPVersion;
+import io.u2ware.ocpp.OCPPConsumer;
+import io.u2ware.ocpp.OCPPFeatureTemplate;
+import io.u2ware.ocpp.OCPPMessage;
+import io.u2ware.ocpp.OCPPVersion;
 
-public final class CSMS extends OCPPFeatureOperations{
+public final class CSMS extends OCPPFeatureTemplate<CSMSCommand>{
     
     private final String rootPackage = "io.u2ware.ocpp.v2_0_1";
 

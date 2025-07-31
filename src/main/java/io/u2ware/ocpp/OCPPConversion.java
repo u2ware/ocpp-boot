@@ -1,4 +1,4 @@
-package io.u2ware.ocpp.core;
+package io.u2ware.ocpp;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

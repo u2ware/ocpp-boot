@@ -1,4 +1,4 @@
-package io.u2ware.ocpp.core;
+package io.u2ware.ocpp;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -14,7 +14,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-public abstract class OCPPSessionHandlerTemplate<T extends OCPPFeatureOperations> extends OCPPSessionHandler<T> implements ApplicationContextAware{
+public abstract class OCPPSessionHandlerTemplate<T extends OCPPFeatureOperations<?>> extends OCPPSessionHandler<T> implements ApplicationContextAware{
     
     protected final Log logger = LogFactory.getLog(getClass());
 

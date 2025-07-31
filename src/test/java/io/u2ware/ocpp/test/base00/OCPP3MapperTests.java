@@ -5,12 +5,12 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.jupiter.api.Test;
 
-import io.u2ware.ocpp.core.Call;
-import io.u2ware.ocpp.core.CallError;
-import io.u2ware.ocpp.core.CallException;
-import io.u2ware.ocpp.core.CallResult;
-import io.u2ware.ocpp.core.OCPPConversion;
-import io.u2ware.ocpp.core.OCPPMessage;
+import io.u2ware.ocpp.Call;
+import io.u2ware.ocpp.CallError;
+import io.u2ware.ocpp.CallException;
+import io.u2ware.ocpp.CallResult;
+import io.u2ware.ocpp.OCPPConversion;
+import io.u2ware.ocpp.OCPPMessage;
 import io.u2ware.ocpp.v1_6.model.AuthorizeRequest;
 import io.u2ware.ocpp.v1_6.model.AuthorizeResponse;
 

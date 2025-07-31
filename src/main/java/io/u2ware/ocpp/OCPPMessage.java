@@ -1,4 +1,4 @@
-package io.u2ware.ocpp.core;
+package io.u2ware.ocpp;
 
 public abstract class OCPPMessage<T> {
 

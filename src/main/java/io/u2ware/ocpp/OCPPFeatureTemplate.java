@@ -1,4 +1,4 @@
-package io.u2ware.ocpp.core;
+package io.u2ware.ocpp;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,20 +10,15 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.util.ClassUtils;
 
-public abstract class OCPPFeatureOperations {
+public abstract class OCPPFeatureTemplate<T extends OCPPCommand> implements OCPPFeatureOperations<T> {
     
     protected final Log logger = LogFactory.getLog(getClass());
 
 
     protected OCPPConversion conversion = new OCPPConversion();
-    protected OCPPFeatureOperations(){}
+    protected OCPPFeatureTemplate(){}
 
     private Map<String, OCPPIdentifier> identifiers = new HashMap<>();
-
-    public abstract String name();
-    public abstract boolean isServer();
-    public abstract boolean isClient();
-    public abstract OCPPVersion version();
 
     protected abstract String requestType(String source);
     protected abstract String responseType(String source);

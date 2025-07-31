@@ -2,7 +2,7 @@ package io.u2ware.ocpp.config;
 
 import org.springframework.context.annotation.Import;
 
-import io.u2ware.ocpp.core.OCPPVersion;
+import io.u2ware.ocpp.OCPPVersion;
 
 import java.lang.annotation.*;
 

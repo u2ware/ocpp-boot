@@ -5,11 +5,11 @@ import org.apache.commons.logging.LogFactory;
 import org.junit.jupiter.api.Test;
 import org.springframework.util.StringUtils;
 
-import io.u2ware.ocpp.core.Call;
-import io.u2ware.ocpp.core.CallError;
-import io.u2ware.ocpp.core.CallResult;
-import io.u2ware.ocpp.core.CallType;
-import io.u2ware.ocpp.core.OCPPMessage;
+import io.u2ware.ocpp.Call;
+import io.u2ware.ocpp.CallError;
+import io.u2ware.ocpp.CallResult;
+import io.u2ware.ocpp.CallType;
+import io.u2ware.ocpp.OCPPMessage;
 
 public class OCPP2MessageTests {
     

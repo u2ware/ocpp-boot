@@ -1,4 +1,4 @@
-package io.u2ware.ocpp.core;
+package io.u2ware.ocpp;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,7 +9,7 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-public abstract class OCPPSessionHandler<T extends OCPPFeatureOperations> extends TextWebSocketHandler{
+public abstract class OCPPSessionHandler<T extends OCPPFeatureOperations<?>> extends TextWebSocketHandler{
 
 
     protected OCPPConversion conversion = new OCPPConversion();

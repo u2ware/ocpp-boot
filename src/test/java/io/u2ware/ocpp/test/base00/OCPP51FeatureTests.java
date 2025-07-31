@@ -8,7 +8,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.StringUtils;
 
-import io.u2ware.ocpp.core.*;
+import io.u2ware.ocpp.Call;
+import io.u2ware.ocpp.CallError;
+import io.u2ware.ocpp.CallResult;
 import io.u2ware.ocpp.v1_6.messaging.*;
 import io.u2ware.ocpp.v1_6.exception.*;
 import io.u2ware.ocpp.v1_6.handlers.Authorize;

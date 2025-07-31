@@ -2,12 +2,12 @@ package io.u2ware.ocpp.v2_0_1.messaging;
 
 import org.springframework.util.ClassUtils;
 
-import io.u2ware.ocpp.core.OCPPConsumer;
-import io.u2ware.ocpp.core.OCPPFeatureOperations;
-import io.u2ware.ocpp.core.OCPPMessage;
-import io.u2ware.ocpp.core.OCPPVersion;
+import io.u2ware.ocpp.OCPPConsumer;
+import io.u2ware.ocpp.OCPPFeatureTemplate;
+import io.u2ware.ocpp.OCPPMessage;
+import io.u2ware.ocpp.OCPPVersion;
 
-public final class ChargingStation extends OCPPFeatureOperations{
+public final class ChargingStation extends OCPPFeatureTemplate<ChargingStationCommand>{
     
     private final String rootPackage = "io.u2ware.ocpp.v2_0_1";
 

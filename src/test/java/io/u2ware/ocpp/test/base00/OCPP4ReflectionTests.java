@@ -7,7 +7,7 @@ import org.apache.commons.logging.LogFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import io.u2ware.ocpp.core.OCPPFeature;
+import io.u2ware.ocpp.OCPPFeature;
 import io.u2ware.ocpp.v1_6.exception.ErrorCodes;
 import io.u2ware.ocpp.v1_6.model.AuthorizeRequest;
 import io.u2ware.ocpp.v1_6.model.AuthorizeResponse;

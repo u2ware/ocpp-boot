@@ -3,7 +3,7 @@ package io.u2ware.ocpp.v1_6.messaging;
 import java.util.HashMap;
 import java.util.Map;
 
-import io.u2ware.ocpp.core.OCPPCommand;
+import io.u2ware.ocpp.OCPPCommand;
 
 public class ChargePointCommand implements OCPPCommand{
     
