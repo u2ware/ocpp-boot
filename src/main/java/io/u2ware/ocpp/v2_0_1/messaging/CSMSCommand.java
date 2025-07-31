@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import io.u2ware.ocpp.core.OCPPCommand;
-import io.u2ware.ocpp.core.OCPPFeature;
 
 public class CSMSCommand implements OCPPCommand{
 
