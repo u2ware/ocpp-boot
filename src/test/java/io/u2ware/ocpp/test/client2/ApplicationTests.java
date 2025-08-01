@@ -9,7 +9,6 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.context.ApplicationContext;
 
 import io.u2ware.ocpp.client.MockWebSocketHandlerInvoker;
-import io.u2ware.ocpp.v1_6.messaging.CentralSystem;
 import io.u2ware.ocpp.v1_6.messaging.CentralSystemCommand;
 import io.u2ware.ocpp.v1_6.messaging.CentralSystemCommandTemplate;
 import io.u2ware.ocpp.v1_6.messaging.ChargePoint;
@@ -34,18 +33,11 @@ class ApplicationTests {
 		client.registerDefaultFeatures();
 
 		/////////////////////////////////////
-		// Create Mock Server
-		/////////////////////////////////////
-		CentralSystem server = new CentralSystem();
-		CentralSystemCommandTemplate serverTemplate = new CentralSystemCommandTemplate(server);
-		
-        server.registerDefaultFeatures();
-
-
-		/////////////////////////////////////
 		// OCPP Client Test without I/O
 		/////////////////////////////////////
-		MockWebSocketHandlerInvoker.of(ac).connect(clientTemplate, serverTemplate);
+		CentralSystemCommandTemplate mockServerTemplate1 = new CentralSystemCommandTemplate();
+		
+		MockWebSocketHandlerInvoker.of(ac).connect(clientTemplate, mockServerTemplate1);
 		Thread.sleep(1000);
 
 	
@@ -64,7 +56,7 @@ class ApplicationTests {
 		Thread.sleep(1000);
 
 		logger.info("2 ===================");		
-		serverTemplate.send(CentralSystemCommand.ALL.DataTransfer.build());
+		mockServerTemplate1.send(CentralSystemCommand.ALL.DataTransfer.build());
 		Thread.sleep(1000);		
 	}
 }

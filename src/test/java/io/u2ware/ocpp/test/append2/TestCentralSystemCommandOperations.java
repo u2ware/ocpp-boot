@@ -8,6 +8,10 @@ import io.u2ware.ocpp.v1_6.messaging.CentralSystemCommandOperations;
 
 public class TestCentralSystemCommandOperations extends AbstractWebsocketStompTemplate<CentralSystem> implements CentralSystemCommandOperations{
 
+    public TestCentralSystemCommandOperations(String destination){
+        super(new CentralSystem().registerDefaultFeatures(), destination);
+    }
+
     public TestCentralSystemCommandOperations(CentralSystem operations, String destination){
         super(operations, destination);
     }

@@ -9,8 +9,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.context.ApplicationContext;
 
+import io.u2ware.ocpp.client.MockWebSocketHandlerInvoker;
 import io.u2ware.ocpp.client.WebsocketStandardClient;
-import io.u2ware.ocpp.v1_6.messaging.ChargePoint;
 import io.u2ware.ocpp.v1_6.messaging.ChargePointCommand;
 import io.u2ware.ocpp.v1_6.messaging.ChargePointCommandTemplate;
 import io.u2ware.ocpp.v1_6.messaging.CentralSystem;
@@ -37,26 +37,20 @@ class ApplicationTests {
 		server.registerDefaultFeatures();
 
 		/////////////////////////////////////
-		// Create Mock Client
+		// OCPP Server Test without I/O
 		/////////////////////////////////////
-		ChargePoint client = new ChargePoint();
-		ChargePointCommandTemplate clientTemplate = new ChargePointCommandTemplate(client);
-		
-		client.registerDefaultFeatures();
+		ChargePointCommandTemplate mockClientTemplate1 = new ChargePointCommandTemplate();
 
-
-		/////////////////////////////////////
-		// OCPP Server Test  without I/O
-		/////////////////////////////////////
-		// WebSocketHandlerInvoker.of(ac).connect(serverTemplate, clientTemplate);
-		// Thread.sleep(1000);	
-
+		MockWebSocketHandlerInvoker.of(ac).connect(serverTemplate, mockClientTemplate1);
+		Thread.sleep(1000);	
 		
 		/////////////////////////////////////
 		// OCPP Server Test with I/O
 		/////////////////////////////////////
+		ChargePointCommandTemplate mockClientTemplate2 = new ChargePointCommandTemplate();
+
 		WebsocketStandardClient.withSockJS()
-			.connect(String.format("ws://localhost:%d/ocpp", port), clientTemplate)
+			.connect(String.format("ws://localhost:%d/ocpp", port), mockClientTemplate2)
 			.whenComplete((c1, u1)->{});
 		Thread.sleep(1000);	
 
@@ -68,8 +62,12 @@ class ApplicationTests {
 		Thread.sleep(1000);
 
 		logger.info("2 ===================");		
-		clientTemplate.send(ChargePointCommand.ALL.DataTransfer.build());
+		mockClientTemplate1.send(ChargePointCommand.ALL.DataTransfer.build());
 		Thread.sleep(1000);
 	
+
+		logger.info("3 ===================");		
+		mockClientTemplate2.send(ChargePointCommand.ALL.DataTransfer.build());
+		Thread.sleep(1000);		
 	}
 }

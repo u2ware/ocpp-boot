@@ -7,7 +7,7 @@ import io.u2ware.ocpp.OCPPVersion;
 import io.u2ware.ocpp.config.EnableOcppServer;
 
 @SpringBootApplication
-@EnableOcppServer(version = OCPPVersion.V1_6)
+@EnableOcppServer(version = OCPPVersion.V1_6, uri = "/helloOcpp")
 public class Application {
 
 	public static void main(String[] args) {

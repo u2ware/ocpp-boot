@@ -20,7 +20,7 @@ class WebSocketStandardServerConfiguration implements WebSocketConfigurer {
 
 	protected Log logger = LogFactory.getLog(getClass());
 
-	public static final String ENDPOINT = "/ocpp";  //"Invalid SockJS path '/websocket/info' - required to have 3 path segments"
+	// public static final String ENDPOINT = "/ocpp";  //"Invalid SockJS path '/websocket/info' - required to have 3 path segments"
 
     protected @Autowired OcppAttributes ocppAttributes;
     protected @Autowired OCPPSessionHandler<?> websocketHandler;
@@ -29,7 +29,7 @@ class WebSocketStandardServerConfiguration implements WebSocketConfigurer {
 	@Override
 	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
 		
-		registry.addHandler(websocketHandler, ENDPOINT)
+		registry.addHandler(websocketHandler, ocppAttributes.getUri())
 			// .setAllowedOrigins("*")
 			.setAllowedOriginPatterns("*")
 			.addInterceptors(new HandshakeInterceptor(){

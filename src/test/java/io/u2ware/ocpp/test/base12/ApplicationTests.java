@@ -29,18 +29,11 @@ class ApplicationTests {
 	void contextLoads() throws Exception {
 
 
-		CentralSystem cs = new CentralSystem();
-        cs.registerDefaultFeatures();
-
-
-		ChargePoint cp = new ChargePoint();
-        cp.registerDefaultFeatures();
-
-		///////////////////////////////////////
-		// WebSocketHandlerInvoker without I/O
-		///////////////////////////////////////
-		CentralSystemCommandTemplate serverOperations = new CentralSystemCommandTemplate(cs);
-		ChargePointCommandTemplate clientOperations = new ChargePointCommandTemplate(cp);
+		/////////////////////////////////////////////////////
+		// Test without I/O by MockWebSocketHandlerInvoker
+		/////////////////////////////////////////////////////
+		CentralSystemCommandTemplate serverOperations = new CentralSystemCommandTemplate();
+		ChargePointCommandTemplate clientOperations = new ChargePointCommandTemplate();
 
 		MockWebSocketHandlerInvoker.of(ac).connect(serverOperations, clientOperations);
 		Thread.sleep(1000);

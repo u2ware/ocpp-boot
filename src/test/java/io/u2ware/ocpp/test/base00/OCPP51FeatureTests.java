@@ -11,6 +11,7 @@ import org.springframework.util.StringUtils;
 import io.u2ware.ocpp.Call;
 import io.u2ware.ocpp.CallError;
 import io.u2ware.ocpp.CallResult;
+import io.u2ware.ocpp.test.append0.SimpleMessageCallback;
 import io.u2ware.ocpp.v1_6.messaging.*;
 import io.u2ware.ocpp.v1_6.exception.*;
 import io.u2ware.ocpp.v1_6.handlers.Authorize;

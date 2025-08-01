@@ -8,6 +8,10 @@ import io.u2ware.ocpp.v1_6.messaging.ChargePointCommandOperations;
 
 public class TestChargePointCommandOperations extends AbstractWebsocketStompTemplate<ChargePoint> implements ChargePointCommandOperations{
 
+
+    public TestChargePointCommandOperations(String destination){
+        super(new ChargePoint().registerDefaultFeatures(), destination);
+    }    
     public TestChargePointCommandOperations(ChargePoint operations, String destination){
         super(operations, destination);
     }

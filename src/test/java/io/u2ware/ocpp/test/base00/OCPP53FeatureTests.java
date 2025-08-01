@@ -5,6 +5,7 @@ import org.apache.commons.logging.LogFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import io.u2ware.ocpp.test.append0.SimpleMessageCallback;
 import io.u2ware.ocpp.v1_6.messaging.*;
 
 public class OCPP53FeatureTests {

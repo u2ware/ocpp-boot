@@ -33,7 +33,7 @@ class ApplicationTests {
 
 
 		///////////////////////////////////////
-		// AbstractEventBusTemplate without I/O
+		// Test without I/O by AbstractEventBusTemplate
 		///////////////////////////////////////
 		TestCentralSystemCommandOperations serverOperations = new TestCentralSystemCommandOperations(cs, ac);
 		TestChargePointCommandOperations clientOperations = new TestChargePointCommandOperations(cp, ac);

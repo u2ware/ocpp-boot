@@ -1,4 +1,4 @@
-package io.u2ware.ocpp.test.base00;
+package io.u2ware.ocpp.test.append0;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

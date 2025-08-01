@@ -8,6 +8,10 @@ import io.u2ware.ocpp.v1_6.messaging.CentralSystemCommandOperations;
 
 public class TestCentralSystemCommandOperations extends AbstractEventBusTemplate<CentralSystem> implements CentralSystemCommandOperations{
 
+    public TestCentralSystemCommandOperations(ApplicationContext ac){
+        super(new CentralSystem().registerDefaultFeatures(), ac);
+    }
+
     public TestCentralSystemCommandOperations(CentralSystem operations, ApplicationContext ac){
         super(operations, ac);
     }
