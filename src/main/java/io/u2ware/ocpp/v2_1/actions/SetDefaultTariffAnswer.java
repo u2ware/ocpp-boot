@@ -1,8 +1,8 @@
 package io.u2ware.ocpp.v2_1.actions;
 
-import io.u2ware.ocpp.v2_1.exception.ErrorCode;
 import io.u2ware.ocpp.v2_1.model.SetDefaultTariffRequest;
 import io.u2ware.ocpp.v2_1.model.SetDefaultTariffResponse;
+import io.u2ware.ocpp.v2_1.exception.ErrorCode;
 
 public interface SetDefaultTariffAnswer { 
 

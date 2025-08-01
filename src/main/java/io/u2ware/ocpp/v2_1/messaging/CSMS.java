@@ -10,7 +10,7 @@ import io.u2ware.ocpp.OCPPVersion;
 
 public final class CSMS extends OCPPFeatureTemplate<CSMSCommand>{
     
-    private final String rootPackage = "io.u2ware.ocpp.v2_0_1";
+    private final String rootPackage = "io.u2ware.ocpp.v2_1";
 
     @Override
     protected String requestType(String source) {

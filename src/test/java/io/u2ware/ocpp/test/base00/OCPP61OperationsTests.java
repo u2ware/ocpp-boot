@@ -90,12 +90,20 @@ public class OCPP61OperationsTests {
         testV16(CentralSystemCommand.ALL.DataTransfer.build(), cs, cp);
 
         logger.info("-------------------");
+        int initiatedByClient = 0;
         for(ChargePointCommand.Builder e :  ChargePointCommand.ALL.values()){
             testV16(e.build(), cp, cs);
+            initiatedByClient++;
         }
         logger.info("-------------------");
+        int initiatedByServer = 0;
         for(CentralSystemCommand.Builder e :  CentralSystemCommand.ALL.values()){
             testV16(e.build(), cs, cp);
-        }    
+            initiatedByServer++;
+        }
+        System.err.println("initiatedByClient: "+initiatedByClient);
+        System.err.println("initiatedByServer: "+initiatedByServer); // add DataTransfer
+        
+        
     }
 }

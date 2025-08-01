@@ -35,7 +35,7 @@ import lombok.experimental.SuperBuilder;
     "customData"
 })
 @Generated("jsonschema2pojo")
-public class NotifyPeriodicEventStream {
+public class NotifyPeriodicEventStreamRequest {
 
     /**
      * 

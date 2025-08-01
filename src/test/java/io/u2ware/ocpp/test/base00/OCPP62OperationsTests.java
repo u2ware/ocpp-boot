@@ -13,7 +13,7 @@ public class OCPP62OperationsTests {
     
     protected final Log logger = LogFactory.getLog(getClass());
 
-    private void testV201(
+    private void testV20(
         ChargingStationCommand feature,
         ChargingStation offer, 
         CSMS answer){ 
@@ -33,7 +33,7 @@ public class OCPP62OperationsTests {
         Assertions.assertNull(x.err());
     }
 
-    private void testV201(
+    private void testV20(
         CSMSCommand feature,
         CSMS offer, 
         ChargingStation answer){ 
@@ -85,16 +85,22 @@ public class OCPP62OperationsTests {
         logger.info(cs.resolveFeature(b.getAction()));
 
         logger.info("-------------------");
-        testV201(ChargingStationCommand.ALL.DataTransfer.build(), cp, cs);
-        testV201(CSMSCommand.ALL.DataTransfer.build(), cs, cp);
+        testV20(ChargingStationCommand.ALL.DataTransfer.build(), cp, cs);
+        testV20(CSMSCommand.ALL.DataTransfer.build(), cs, cp);
 
         logger.info("-------------------");
+        int initiatedByClient = 0;
         for(ChargingStationCommand.Builder e :  ChargingStationCommand.ALL.values()){
-            testV201(e.build(), cp, cs);
+            testV20(e.build(), cp, cs);
+            initiatedByClient++;
         }
         logger.info("-------------------");
+        int initiatedByServer = 0;
         for(CSMSCommand.Builder e :  CSMSCommand.ALL.values()){
-            testV201(e.build(), cs, cp);
+            testV20(e.build(), cs, cp);
+            initiatedByServer++;
         }    
+        System.err.println("initiatedByClient: "+initiatedByClient);
+        System.err.println("initiatedByServer: "+initiatedByServer); // add DataTransfer
     }
 }

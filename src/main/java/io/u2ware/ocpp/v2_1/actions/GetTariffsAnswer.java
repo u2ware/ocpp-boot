@@ -1,8 +1,8 @@
 package io.u2ware.ocpp.v2_1.actions;
 
-import io.u2ware.ocpp.v2_1.exception.ErrorCode;
 import io.u2ware.ocpp.v2_1.model.GetTariffsRequest;
 import io.u2ware.ocpp.v2_1.model.GetTariffsResponse;
+import io.u2ware.ocpp.v2_1.exception.ErrorCode;
 
 public interface GetTariffsAnswer { 
 

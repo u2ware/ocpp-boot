@@ -1,8 +1,8 @@
 package io.u2ware.ocpp.v2_1.actions;
 
-import io.u2ware.ocpp.v2_1.exception.ErrorCode;
 import io.u2ware.ocpp.v2_1.model.Get15118EVCertificateRequest;
 import io.u2ware.ocpp.v2_1.model.Get15118EVCertificateResponse;
+import io.u2ware.ocpp.v2_1.exception.ErrorCode;
 
 public interface Get15118EVCertificateAnswer { 
 

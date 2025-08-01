@@ -2,9 +2,9 @@ package io.u2ware.ocpp.v2_1.actions;
 
 import java.util.Map;
 
-import io.u2ware.ocpp.v2_1.exception.ErrorCode;
 import io.u2ware.ocpp.v2_1.model.OpenPeriodicEventStreamRequest;
 import io.u2ware.ocpp.v2_1.model.OpenPeriodicEventStreamResponse;
+import io.u2ware.ocpp.v2_1.exception.ErrorCode;
 
 public interface OpenPeriodicEventStreamOffer { 
 

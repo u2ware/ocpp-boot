@@ -1,0 +1,54 @@
+package io.u2ware.ocpp.v2_1.handlers;
+
+import java.util.Map;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+
+import io.u2ware.ocpp.v2_1.actions.ReserveNowOffer;
+import io.u2ware.ocpp.v2_1.actions.ReserveNowAnswer;
+import io.u2ware.ocpp.v2_1.model.ReserveNowRequest;
+import io.u2ware.ocpp.v2_1.model.ReserveNowResponse;
+import io.u2ware.ocpp.v2_1.exception.ErrorCode;
+
+public interface ReserveNow {
+
+    public interface CSMSHandler extends ReserveNowOffer, io.u2ware.ocpp.v2_1.messaging.CSMSHandler {
+
+        default String[] features() { return new String[]{"ReserveNow"};}
+
+        public static CSMSHandler DEFAULT = new CSMSHandler(){
+
+            protected Log logger = LogFactory.getLog(getClass());
+
+            public ReserveNowRequest sendReserveNowRequest(String id, Map<String,Object> req){
+                logger.info(String.format("\n\n\tsendReserveNowRequest(%s)\n", id));
+                return ReserveNowRequest.builder().build();
+            }
+
+            public void receivedReserveNowResponse(String id, ReserveNowResponse res, ErrorCode err){
+                logger.info(String.format("\n\n\treceivedReserveNowResponse(%s)\n", id), err);
+            }
+        };
+    }
+
+    public interface ChargingStationHandler extends ReserveNowAnswer, io.u2ware.ocpp.v2_1.messaging.ChargingStationHandler {    
+
+        default String[] features() { return new String[]{"ReserveNow"};}
+
+        public static ChargingStationHandler DEFAULT = new ChargingStationHandler(){
+
+            protected Log logger = LogFactory.getLog(getClass());
+
+            public ReserveNowResponse receivedReserveNowRequest(String id, ReserveNowRequest req){
+                logger.info(String.format("\n\n\treceivedReserveNowRequest(%s)\n", id));
+                return ReserveNowResponse.builder().build();
+            }
+
+            public void sendReserveNowResponse(String id, ReserveNowResponse res, ErrorCode err){
+                logger.info(String.format("\n\n\tsendReserveNowResponse(%s)\n", id), err);
+            }
+        };
+    }
+}
