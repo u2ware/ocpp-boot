@@ -63,8 +63,26 @@ class OcppClientConfiguration implements ImportBeanDefinitionRegistrar{
 
             }
             case V2_1: {
+
+                registry.registerBeanDefinition("ocppOperations", BeanDefinitionBuilder
+                    .genericBeanDefinition(io.u2ware.ocpp.v2_1.messaging.ChargingStation.class)
+                    .getBeanDefinition());
                 
-            };
+                
+                registry.registerBeanDefinition("ocppTemplate", BeanDefinitionBuilder
+                    .genericBeanDefinition(io.u2ware.ocpp.v2_1.messaging.ChargingStationCommandTemplate.class)
+                    .addConstructorArgReference("ocppOperations")
+                    .addConstructorArgReference("brokerMessagingTemplate")
+                    .getBeanDefinition());
+
+
+                registry.registerBeanDefinition("ocppInitializer", BeanDefinitionBuilder
+                    .genericBeanDefinition(io.u2ware.ocpp.v2_1.messaging.ChargingStationInitializer.class)
+                    .addConstructorArgReference("ocppOperations")
+                    .getBeanDefinition());
+                    
+                return;
+            }
             default: {
                 
 

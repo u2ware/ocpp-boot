@@ -64,7 +64,26 @@ class OcppServerConfiguration implements ImportBeanDefinitionRegistrar{
             }
             case V2_1: {
                 
-            };
+                registry.registerBeanDefinition("ocppOperations", BeanDefinitionBuilder
+                    .genericBeanDefinition(io.u2ware.ocpp.v2_1.messaging.CSMS.class)
+                    .getBeanDefinition());
+                
+                
+                registry.registerBeanDefinition("ocppTemplate", BeanDefinitionBuilder
+                    .genericBeanDefinition(io.u2ware.ocpp.v2_1.messaging.CSMSCommandTemplate.class)
+                    .addConstructorArgReference("ocppOperations")
+                    .addConstructorArgReference("brokerMessagingTemplate")
+                    .getBeanDefinition());
+
+
+                registry.registerBeanDefinition("ocppInitializer", BeanDefinitionBuilder
+                    .genericBeanDefinition(io.u2ware.ocpp.v2_1.messaging.CSMSInitializer.class)
+                    .addConstructorArgReference("ocppOperations")
+                    .getBeanDefinition());
+
+                return;
+
+            }
             default: {
                 
 
