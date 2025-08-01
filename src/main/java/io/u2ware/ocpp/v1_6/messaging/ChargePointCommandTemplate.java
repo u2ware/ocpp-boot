@@ -8,6 +8,11 @@ import io.u2ware.ocpp.OCPPSessionHandlerTemplate;
 
 public class ChargePointCommandTemplate extends OCPPSessionHandlerTemplate<ChargePoint> implements ChargePointCommandOperations {
 
+
+    public ChargePointCommandTemplate() {
+        super(new ChargePoint().registerDefaultFeatures(), null);
+    }
+
     public ChargePointCommandTemplate(ChargePoint operations) {
         super(operations, null);
     }

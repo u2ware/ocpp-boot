@@ -50,17 +50,33 @@ public class ChargingStationCommand extends OCPPCommand{
 
 
     public enum ALL implements Builder {
-        
+        Authorize,
+        BootNotification,
+        ClearedChargingLimit,
+        DataTransfer,
+        FirmwareStatusNotification,
+        Get15118EVCertificate,
+        GetCertificateStatus,
+        Heartbeat,
+        LogStatusNotification,
+        MeterValues,
+        NotifyChargingLimit,
+        NotifyCustomerInformation,
+        NotifyDisplayMessages,
+        NotifyEVChargingNeeds,
+        NotifyEVChargingSchedule,
+        NotifyEvent,
+        NotifyMonitoringReport,
+        NotifyReport,
+        PublishFirmwareStatusNotification,
+        ReportChargingProfiles,
+        ReservationStatusUpdate,
+        SecurityEventNotification,
+        SignCertificate,
+        StatusNotification,
+        TransactionEvent,
         ;
-
-        @Override
-        public String usecase() {
-            return "";
-        }
-
-        @Override
-        public String action() {
-            return name();            
-        }
+        public String usecase() {return "";}
+        public String action() {return name();}
     }
 }

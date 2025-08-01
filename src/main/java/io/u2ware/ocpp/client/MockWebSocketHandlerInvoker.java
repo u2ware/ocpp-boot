@@ -1,4 +1,4 @@
-package io.u2ware.ocpp.config;
+package io.u2ware.ocpp.client;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -23,18 +23,18 @@ import org.springframework.web.socket.messaging.SubProtocolWebSocketHandler;
 import org.springframework.web.util.UriComponentsBuilder;
 
 
-public class WebSocketHandlerInvoker {
+public class MockWebSocketHandlerInvoker {
     
 
-    public static WebSocketHandlerInvoker of(ApplicationContext ac) {
-        return new WebSocketHandlerInvoker(ac);
+    public static MockWebSocketHandlerInvoker of(ApplicationContext ac) {
+        return new MockWebSocketHandlerInvoker(ac);
     }
     
     private Map<WebSocketHandler, WebSocketHandler> delegate = new HashMap<>();
     private Map<WebSocketSession, WebSocketHandler> session = new HashMap<>();
     private MockWebSocketSessionWorker consumer = new MockWebSocketSessionWorker(session);
 
-    private WebSocketHandlerInvoker(ApplicationContext ac){
+    private MockWebSocketHandlerInvoker(ApplicationContext ac){
         Map<String, WebSocketHandler> handlers = ac.getBeansOfType(WebSocketHandler.class);
         for(WebSocketHandler h : handlers.values()) {
             registerDecorator(h);

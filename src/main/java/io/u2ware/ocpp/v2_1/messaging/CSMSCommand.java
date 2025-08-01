@@ -51,48 +51,61 @@ public class CSMSCommand extends OCPPCommand{
 
 
     public enum ALL implements Builder {
-        
+        CancelReservation,
+        CertificateSigned,
+        ChangeAvailability,
+        ClearCache,
+        ClearChargingProfile,
+        ClearDisplayMessage,
+        ClearVariableMonitoring,
+        CostUpdated,
+        CustomerInformation,
+        DataTransfer,
+        DeleteCertificate,
+        GetBaseReport,
+        GetChargingProfiles,
+        GetCompositeSchedule,
+        GetDisplayMessages,
+        GetInstalledCertificateIds,
+        GetLocalListVersion,
+        GetLog,
+        GetMonitoringReport,
+        GetReport,
+        GetTransactionStatus,
+        GetVariables,
+        InstallCertificate,
+        PublishFirmware,
+        RequestStartTransaction,
+        RequestStopTransaction,
+        ReserveNow,
+        Reset,
+        SendLocalList,
+        SetChargingProfile,
+        SetDisplayMessage,
+        SetMonitoringBase,
+        SetMonitoringLevel,
+        SetNetworkProfile,
+        SetVariableMonitoring,
+        SetVariables,
+        TriggerMessage,
+        UnlockConnector,
+        UnpublishFirmware,
+        UpdateFirmware,
         ;
-
-        @Override
-        public String usecase() {
-            return "";
-        }
-
-        @Override
-        public String action() {
-            return name();            
-        }
+        public String usecase() {return "";}
+        public String action() {return name();}
     }
 
-    public enum Security implements Builder {
+    // public enum Security implements Builder {
+    //     ;
+    //     public String usecase() {return "";}
+    //     public String action() {return name();}
+    // }
 
+    // public enum A1 implements Builder {
 
-        ;
-
-        @Override
-        public String usecase() {
-            return "";
-        }
-
-        @Override
-        public String action() {
-            return name();            
-        }
-    }
-
-    public enum A1 implements Builder {
-
-        ;
-
-        @Override
-        public String usecase() {
-            return "";
-        }
-
-        @Override
-        public String action() {
-            return name();            
-        }
-    }
+    //     ;
+    //     public String usecase() {return "";}
+    //     public String action() {return name();}
+    // }
 }

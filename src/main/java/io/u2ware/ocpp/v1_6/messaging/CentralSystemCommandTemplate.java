@@ -8,6 +8,10 @@ import io.u2ware.ocpp.OCPPSessionHandlerTemplate;
 
 public class CentralSystemCommandTemplate extends OCPPSessionHandlerTemplate<CentralSystem> implements CentralSystemCommandOperations {
 
+    public CentralSystemCommandTemplate() {
+        super(new CentralSystem().registerDefaultFeatures(), null);
+    }
+
     public CentralSystemCommandTemplate(CentralSystem operations) {
         super(operations, null);
     }

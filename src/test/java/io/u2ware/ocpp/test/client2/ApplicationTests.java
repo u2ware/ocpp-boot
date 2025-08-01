@@ -8,7 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.context.ApplicationContext;
 
-import io.u2ware.ocpp.config.WebSocketHandlerInvoker;
+import io.u2ware.ocpp.client.MockWebSocketHandlerInvoker;
 import io.u2ware.ocpp.v1_6.messaging.CentralSystem;
 import io.u2ware.ocpp.v1_6.messaging.CentralSystemCommand;
 import io.u2ware.ocpp.v1_6.messaging.CentralSystemCommandTemplate;
@@ -45,7 +45,7 @@ class ApplicationTests {
 		/////////////////////////////////////
 		// OCPP Client Test without I/O
 		/////////////////////////////////////
-		WebSocketHandlerInvoker.of(ac).connect(clientTemplate, serverTemplate);
+		MockWebSocketHandlerInvoker.of(ac).connect(clientTemplate, serverTemplate);
 		Thread.sleep(1000);
 
 	

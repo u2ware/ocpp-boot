@@ -61,7 +61,7 @@ public final class CentralSystem extends OCPPFeatureTemplate<CentralSystemComman
         super.registerFeature(handler);
     }
 
-    public void registerDefaultFeatures() {
+    public CentralSystem registerDefaultFeatures() {
         for(ChargePointCommand.Builder e :  ChargePointCommand.ALL.values()){
             Class<?> c = handlerClass(e.action());
             CentralSystemHandler h = (CentralSystemHandler)OCPPFeature.invokeField(c, "DEFAULT");
@@ -72,5 +72,6 @@ public final class CentralSystem extends OCPPFeatureTemplate<CentralSystemComman
             CentralSystemHandler h = (CentralSystemHandler)OCPPFeature.invokeField(c, "DEFAULT");
             super.registerFeature(h);
         }
+        return this;
     }
 }

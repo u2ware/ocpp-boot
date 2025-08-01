@@ -8,6 +8,10 @@ import io.u2ware.ocpp.OCPPSessionHandlerTemplate;
 
 public class CSMSCommandTemplate extends OCPPSessionHandlerTemplate<CSMS> implements CSMSCommandOperations {
 
+    public CSMSCommandTemplate() {
+        super(new CSMS().registerDefaultFeatures(), null);
+    }    
+
     public CSMSCommandTemplate(CSMS operations) {
         super(operations, null);
     }

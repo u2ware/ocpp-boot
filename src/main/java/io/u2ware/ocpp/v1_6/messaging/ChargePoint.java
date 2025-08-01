@@ -60,7 +60,7 @@ public final class ChargePoint extends OCPPFeatureTemplate<ChargePointCommand>{
         super.registerFeature(handler);
     }
 
-    public void registerDefaultFeatures() {
+    public ChargePoint registerDefaultFeatures() {
         for(ChargePointCommand.Builder e :  ChargePointCommand.ALL.values()){
             Class<?> c = handlerClass(e.action());
             ChargePointHandler h = (ChargePointHandler)OCPPFeature.invokeField(c, "DEFAULT");
@@ -71,6 +71,7 @@ public final class ChargePoint extends OCPPFeatureTemplate<ChargePointCommand>{
             ChargePointHandler h = (ChargePointHandler)OCPPFeature.invokeField(c, "DEFAULT");
             super.registerFeature(h);
         }
+        return this;
     }
 
 }

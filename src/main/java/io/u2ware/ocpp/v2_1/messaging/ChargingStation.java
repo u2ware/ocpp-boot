@@ -10,7 +10,7 @@ import io.u2ware.ocpp.OCPPVersion;
 
 public final class ChargingStation extends OCPPFeatureTemplate<ChargingStationCommand>{
     
-    private final String rootPackage = "io.u2ware.ocpp.v2_1";
+    private final String rootPackage = "io.u2ware.ocpp.v2_0_1";
 
     @Override
     protected String requestType(String source) {
@@ -60,7 +60,7 @@ public final class ChargingStation extends OCPPFeatureTemplate<ChargingStationCo
         super.registerFeature(handler);
     }    
 
-    public void registerDefaultFeatures() {
+    public ChargingStation registerDefaultFeatures() {
         for(ChargingStationCommand.Builder e :  ChargingStationCommand.ALL.values()){
             Class<?> c = handlerClass(e.action());
             ChargingStationHandler h = (ChargingStationHandler)OCPPFeature.invokeField(c, "DEFAULT");
@@ -71,6 +71,7 @@ public final class ChargingStation extends OCPPFeatureTemplate<ChargingStationCo
             ChargingStationHandler h = (ChargingStationHandler)OCPPFeature.invokeField(c, "DEFAULT");
             super.registerFeature(h);
         }
+        return this;
     }
 
 }

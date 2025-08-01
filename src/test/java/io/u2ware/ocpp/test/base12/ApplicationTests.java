@@ -8,7 +8,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
 
-import io.u2ware.ocpp.config.WebSocketHandlerInvoker;
+import io.u2ware.ocpp.client.MockWebSocketHandlerInvoker;
 import io.u2ware.ocpp.v1_6.messaging.CentralSystem;
 import io.u2ware.ocpp.v1_6.messaging.CentralSystemCommand;
 import io.u2ware.ocpp.v1_6.messaging.CentralSystemCommandTemplate;
@@ -42,7 +42,7 @@ class ApplicationTests {
 		CentralSystemCommandTemplate serverOperations = new CentralSystemCommandTemplate(cs);
 		ChargePointCommandTemplate clientOperations = new ChargePointCommandTemplate(cp);
 
-		WebSocketHandlerInvoker.of(ac).connect(serverOperations, clientOperations);
+		MockWebSocketHandlerInvoker.of(ac).connect(serverOperations, clientOperations);
 		Thread.sleep(1000);
 
 		////////////////////////////

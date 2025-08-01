@@ -10,7 +10,7 @@ import io.u2ware.ocpp.OCPPVersion;
 
 public final class CSMS extends OCPPFeatureTemplate<CSMSCommand>{
     
-    private final String rootPackage = "io.u2ware.ocpp.v2_1";
+    private final String rootPackage = "io.u2ware.ocpp.v2_0_1";
 
     @Override
     protected String requestType(String source) {
@@ -60,7 +60,7 @@ public final class CSMS extends OCPPFeatureTemplate<CSMSCommand>{
         super.registerFeature(handler);
     }  
 
-    public void registerDefaultFeatures() {
+    public CSMS registerDefaultFeatures() {
         for(ChargingStationCommand.Builder e :  ChargingStationCommand.ALL.values()){
             Class<?> c = handlerClass(e.action());
             CSMSHandler h = (CSMSHandler)OCPPFeature.invokeField(c, "DEFAULT");
@@ -71,6 +71,7 @@ public final class CSMS extends OCPPFeatureTemplate<CSMSCommand>{
             CSMSHandler h = (CSMSHandler)OCPPFeature.invokeField(c, "DEFAULT");
             super.registerFeature(h);
         }
+        return this;
     }
 
 }

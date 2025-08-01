@@ -8,6 +8,9 @@ import io.u2ware.ocpp.OCPPSessionHandlerTemplate;
 
 public class ChargingStationCommandTemplate extends OCPPSessionHandlerTemplate<ChargingStation> implements ChargingStationCommandOperations {
 
+    public ChargingStationCommandTemplate() {
+        super(new ChargingStation().registerDefaultFeatures(), null);
+    }    
     public ChargingStationCommandTemplate(ChargingStation operations) {
         super(operations, null);
     }

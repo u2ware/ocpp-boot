@@ -60,7 +60,7 @@ public final class ChargingStation extends OCPPFeatureTemplate<ChargingStationCo
         super.registerFeature(handler);
     }    
 
-    public void registerDefaultFeatures() {
+    public ChargingStation registerDefaultFeatures() {
         for(ChargingStationCommand.Builder e :  ChargingStationCommand.ALL.values()){
             Class<?> c = handlerClass(e.action());
             ChargingStationHandler h = (ChargingStationHandler)OCPPFeature.invokeField(c, "DEFAULT");
@@ -71,6 +71,7 @@ public final class ChargingStation extends OCPPFeatureTemplate<ChargingStationCo
             ChargingStationHandler h = (ChargingStationHandler)OCPPFeature.invokeField(c, "DEFAULT");
             super.registerFeature(h);
         }
+        return this;
     }
 
 }
