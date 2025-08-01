@@ -9,6 +9,4 @@ public interface OCPPFeatureOperations<T extends OCPPCommand> {
     public boolean isServer();
     public boolean isClient();
     public OCPPVersion version();
-
-
 }

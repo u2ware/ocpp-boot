@@ -5,51 +5,10 @@ import java.util.Map;
 
 import io.u2ware.ocpp.OCPPCommand;
 
-public class CentralSystemCommand implements OCPPCommand{
+public class CentralSystemCommand extends OCPPCommand{
 
-    private CentralSystemCommand(){ }
+    private CentralSystemCommand(){};
 
-    private Map<String,Object> attributes;
-    private String usecase;
-    private String action;
-    private String identifier;
-
-    public Map<String, Object> getAttributes() {
-        return attributes;
-    }
-    public void setAttributes(Map<String, Object> attributes) {
-        this.attributes = attributes;
-    }
-    public String getUsecase() {
-        return usecase;
-    }
-    public void setUsecase(String usecase) {
-        this.usecase = usecase;
-    }
-    public String getAction() {
-        return action;
-    }
-    public void setAction(String action) {
-        this.action = action;
-    }
-    public String getIdentifier() {
-        return identifier;
-    }
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
-    }
-
-
-    private static CentralSystemCommand createFeature(String usecase, String action, String identifier, Map<String,Object> attributes){
-        CentralSystemCommand u = new CentralSystemCommand();
-        u.setIdentifier(identifier+usecase);
-        u.setUsecase(usecase);
-        u.setAction(action);
-        u.setAttributes(attributes);
-        return u;
-    }
-
-    
     public interface Builder {
         public String usecase(); 
         public String action();
@@ -63,7 +22,7 @@ public class CentralSystemCommand implements OCPPCommand{
         }
     
         default CentralSystemCommand build(String identifier, Map<String,Object> attributes) {
-            return createFeature(usecase(), action(), identifier, attributes);
+            return create(usecase(), action(), identifier, attributes);
         }
 
         default CentralSystemCommand buildWith(String usecase) {
@@ -75,7 +34,16 @@ public class CentralSystemCommand implements OCPPCommand{
         }
     
         default CentralSystemCommand buildWith(String usecase, String identifier, Map<String,Object> attributes) {
-            return createFeature(usecase, action(), identifier, attributes);
+            return create(usecase, action(), identifier, attributes);
+        }
+
+        private static CentralSystemCommand create(String usecase, String action, String identifier, Map<String,Object> attributes){
+            CentralSystemCommand u = new CentralSystemCommand();
+            u.setIdentifier(identifier+usecase);
+            u.setUsecase(usecase);
+            u.setAction(action);
+            u.setAttributes(attributes);
+            return u;
         }
     }
 

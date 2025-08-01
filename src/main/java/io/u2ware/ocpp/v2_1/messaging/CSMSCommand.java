@@ -1,4 +1,4 @@
-package io.u2ware.ocpp.v2_0_1.messaging;
+package io.u2ware.ocpp.v2_1.messaging;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -51,61 +51,48 @@ public class CSMSCommand extends OCPPCommand{
 
 
     public enum ALL implements Builder {
-        CancelReservation,
-        CertificateSigned,
-        ChangeAvailability,
-        ClearCache,
-        ClearChargingProfile,
-        ClearDisplayMessage,
-        ClearVariableMonitoring,
-        CostUpdated,
-        CustomerInformation,
-        DataTransfer,
-        DeleteCertificate,
-        GetBaseReport,
-        GetChargingProfiles,
-        GetCompositeSchedule,
-        GetDisplayMessages,
-        GetInstalledCertificateIds,
-        GetLocalListVersion,
-        GetLog,
-        GetMonitoringReport,
-        GetReport,
-        GetTransactionStatus,
-        GetVariables,
-        InstallCertificate,
-        PublishFirmware,
-        RequestStartTransaction,
-        RequestStopTransaction,
-        ReserveNow,
-        Reset,
-        SendLocalList,
-        SetChargingProfile,
-        SetDisplayMessage,
-        SetMonitoringBase,
-        SetMonitoringLevel,
-        SetNetworkProfile,
-        SetVariableMonitoring,
-        SetVariables,
-        TriggerMessage,
-        UnlockConnector,
-        UnpublishFirmware,
-        UpdateFirmware,
+        
         ;
-        public String usecase() {return "";}
-        public String action() {return name();}
+
+        @Override
+        public String usecase() {
+            return "";
+        }
+
+        @Override
+        public String action() {
+            return name();            
+        }
     }
 
-    // public enum Security implements Builder {
-    //     ;
-    //     public String usecase() {return "";}
-    //     public String action() {return name();}
-    // }
+    public enum Security implements Builder {
 
-    // public enum A1 implements Builder {
 
-    //     ;
-    //     public String usecase() {return "";}
-    //     public String action() {return name();}
-    // }
+        ;
+
+        @Override
+        public String usecase() {
+            return "";
+        }
+
+        @Override
+        public String action() {
+            return name();            
+        }
+    }
+
+    public enum A1 implements Builder {
+
+        ;
+
+        @Override
+        public String usecase() {
+            return "";
+        }
+
+        @Override
+        public String action() {
+            return name();            
+        }
+    }
 }

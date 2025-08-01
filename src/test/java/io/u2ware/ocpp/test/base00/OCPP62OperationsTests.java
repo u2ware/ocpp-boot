@@ -4,18 +4,18 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import io.u2ware.ocpp.v1_6.messaging.*;
+
+import io.u2ware.ocpp.v2_0_1.messaging.*;
 
 
-public class OCPP61OperationsTests {
+public class OCPP62OperationsTests {
     
     protected final Log logger = LogFactory.getLog(getClass());
 
-
-    private void testV16(
-        ChargePointCommand feature,
-        ChargePoint offer, 
-        CentralSystem answer){ 
+    private void testV201(
+        ChargingStationCommand feature,
+        ChargingStation offer, 
+        CSMS answer){ 
 
         SimpleMessageCallback x = new SimpleMessageCallback();
 
@@ -32,10 +32,10 @@ public class OCPP61OperationsTests {
         Assertions.assertNull(x.err());
     }
 
-    private void testV16(
-        CentralSystemCommand feature,
-        CentralSystem offer, 
-        ChargePoint answer){ 
+    private void testV201(
+        CSMSCommand feature,
+        CSMS offer, 
+        ChargingStation answer){ 
 
         SimpleMessageCallback x = new SimpleMessageCallback();
 
@@ -58,14 +58,14 @@ public class OCPP61OperationsTests {
     public void context1Loads()  throws Exception{
 
         logger.info("-------------------");
-        ChargePoint cp = new ChargePoint();
+        ChargingStation cp = new ChargingStation();
         cp.registerDefaultFeatures();
 
-        CentralSystem cs = new CentralSystem();        
+        CSMS cs = new CSMS();        
         cs.registerDefaultFeatures();
 
         logger.info("-------------------");
-        ChargePointCommand a = ChargePointCommand.ALL.StartTransaction.build();
+        ChargingStationCommand a = ChargingStationCommand.ALL.TransactionEvent.build();
         logger.info(a.getAction());
         logger.info(a.getUsecase());
         logger.info(a.getIdentifier());
@@ -74,7 +74,7 @@ public class OCPP61OperationsTests {
         logger.info(cs.resolveFeature(a.getIdentifier()));
         logger.info(cs.resolveFeature(a.getAction()));
 
-        CentralSystemCommand b =  CentralSystemCommand.ALL.RemoteStopTransaction.build();
+        CSMSCommand b =  CSMSCommand.ALL.RequestStartTransaction.build();
         logger.info(b.getAction());
         logger.info(b.getUsecase());
         logger.info(b.getIdentifier());
@@ -84,16 +84,16 @@ public class OCPP61OperationsTests {
         logger.info(cs.resolveFeature(b.getAction()));
 
         logger.info("-------------------");
-        testV16(ChargePointCommand.ALL.DataTransfer.build(), cp, cs);
-        testV16(CentralSystemCommand.ALL.DataTransfer.build(), cs, cp);
+        testV201(ChargingStationCommand.ALL.DataTransfer.build(), cp, cs);
+        testV201(CSMSCommand.ALL.DataTransfer.build(), cs, cp);
 
         logger.info("-------------------");
-        for(ChargePointCommand.Builder e :  ChargePointCommand.ALL.values()){
-            testV16(e.build(), cp, cs);
+        for(ChargingStationCommand.Builder e :  ChargingStationCommand.ALL.values()){
+            testV201(e.build(), cp, cs);
         }
         logger.info("-------------------");
-        for(CentralSystemCommand.Builder e :  CentralSystemCommand.ALL.values()){
-            testV16(e.build(), cs, cp);
+        for(CSMSCommand.Builder e :  CSMSCommand.ALL.values()){
+            testV201(e.build(), cs, cp);
         }    
     }
 }
