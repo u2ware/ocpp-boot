@@ -9,14 +9,6 @@ OCPP implementation based on spring-boot
 
 [ocpp-boot-client](https://github.com/u2ware/ocpp-boot-client)
 
-
-## Install 
-
-```bash
-./mvnw install
-```
-
-
 ## Core Concept 
 ![OCPP-BOOT](./docs/core.png)
 
