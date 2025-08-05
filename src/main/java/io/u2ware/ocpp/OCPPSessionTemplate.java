@@ -20,6 +20,7 @@ import org.springframework.messaging.simp.stomp.StompSession;
 import org.springframework.messaging.simp.stomp.StompSessionHandler;
 import org.springframework.util.Assert;
 import org.springframework.util.ClassUtils;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -161,7 +162,6 @@ public abstract class OCPPSessionTemplate<T extends OCPPCommand> extends TextWeb
             WebSocketSession session = webSocketSessions.get(id);
             // System.err.println("handleStompMessage: "+payload);
             // System.err.println("handleStompMessage: "+session);
-            
             T command = null;
             try{
                 command = convert(payload);
@@ -329,32 +329,34 @@ public abstract class OCPPSessionTemplate<T extends OCPPCommand> extends TextWeb
     private String createPayload(Object session, String category, Object resource){
 
         try{
-            System.err.println("createPayload: "+session);
+            // System.err.println("createPayload: "+session);
             // System.err.println("createPayload: "+category);
-
             ObjectNode root = mapper.createObjectNode();
             root.put("category", category);
 
+
+            ObjectNode target = mapper.createObjectNode();
             if(ClassUtils.isAssignableValue(WebSocketSession.class, session)) {
                 WebSocketSession ws = (WebSocketSession)session;
-
-                ObjectNode target = mapper.createObjectNode();
                 target.put("type", "WebSocketSession");
                 target.put("id", ws.getId());
                 target.put("localAddress", ws.getLocalAddress().toString());
                 target.put("remoteAddress", ws.getRemoteAddress().toString());
                 target.put("uri", ws.getUri().toString());
                 target.put("acceptedProtocol", ws.getAcceptedProtocol().toString());
-                root.set("target", target);
-
             }else if(ClassUtils.isAssignableValue(StompSession.class, session)) {
-                ObjectNode target = mapper.createObjectNode();
                 target.put("type", "StompSession");
-                root.set("target", target);
 
-            }else{
-                root.set("target", null);
+            }else if(ClassUtils.isAssignableValue(StompHeaders.class, session)) {
+                target.put("type", "StompHeaders");
+
+            }else if(ClassUtils.isAssignableValue(SimpMessageSendingOperations.class, session)) {
+                target.put("type", "SimpMessageSendingOperations");
+
+            }else if(! ObjectUtils.isEmpty(session)){
+                target.put("type", ClassUtils.getShortName(session.getClass()));
             }
+            root.set("target", target);
 
             if(ClassUtils.isAssignableValue(Throwable.class, resource)) {
                 Throwable t = (Throwable)resource;
