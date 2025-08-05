@@ -8,16 +8,12 @@ public class OCPPSessionErrorEvent extends ApplicationEvent{
     private String text;
     private Throwable t;
 
-    public OCPPSessionErrorEvent(WebSocketSession source, String text, Throwable t) {
+    public OCPPSessionErrorEvent(Object source, String text, Throwable t) {
         super(source);
         this.text = text;
         this.t = t;
     }
 
-    public WebSocketSession getWebSocketSession(){
-        return (WebSocketSession)getSource();
-    }   
-    
     public String getPayload(){
         return text;
     }         

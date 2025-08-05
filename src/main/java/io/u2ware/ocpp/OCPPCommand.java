@@ -2,6 +2,8 @@ package io.u2ware.ocpp;
 
 import java.util.Map;
 
+import org.springframework.util.ClassUtils;
+
 public abstract class OCPPCommand {
 
     private Map<String,Object> attributes;
@@ -32,5 +34,11 @@ public abstract class OCPPCommand {
     }
     public void setIdentifier(String identifier) {
         this.identifier = identifier;
+    }
+
+    @Override
+    public String toString() {
+        return ClassUtils.getQualifiedName(getClass())+" [attributes=" + attributes + ", usecase=" + usecase + ", action=" + action + ", identifier="
+                + identifier + "]";
     }
 }

@@ -33,20 +33,13 @@ class ApplicationTests {
 		client.registerDefaultFeatures();
 
 		/////////////////////////////////////
-		// OCPP Client Test without I/O
+		// OCPP Test without I/O
 		/////////////////////////////////////
-		CentralSystemCommandTemplate mockServerTemplate1 = new CentralSystemCommandTemplate();
+		CentralSystemCommandTemplate mockServerTemplate = new CentralSystemCommandTemplate();
 		
-		MockWebSocketHandlerInvoker.of(ac).connect(clientTemplate, mockServerTemplate1);
+		MockWebSocketHandlerInvoker.of(ac).connect(clientTemplate, mockServerTemplate);
 		Thread.sleep(1000);
 
-	
-		/////////////////////////////////////
-		// OCPP Client Test with I/O
-		/////////////////////////////////////
-		// logger.info("2===================");	
-
-		// no way !!!!! ㅠㅠ
 		
 		/////////////////////////////////////
 		//
@@ -56,7 +49,7 @@ class ApplicationTests {
 		Thread.sleep(1000);
 
 		logger.info("2 ===================");		
-		mockServerTemplate1.send(CentralSystemCommand.ALL.DataTransfer.build());
+		mockServerTemplate.send(CentralSystemCommand.ALL.DataTransfer.build());
 		Thread.sleep(1000);		
 	}
 }

@@ -6,7 +6,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import io.u2ware.ocpp.test.append0.SimpleMessageCallback;
-import io.u2ware.ocpp.v1_6.messaging.*;
+import io.u2ware.ocpp.v1_6.messaging.CentralSystem;
+import io.u2ware.ocpp.v1_6.messaging.ChargePoint;
+import io.u2ware.ocpp.v1_6.messaging.ChargePointCommand;
 
 public class OCPP53FeatureTests {
     

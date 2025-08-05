@@ -44,32 +44,32 @@ class ApplicationTests {
 		////////////////////////////
 		logger.info("0 ===================");		
 		cp.offer(ChargePointCommand.ALL.StartTransaction.build(), clientOperations.getServerCallback());
-		Thread.sleep(500);
+		Thread.sleep(1000);
 
 		
 		logger.info("0 ===================");		
 		cs.offer(CentralSystemCommand.ALL.RemoteStartTransaction.build(), serverOperations.getClientCallback());
-		Thread.sleep(500);
+		Thread.sleep(1000);
 
 		////////////////////////////
 		/// 
 		////////////////////////////
 		logger.info("1 ===================");		
 		clientOperations.send(ChargePointCommand.ALL.Authorize.build());
-		Thread.sleep(500);
+		Thread.sleep(1000);
 
 		logger.info("2 ===================");	
 		serverOperations.send(CentralSystemCommand.ALL.TriggerMessage.build("hello"));
-		Thread.sleep(2000);
+		Thread.sleep(1000);
 
 
 		logger.info("3 ===================");	
 		clientOperations.send(ChargePointCommand.ALL.DataTransfer.build("hello"));
-		Thread.sleep(2000);
+		Thread.sleep(1000);
 
 		logger.info("4 ===================");	
 		serverOperations.send(CentralSystemCommand.ALL.DataTransfer.build("hello"));
-		Thread.sleep(2000);
+		Thread.sleep(1000);
 
 	}
 }

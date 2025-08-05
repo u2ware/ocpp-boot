@@ -8,14 +8,10 @@ public class OCPPSessionReceivedEvent extends ApplicationEvent{
 
     private String payload;
 
-    public OCPPSessionReceivedEvent(WebSocketSession source, String payload) {
+    public OCPPSessionReceivedEvent(Object source, String payload) {
         super(source);
         this.payload = payload;
     }
-
-    public WebSocketSession getWebSocketSession(){
-        return (WebSocketSession)getSource();
-    }   
     
     public String getPayload(){
         return payload;

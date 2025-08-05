@@ -2,6 +2,7 @@ package io.u2ware.ocpp.client;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -13,7 +14,6 @@ import org.springframework.messaging.converter.CompositeMessageConverter;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import org.springframework.messaging.converter.StringMessageConverter;
 import org.springframework.messaging.simp.stomp.StompFrameHandler;
-import org.springframework.messaging.simp.stomp.StompHeaders;
 import org.springframework.messaging.simp.stomp.StompSession;
 import org.springframework.messaging.simp.stomp.StompSession.Subscription;
 import org.springframework.messaging.simp.stomp.StompSessionHandler;
@@ -38,9 +38,8 @@ public class WebsocketStompClient {
 
     private WebSocketStompClient client;
     private StompSession session;
-
-    private StompSessionHandler handler;
-    private Map<String,Subscription> subscriptions;
+    private Map<String,Subscription> subscriptions = new HashMap<>();
+    private StompFrameHandler handler;
 
 
     public static WebsocketStompClient with() {
@@ -105,15 +104,17 @@ public class WebsocketStompClient {
             return CompletableFuture.completedFuture(WebsocketStompClient.this);
         }
 
-        this.handler = handler;
         return this.client.connectAsync(uri, handler)
             .thenApply((session)->{
+                this.handler = handler;
                 this.session = session;
                 return WebsocketStompClient.this;
             });
     }
 
-
+    public CompletableFuture<WebsocketStompClient> connect(String uri){
+        return connect(uri, new WebsocketStompLoggingHandler());
+    }
 
     public CompletableFuture<WebsocketStompClient> disconnect(){
 
@@ -133,19 +134,35 @@ public class WebsocketStompClient {
         });
     }
 
+    public <T> CompletableFuture<WebsocketStompClient> broadcast(String destination, T payload) {
 
+        if(session == null) {
+            return CompletableFuture.failedFuture(new NullPointerException());
+        }
 
-    public CompletableFuture<WebsocketStompClient> subscribe(String destination){
-        return subscribe(destination, this.handler);
-    }    
+        System.err.println("broadcast");
+        System.err.println("broadcast: "+destination);
+        System.err.println("broadcast: "+payload);
 
-    public CompletableFuture<WebsocketStompClient> subscribe(String destination, WebsocketStompGenericListener<JsonNode> handler){
-        return subscribe(destination, new WebsocketStompGenericHandler<JsonNode>() {
-            public void handle(StompHeaders header, JsonNode payload) {
-                handler.handle(header, payload);
+        return CompletableFuture.supplyAsync(()->{
+            try{
+                synchronized(session) {
+                    session.send(destination, payload);
+                }
+                return WebsocketStompClient.this;
+            }catch (Exception e){
+                throw new RuntimeException(e);
             }
         });
     }
+
+
+    public CompletableFuture<WebsocketStompClient> subscribe(String destination){
+        if(this.handler == null) {
+            return CompletableFuture.failedFuture(new NullPointerException());
+        }        
+        return subscribe(destination, this.handler);
+    }    
 
 
     public CompletableFuture<WebsocketStompClient> subscribe(String destination, StompFrameHandler handler){

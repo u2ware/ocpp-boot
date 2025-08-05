@@ -5,11 +5,8 @@ import org.springframework.web.socket.WebSocketSession;
 
 public class OCPPSessionDisconnectEvent extends ApplicationEvent{
 
-    public OCPPSessionDisconnectEvent(WebSocketSession source) {
+    public OCPPSessionDisconnectEvent(Object source) {
         super(source);
     }
 
-    public WebSocketSession getWebSocketSession(){
-        return (WebSocketSession)getSource();
-    }    
 }

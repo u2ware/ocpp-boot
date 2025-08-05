@@ -15,9 +15,14 @@ public class WebSocketStompServerConfiguration implements WebSocketMessageBroker
 
     protected Log logger = LogFactory.getLog(getClass());
 
-    public static final String WS_CONNECTION    = "/console";  //sockjs '/ocpp1.6/websocket'
+    public static final String WS_CONNECTION    = "/ocpp-boot";  //sockjs '/ocpp1.6/websocket'
     public static final String WS_BROADCASTING  = "/app/";
     public static final String WS_SUBSCRIPTIONS = "/topic/";
+
+
+    // public static final String CONSOLE = "console";
+    // public static final String CONSOLE_DEST = "/app/console.{dest}";
+
 
 
     protected @Autowired OcppAttributes attributes;

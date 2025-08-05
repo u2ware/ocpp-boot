@@ -9,21 +9,22 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.util.Assert;
 import org.springframework.util.ClassUtils;
 
-import io.u2ware.ocpp.OCPPConsumer;
+import io.u2ware.ocpp.OCPPCommand;
+import io.u2ware.ocpp.OCPPMessageConsumer;
 import io.u2ware.ocpp.OCPPConversion;
-import io.u2ware.ocpp.OCPPFeatureOperations;
+import io.u2ware.ocpp.OCPPHandlerOperations;
 import io.u2ware.ocpp.OCPPMessage;
 
-public abstract class AbstractEventBusTemplate<T extends OCPPFeatureOperations<?>> {
+public abstract class AbstractEventBusTemplate<T extends OCPPCommand> {
     
 	protected Log logger = LogFactory.getLog(getClass());
 
     protected ConfigurableApplicationContext context;
     protected OCPPConversion conversion = new OCPPConversion();
-    protected T operations;
+    protected OCPPHandlerOperations<T> operations;
 
 
-    protected AbstractEventBusTemplate(T operations, ApplicationContext ac){
+    protected AbstractEventBusTemplate(OCPPHandlerOperations<T> operations, ApplicationContext ac){
         this.operations = operations;
         if(ClassUtils.isAssignableValue(ConfigurableApplicationContext.class, ac)) {
             this.context = (ConfigurableApplicationContext)ac;
@@ -87,13 +88,13 @@ public abstract class AbstractEventBusTemplate<T extends OCPPFeatureOperations<?
         }
     }
 
-    public class ClientEventPublisher implements OCPPConsumer<OCPPMessage<?>> {
+    public class ClientEventPublisher implements OCPPMessageConsumer {
         public void accept(OCPPMessage<?> t, Throwable u) {
             publish(convert(t), u);
         }
     }
 
-    public class ServerEventPublisher implements OCPPConsumer<OCPPMessage<?>> {
+    public class ServerEventPublisher implements OCPPMessageConsumer {
         public void accept(OCPPMessage<?> t, Throwable u) {
             publish(convert(t), u);
         }
@@ -113,11 +114,11 @@ public abstract class AbstractEventBusTemplate<T extends OCPPFeatureOperations<?
     }
 
 
-    public OCPPConsumer<OCPPMessage<?>> getClientCallback(){
+    public OCPPMessageConsumer getClientCallback(){
         return new ClientEventPublisher();
     }
     
-    public OCPPConsumer<OCPPMessage<?>> getServerCallback(){
+    public OCPPMessageConsumer getServerCallback(){
         return new ServerEventPublisher();
     }
 }

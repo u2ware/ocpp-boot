@@ -7,9 +7,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.StringUtils;
 
-import io.u2ware.ocpp.v1_6.messaging.*;
 import io.u2ware.ocpp.test.append0.SimpleMessageCallback;
-import io.u2ware.ocpp.v1_6.exception.*;
+import io.u2ware.ocpp.v1_6.exception.ErrorCode;
+import io.u2ware.ocpp.v1_6.messaging.ChargePoint;
+import io.u2ware.ocpp.v1_6.messaging.ChargePointCommand;
 
 public class OCPP52FeatureTests {
     

@@ -16,6 +16,12 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.socket.sockjs.client.RestTemplateXhrTransport;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import io.u2ware.ocpp.OCPPVersion;
+import io.u2ware.ocpp.client.WebsocketStandardClient;
+import io.u2ware.ocpp.config.OcppAttributes;
+import io.u2ware.ocpp.test.append0.SimpleWebsocketStandardClientCallback;
+import io.u2ware.ocpp.v1_6.messaging.ChargePointCommandTemplate;
+
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
@@ -46,6 +52,8 @@ class ApplicationTests {
 	private @Autowired(required = false) io.u2ware.ocpp.v2_0_1.messaging.CSMSCommandOperations csms201Operations;
 	private @Autowired(required = false) io.u2ware.ocpp.v2_0_1.messaging.CSMSInitializer csms201Initializer;	
 	
+	private @Autowired OcppAttributes ocppAttributes;
+
 
 	@Test
 	void contextLoads() throws Exception {
@@ -73,19 +81,27 @@ class ApplicationTests {
 		logger.info("(v2.0.1)csms201Initializer : "+csms201Initializer);
 		logger.info("===================");		
 
-
-
 		RestTemplateXhrTransport t = new RestTemplateXhrTransport();
+		String r = null;
 
-		URI uri1 = UriComponentsBuilder.fromUriString(String.format("http://localhost:%d/console/info", port)).build().toUri();
-		String result1 = t.executeInfoRequest(uri1, null);
-		Assertions.assertNotNull(result1);
-		logger.info(result1);
+		/////////////////////////////////////
+		// Check Stomp Server Running
+		/////////////////////////////////////
+		String stompInfo = String.format("http://localhost:%d/ocpp-boot/info", port);
+		URI stompInfoUri = UriComponentsBuilder.fromUriString(stompInfo).build().toUri();
 
-		URI uri2 = UriComponentsBuilder.fromUriString(String.format("http://localhost:%d/ocpp/info", port)).build().toUri();
-		String result2 = t.executeInfoRequest(uri2, null);
-		Assertions.assertNotNull(result2);
-		logger.info(result2);
+		r = t.executeInfoRequest(stompInfoUri, null);
+		Assertions.assertNotNull(r);
+		logger.info(stompInfoUri+"  "+r);
 
+		/////////////////////////////////////
+		// Check Websocket Server Running 
+		/////////////////////////////////////
+		String websocketInfo = String.format("http://localhost:%d/%s/info", port, ocppAttributes.getUri());
+		URI websocketInfoUri = UriComponentsBuilder.fromUriString(websocketInfo).build().toUri();
+
+		r = t.executeInfoRequest(websocketInfoUri, null);
+		Assertions.assertNotNull(r);
+		logger.info(websocketInfoUri+"  "+r);
 	}
 }

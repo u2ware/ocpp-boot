@@ -6,7 +6,7 @@ import io.u2ware.ocpp.v1_6.messaging.CentralSystem;
 import io.u2ware.ocpp.v1_6.messaging.CentralSystemCommand;
 import io.u2ware.ocpp.v1_6.messaging.CentralSystemCommandOperations;
 
-public class TestCentralSystemCommandOperations extends AbstractEventBusTemplate<CentralSystem> implements CentralSystemCommandOperations{
+public class TestCentralSystemCommandOperations extends AbstractEventBusTemplate<CentralSystemCommand> implements CentralSystemCommandOperations{
 
     public TestCentralSystemCommandOperations(ApplicationContext ac){
         super(new CentralSystem().registerDefaultFeatures(), ac);
@@ -18,10 +18,9 @@ public class TestCentralSystemCommandOperations extends AbstractEventBusTemplate
 
     @Override
     public void send(String destination, CentralSystemCommand payload) {
-        send(payload);
+        operations.offer(payload, new ServerEventPublisher());
     }
 
-    @Override
     public void send(CentralSystemCommand payload) {
         operations.offer(payload, new ServerEventPublisher());
     }

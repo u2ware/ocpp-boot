@@ -2,13 +2,12 @@ package io.u2ware.ocpp.v1_6.messaging;
 
 import org.springframework.util.ClassUtils;
 
-import io.u2ware.ocpp.OCPPConsumer;
-import io.u2ware.ocpp.OCPPFeature;
-import io.u2ware.ocpp.OCPPFeatureTemplate;
-import io.u2ware.ocpp.OCPPMessage;
+import io.u2ware.ocpp.OCPPMessageConsumer;
+import io.u2ware.ocpp.OCPPHandlerInvoker;
+import io.u2ware.ocpp.OCPPHandlerTemplate;
 import io.u2ware.ocpp.OCPPVersion;
 
-public final class ChargePoint extends OCPPFeatureTemplate<ChargePointCommand>{
+public final class ChargePoint extends OCPPHandlerTemplate<ChargePointCommand>{
 
     private final String rootPackage = "io.u2ware.ocpp.v1_6";
 
@@ -52,7 +51,7 @@ public final class ChargePoint extends OCPPFeatureTemplate<ChargePointCommand>{
         return OCPPVersion.V1_6;
     }
 
-    public void offer(ChargePointCommand command, OCPPConsumer<OCPPMessage<?>> consumer) {
+    public void offer(ChargePointCommand command, OCPPMessageConsumer consumer) {
         super.offer(()->{ return command;}, consumer);
     }
 
@@ -63,12 +62,12 @@ public final class ChargePoint extends OCPPFeatureTemplate<ChargePointCommand>{
     public ChargePoint registerDefaultFeatures() {
         for(ChargePointCommand.Builder e :  ChargePointCommand.ALL.values()){
             Class<?> c = handlerClass(e.action());
-            ChargePointHandler h = (ChargePointHandler)OCPPFeature.invokeField(c, "DEFAULT");
+            ChargePointHandler h = (ChargePointHandler)OCPPHandlerInvoker.invokeField(c, "DEFAULT");
             super.registerFeature(h);
         }
         for(CentralSystemCommand.Builder e :  CentralSystemCommand.ALL.values()){
             Class<?> c = handlerClass(e.action());
-            ChargePointHandler h = (ChargePointHandler)OCPPFeature.invokeField(c, "DEFAULT");
+            ChargePointHandler h = (ChargePointHandler)OCPPHandlerInvoker.invokeField(c, "DEFAULT");
             super.registerFeature(h);
         }
         return this;

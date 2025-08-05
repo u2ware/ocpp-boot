@@ -13,13 +13,13 @@ import org.springframework.util.ReflectionUtils;
 import org.springframework.util.StringUtils;
 
 
-public class OCPPFeature {
+public class OCPPHandlerInvoker {
 
     protected final Log logger = LogFactory.getLog(getClass());
 
     private Object target;
 
-    public OCPPFeature(Object target){
+    public OCPPHandlerInvoker(Object target){
         Assert.notNull(target, "target is null");
         this.target = target;
     }
@@ -96,7 +96,7 @@ public class OCPPFeature {
     /////////////////////////////////////////////////////////////
     public static Class<?> resolveType(String name) {
         try{
-            return ClassUtils.forName(name, OCPPFeatureOperations.class.getClassLoader());
+            return ClassUtils.forName(name, OCPPHandlerOperations.class.getClassLoader());
         }catch(Exception e){
             return null;
         }

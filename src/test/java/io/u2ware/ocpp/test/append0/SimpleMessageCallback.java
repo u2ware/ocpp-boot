@@ -3,11 +3,11 @@ package io.u2ware.ocpp.test.append0;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import io.u2ware.ocpp.OCPPConsumer;
+import io.u2ware.ocpp.OCPPMessageConsumer;
 import io.u2ware.ocpp.OCPPMessage;
 
 
-public class SimpleMessageCallback implements OCPPConsumer<OCPPMessage<?>>{
+public class SimpleMessageCallback implements OCPPMessageConsumer{
 
     protected final Log logger = LogFactory.getLog(getClass());
 

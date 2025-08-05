@@ -12,10 +12,14 @@ import io.u2ware.ocpp.Call;
 import io.u2ware.ocpp.CallError;
 import io.u2ware.ocpp.CallResult;
 import io.u2ware.ocpp.test.append0.SimpleMessageCallback;
-import io.u2ware.ocpp.v1_6.messaging.*;
-import io.u2ware.ocpp.v1_6.exception.*;
+import io.u2ware.ocpp.v1_6.exception.ErrorCode;
+import io.u2ware.ocpp.v1_6.exception.ErrorCodes;
 import io.u2ware.ocpp.v1_6.handlers.Authorize;
-import io.u2ware.ocpp.v1_6.model.*;
+import io.u2ware.ocpp.v1_6.messaging.CentralSystem;
+import io.u2ware.ocpp.v1_6.messaging.ChargePoint;
+import io.u2ware.ocpp.v1_6.messaging.ChargePointCommand;
+import io.u2ware.ocpp.v1_6.model.AuthorizeRequest;
+import io.u2ware.ocpp.v1_6.model.AuthorizeResponse;
 
 
 public class OCPP51FeatureTests {

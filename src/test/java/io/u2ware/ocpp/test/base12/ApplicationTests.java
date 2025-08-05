@@ -9,13 +9,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
 
 import io.u2ware.ocpp.client.MockWebSocketHandlerInvoker;
-import io.u2ware.ocpp.v1_6.messaging.CentralSystem;
-import io.u2ware.ocpp.v1_6.messaging.CentralSystemCommand;
-import io.u2ware.ocpp.v1_6.messaging.CentralSystemCommandTemplate;
-import io.u2ware.ocpp.v1_6.messaging.ChargePoint;
-import io.u2ware.ocpp.v1_6.messaging.ChargePointCommand;
-import io.u2ware.ocpp.v1_6.messaging.ChargePointCommandTemplate;
-
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
@@ -26,14 +19,14 @@ class ApplicationTests {
     protected @Autowired ApplicationContext ac;
 
 	@Test
-	void contextLoads() throws Exception {
+	void context16Loads() throws Exception {
 
 
 		/////////////////////////////////////////////////////
 		// Test without I/O by MockWebSocketHandlerInvoker
 		/////////////////////////////////////////////////////
-		CentralSystemCommandTemplate serverOperations = new CentralSystemCommandTemplate();
-		ChargePointCommandTemplate clientOperations = new ChargePointCommandTemplate();
+		io.u2ware.ocpp.v1_6.messaging.CentralSystemCommandTemplate serverOperations = new io.u2ware.ocpp.v1_6.messaging.CentralSystemCommandTemplate();
+		io.u2ware.ocpp.v1_6.messaging.ChargePointCommandTemplate clientOperations = new io.u2ware.ocpp.v1_6.messaging.ChargePointCommandTemplate();
 
 		MockWebSocketHandlerInvoker.of(ac).connect(serverOperations, clientOperations);
 		Thread.sleep(1000);
@@ -42,23 +35,91 @@ class ApplicationTests {
 		/// 
 		////////////////////////////
 		logger.info("1 ===================");		
-		clientOperations.send(ChargePointCommand.ALL.Authorize.build());
+		clientOperations.send(io.u2ware.ocpp.v1_6.messaging.ChargePointCommand.ALL.Authorize.build());
 		Thread.sleep(500);
 
 		logger.info("2 ===================");	
-		serverOperations.send(CentralSystemCommand.ALL.TriggerMessage.build("hello"));
+		serverOperations.send(io.u2ware.ocpp.v1_6.messaging.CentralSystemCommand.ALL.TriggerMessage.build("hello"));
 		Thread.sleep(500);
 
 
 		logger.info("3 ===================");	
-		clientOperations.send(ChargePointCommand.ALL.DataTransfer.build("hello"));
+		clientOperations.send(io.u2ware.ocpp.v1_6.messaging.ChargePointCommand.ALL.DataTransfer.build("hello"));
 		Thread.sleep(500);
 
 		logger.info("4 ===================");	
-		serverOperations.send(CentralSystemCommand.ALL.DataTransfer.build("hello"));
+		serverOperations.send(io.u2ware.ocpp.v1_6.messaging.CentralSystemCommand.ALL.DataTransfer.build("hello"));
+		Thread.sleep(500);
+	}
+
+	@Test
+	void context20Loads() throws Exception {
+
+
+		/////////////////////////////////////////////////////
+		// Test without I/O by MockWebSocketHandlerInvoker
+		/////////////////////////////////////////////////////
+		io.u2ware.ocpp.v2_0_1.messaging.CSMSCommandTemplate serverOperations = new io.u2ware.ocpp.v2_0_1.messaging.CSMSCommandTemplate();
+		io.u2ware.ocpp.v2_0_1.messaging.ChargingStationCommandTemplate clientOperations = new  io.u2ware.ocpp.v2_0_1.messaging.ChargingStationCommandTemplate();
+
+		MockWebSocketHandlerInvoker.of(ac).connect(serverOperations, clientOperations);
+		Thread.sleep(1000);
+
+		////////////////////////////
+		/// 
+		////////////////////////////
+		logger.info("1 ===================");		
+		clientOperations.send(io.u2ware.ocpp.v2_0_1.messaging.ChargingStationCommand.ALL.Authorize.build());
+		Thread.sleep(500);
+
+		logger.info("2 ===================");	
+		serverOperations.send(io.u2ware.ocpp.v2_0_1.messaging.CSMSCommand.ALL.TriggerMessage.build("hello"));
 		Thread.sleep(500);
 
 
+		logger.info("3 ===================");	
+		clientOperations.send(io.u2ware.ocpp.v2_0_1.messaging.ChargingStationCommand.ALL.DataTransfer.build("hello"));
+		Thread.sleep(500);
 
+		logger.info("4 ===================");	
+		serverOperations.send(io.u2ware.ocpp.v2_0_1.messaging.CSMSCommand.ALL.DataTransfer.build("hello"));
+		Thread.sleep(500);
 	}
+
+
+	@Test
+	void context21Loads() throws Exception {
+
+
+		/////////////////////////////////////////////////////
+		// Test without I/O by MockWebSocketHandlerInvoker
+		/////////////////////////////////////////////////////
+		io.u2ware.ocpp.v2_1.messaging.CSMSCommandTemplate serverOperations = new io.u2ware.ocpp.v2_1.messaging.CSMSCommandTemplate();
+		io.u2ware.ocpp.v2_1.messaging.ChargingStationCommandTemplate clientOperations = new  io.u2ware.ocpp.v2_1.messaging.ChargingStationCommandTemplate();
+
+		MockWebSocketHandlerInvoker.of(ac).connect(serverOperations, clientOperations);
+		Thread.sleep(1000);
+
+		////////////////////////////
+		/// 
+		////////////////////////////
+		logger.info("1 ===================");		
+		clientOperations.send(io.u2ware.ocpp.v2_1.messaging.ChargingStationCommand.ALL.Authorize.build());
+		Thread.sleep(500);
+
+		logger.info("2 ===================");	
+		serverOperations.send(io.u2ware.ocpp.v2_1.messaging.CSMSCommand.ALL.TriggerMessage.build("hello"));
+		Thread.sleep(500);
+
+
+		logger.info("3 ===================");	
+		clientOperations.send(io.u2ware.ocpp.v2_1.messaging.ChargingStationCommand.ALL.DataTransfer.build("hello"));
+		Thread.sleep(500);
+
+		logger.info("4 ===================");	
+		serverOperations.send(io.u2ware.ocpp.v2_1.messaging.CSMSCommand.ALL.DataTransfer.build("hello"));
+		Thread.sleep(500);
+	}
+
+
 }

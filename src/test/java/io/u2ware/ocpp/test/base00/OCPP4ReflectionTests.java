@@ -7,7 +7,7 @@ import org.apache.commons.logging.LogFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import io.u2ware.ocpp.OCPPFeature;
+import io.u2ware.ocpp.OCPPHandlerInvoker;
 import io.u2ware.ocpp.v1_6.exception.ErrorCodes;
 import io.u2ware.ocpp.v1_6.model.AuthorizeRequest;
 import io.u2ware.ocpp.v1_6.model.AuthorizeResponse;
@@ -22,8 +22,8 @@ public class OCPP4ReflectionTests {
     public void context1Loads()  {
 
 
-        OCPPFeature a1 = new OCPPFeature(io.u2ware.ocpp.v1_6.handlers.Authorize.ChargePointHandler.DEFAULT);
-        OCPPFeature a2 = new OCPPFeature(io.u2ware.ocpp.v1_6.handlers.Authorize.CentralSystemHandler.DEFAULT);
+        OCPPHandlerInvoker a1 = new OCPPHandlerInvoker(io.u2ware.ocpp.v1_6.handlers.Authorize.ChargePointHandler.DEFAULT);
+        OCPPHandlerInvoker a2 = new OCPPHandlerInvoker(io.u2ware.ocpp.v1_6.handlers.Authorize.CentralSystemHandler.DEFAULT);
 
 
         Assertions.assertTrue(sendRequest(a1, "Authorize", new HashMap<String,Object>()));
@@ -87,7 +87,7 @@ public class OCPP4ReflectionTests {
 
 
 
-    private Boolean sendRequest(OCPPFeature target, String action, Object request){
+    private Boolean sendRequest(OCPPHandlerInvoker target, String action, Object request){
         try{
             target.sendRequest(action, "id", request);
             return Boolean.TRUE;
@@ -96,7 +96,7 @@ public class OCPP4ReflectionTests {
             return Boolean.FALSE;
         }
     }
-    private Boolean receivedResponse(OCPPFeature target, String action, Object request, Object error){
+    private Boolean receivedResponse(OCPPHandlerInvoker target, String action, Object request, Object error){
         try{
             target.receivedResponse(action, "id", request, error);
             return Boolean.TRUE;
@@ -106,7 +106,7 @@ public class OCPP4ReflectionTests {
         }
     }
 
-    private Boolean receivedRequest(OCPPFeature target, String action, Object request){
+    private Boolean receivedRequest(OCPPHandlerInvoker target, String action, Object request){
         try{
             target.receivedRequest(action, "id", request);
             return Boolean.TRUE;
@@ -116,7 +116,7 @@ public class OCPP4ReflectionTests {
         }
     }
 
-    private Boolean sendResponse(OCPPFeature target, String action, Object response, Object error){
+    private Boolean sendResponse(OCPPHandlerInvoker target, String action, Object response, Object error){
         try{
             target.sendResponse(action, "id", response, error);
             return Boolean.TRUE;

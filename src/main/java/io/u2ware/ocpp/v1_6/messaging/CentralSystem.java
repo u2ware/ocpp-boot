@@ -2,13 +2,12 @@ package io.u2ware.ocpp.v1_6.messaging;
 
 import org.springframework.util.ClassUtils;
 
-import io.u2ware.ocpp.OCPPConsumer;
-import io.u2ware.ocpp.OCPPFeature;
-import io.u2ware.ocpp.OCPPFeatureTemplate;
-import io.u2ware.ocpp.OCPPMessage;
+import io.u2ware.ocpp.OCPPMessageConsumer;
+import io.u2ware.ocpp.OCPPHandlerInvoker;
+import io.u2ware.ocpp.OCPPHandlerTemplate;
 import io.u2ware.ocpp.OCPPVersion;
 
-public final class CentralSystem extends OCPPFeatureTemplate<CentralSystemCommand>{
+public final class CentralSystem extends OCPPHandlerTemplate<CentralSystemCommand>{
 
     private final String rootPackage = "io.u2ware.ocpp.v1_6";
 
@@ -53,7 +52,7 @@ public final class CentralSystem extends OCPPFeatureTemplate<CentralSystemComman
         return OCPPVersion.V1_6;
     }
 
-    public void offer(CentralSystemCommand command, OCPPConsumer<OCPPMessage<?>> consumer) {
+    public void offer(CentralSystemCommand command, OCPPMessageConsumer consumer) {
         super.offer(()->{ return command;}, consumer);
     }
 
@@ -64,12 +63,12 @@ public final class CentralSystem extends OCPPFeatureTemplate<CentralSystemComman
     public CentralSystem registerDefaultFeatures() {
         for(ChargePointCommand.Builder e :  ChargePointCommand.ALL.values()){
             Class<?> c = handlerClass(e.action());
-            CentralSystemHandler h = (CentralSystemHandler)OCPPFeature.invokeField(c, "DEFAULT");
+            CentralSystemHandler h = (CentralSystemHandler)OCPPHandlerInvoker.invokeField(c, "DEFAULT");
             super.registerFeature(h);
         }
         for(CentralSystemCommand.Builder e :  CentralSystemCommand.ALL.values()){
             Class<?> c = handlerClass(e.action());
-            CentralSystemHandler h = (CentralSystemHandler)OCPPFeature.invokeField(c, "DEFAULT");
+            CentralSystemHandler h = (CentralSystemHandler)OCPPHandlerInvoker.invokeField(c, "DEFAULT");
             super.registerFeature(h);
         }
         return this;

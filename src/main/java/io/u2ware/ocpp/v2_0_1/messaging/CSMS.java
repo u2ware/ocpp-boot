@@ -2,13 +2,12 @@ package io.u2ware.ocpp.v2_0_1.messaging;
 
 import org.springframework.util.ClassUtils;
 
-import io.u2ware.ocpp.OCPPConsumer;
-import io.u2ware.ocpp.OCPPFeature;
-import io.u2ware.ocpp.OCPPFeatureTemplate;
-import io.u2ware.ocpp.OCPPMessage;
+import io.u2ware.ocpp.OCPPMessageConsumer;
+import io.u2ware.ocpp.OCPPHandlerInvoker;
+import io.u2ware.ocpp.OCPPHandlerTemplate;
 import io.u2ware.ocpp.OCPPVersion;
 
-public final class CSMS extends OCPPFeatureTemplate<CSMSCommand>{
+public final class CSMS extends OCPPHandlerTemplate<CSMSCommand>{
     
     private final String rootPackage = "io.u2ware.ocpp.v2_0_1";
 
@@ -52,7 +51,7 @@ public final class CSMS extends OCPPFeatureTemplate<CSMSCommand>{
         return OCPPVersion.V1_6;
     }
 
-    public void offer(CSMSCommand command, OCPPConsumer<OCPPMessage<?>> consumer) {
+    public void offer(CSMSCommand command, OCPPMessageConsumer consumer) {
         super.offer(()->{ return command;}, consumer);
     }
 
@@ -63,12 +62,12 @@ public final class CSMS extends OCPPFeatureTemplate<CSMSCommand>{
     public CSMS registerDefaultFeatures() {
         for(ChargingStationCommand.Builder e :  ChargingStationCommand.ALL.values()){
             Class<?> c = handlerClass(e.action());
-            CSMSHandler h = (CSMSHandler)OCPPFeature.invokeField(c, "DEFAULT");
+            CSMSHandler h = (CSMSHandler)OCPPHandlerInvoker.invokeField(c, "DEFAULT");
             super.registerFeature(h);
         }
         for(CSMSCommand.Builder e :  CSMSCommand.ALL.values()){
             Class<?> c = handlerClass(e.action());
-            CSMSHandler h = (CSMSHandler)OCPPFeature.invokeField(c, "DEFAULT");
+            CSMSHandler h = (CSMSHandler)OCPPHandlerInvoker.invokeField(c, "DEFAULT");
             super.registerFeature(h);
         }
         return this;

@@ -1,12 +1,14 @@
 package io.u2ware.ocpp.v2_1.messaging;
 
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
+import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.socket.WebSocketSession;
 
-import io.u2ware.ocpp.OCPPFeature;
-import io.u2ware.ocpp.OCPPSessionHandlerTemplate;
+import io.u2ware.ocpp.OCPPHandlerInvoker;
+import io.u2ware.ocpp.OCPPSessionTemplate;
 
-public class CSMSCommandTemplate extends OCPPSessionHandlerTemplate<CSMS> implements CSMSCommandOperations {
+public class CSMSCommandTemplate extends OCPPSessionTemplate<CSMSCommand> implements CSMSCommandOperations {
 
     public CSMSCommandTemplate() {
         super(new CSMS().registerDefaultFeatures(), null);
@@ -20,29 +22,35 @@ public class CSMSCommandTemplate extends OCPPSessionHandlerTemplate<CSMS> implem
         super(operations, simpOperations);
     }
 
+
     @Override
-    public void send(CSMSCommand feature) {
-        connections.keySet().stream().findFirst().ifPresentOrElse((id) -> {
-            send(id, feature);
+    public void send(String destination, CSMSCommand command) {
+
+        String key = OCPPHandlerInvoker.extractElement(webSocketSessions.keySet(), destination);
+        WebSocketSession session = webSocketSessions.get(key);
+        if(session != null) {
+            super.offer(session, command);
+        }else{
+            super.offer(destination, command);
+        }
+    }
+
+    public void send(CSMSCommand command) {
+        webSocketSessions.keySet().stream().findFirst().ifPresentOrElse((key) -> {
+            WebSocketSession session = webSocketSessions.get(key);
+            super.offer(session, command);
         }, ()->{
-            brodcast(null, "ERROR90", new NullPointerException("session"));
+            error(this, "ERROR", new NullPointerException("session"));
         });
     }
 
     @Override
-    public void send(String destination, CSMSCommand feature) {
-
-        String key = OCPPFeature.extractElement(connections.keySet(), destination);
-        WebSocketSession session = connections.get(key);
-        if(session == null) {
-            brodcast(null, "ERROR91", new NullPointerException(destination));
-            return;
-        }
-
-        if(! feature.getIdentifier().contains(session.getId())) {
-            feature.setIdentifier(feature.getIdentifier()+""+session.getId());
-        }
-        operations.offer(feature, super.handleTextMessage(session));
+    protected CSMSCommand convert(String payload) throws Exception {
+        CSMSCommand s = conversion.comfortableReadValue(payload, CSMSCommand.class);
+        CSMSCommand c = CSMSCommand.ALL.valueOf(s.getAction()).build();
+        if(StringUtils.hasText(s.getIdentifier())) c.setIdentifier(s.getIdentifier());
+        if(StringUtils.hasText(s.getUsecase())) c.setUsecase(s.getUsecase());
+        if(! ObjectUtils.isEmpty(s.getAttributes())) c.setAttributes(s.getAttributes());
+        return c;
     }
-
 }

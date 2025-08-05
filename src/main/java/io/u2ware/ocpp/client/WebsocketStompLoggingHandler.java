@@ -15,6 +15,10 @@ public class WebsocketStompLoggingHandler extends WebsocketStompGenericHandler<S
 
     private String title;
 
+    public WebsocketStompLoggingHandler(){
+        this.title = "";
+    }
+
     public WebsocketStompLoggingHandler(String title){
         this.title = title;
     }
@@ -32,17 +36,16 @@ public class WebsocketStompLoggingHandler extends WebsocketStompGenericHandler<S
 
     @Override
     public void handleException(StompSession session, StompCommand command, StompHeaders headers, byte[] payload, Throwable exception) {
-        logger.info(String.format("[%s] handleException: ", title, exception));
+        logger.info(String.format("[%s] handleException: ", title), exception);
     }
 
     @Override
     public void handleTransportError(StompSession session, Throwable exception) {
 
-
         if(ClassUtils.isAssignableValue(ConnectionLostException.class, exception)) {
-            logger.info(String.format("[%s] handleException: ConnectionLostException ", title));
+            logger.info(String.format("[%s] handleTransportError ConnectionLostException:  ", title));
         }else{
-            logger.info(String.format("[%s] handleException: ", title, exception));
+            logger.info(String.format("[%s] handleTransportError: ", title, exception));
         }
     }    
 }

@@ -5,11 +5,8 @@ import org.springframework.web.socket.WebSocketSession;
 
 public class OCPPSessionConnectEvent extends ApplicationEvent{
 
-    public OCPPSessionConnectEvent(WebSocketSession source) {
+    public OCPPSessionConnectEvent(Object source) {
         super(source);
     }
 
-    public WebSocketSession getWebSocketSession(){
-        return (WebSocketSession)getSource();
-    }    
 }

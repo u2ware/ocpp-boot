@@ -10,13 +10,13 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.util.ClassUtils;
 
-public abstract class OCPPFeatureTemplate<T extends OCPPCommand> implements OCPPFeatureOperations<T> {
+public abstract class OCPPHandlerTemplate<T extends OCPPCommand> implements OCPPHandlerOperations<T> {
     
     protected final Log logger = LogFactory.getLog(getClass());
 
 
     protected OCPPConversion conversion = new OCPPConversion();
-    protected OCPPFeatureTemplate(){}
+    protected OCPPHandlerTemplate(){}
 
     private Map<String, OCPPIdentifier> identifiers = new HashMap<>();
 
@@ -26,16 +26,16 @@ public abstract class OCPPFeatureTemplate<T extends OCPPCommand> implements OCPP
     protected abstract String handlerType(String source);
 
     public Class<?> requestClass(String source) {
-        return OCPPFeature.resolveType(requestType(source));
+        return OCPPHandlerInvoker.resolveType(requestType(source));
     }
     public Class<?> responseClass(String source) {
-        return OCPPFeature.resolveType(responseType(source));
+        return OCPPHandlerInvoker.resolveType(responseType(source));
     }
     public Class<?> errorClass(String source) {
-        return OCPPFeature.resolveType(errorType(source));
+        return OCPPHandlerInvoker.resolveType(errorType(source));
     }
     public Class<?> handlerClass(String source){
-        return OCPPFeature.resolveType(handlerType(source));
+        return OCPPHandlerInvoker.resolveType(handlerType(source));
     }
 
     public boolean isRequest(String source, Object target) {
@@ -51,18 +51,18 @@ public abstract class OCPPFeatureTemplate<T extends OCPPCommand> implements OCPP
         return ClassUtils.isAssignableValue(handlerClass(source), target);
     }
 
-    protected Map<String, OCPPFeature> features = new HashMap<>();
+    protected Map<String, OCPPHandlerInvoker> features = new HashMap<>();
 
-    public OCPPFeature resolveFeature(String feature){
+    public OCPPHandlerInvoker resolveFeature(String feature){
         if(features.containsKey(feature)) return features.get(feature);
-        String key = OCPPFeature.extractElement(features.keySet(), feature);
+        String key = OCPPHandlerInvoker.extractElement(features.keySet(), feature);
         return features.get(key);
     }
 
     protected void registerFeature(OCPPHandler handler) {
         for(String feature : handler.features()) {
             logger.info(String.format("[%s] %s(%s)", name(), feature, ClassUtils.getDescriptiveType(handler)));
-            this.features.put(feature, new OCPPFeature(handler));
+            this.features.put(feature, new OCPPHandlerInvoker(handler));
         }
     }
 
@@ -70,7 +70,7 @@ public abstract class OCPPFeatureTemplate<T extends OCPPCommand> implements OCPP
     ///////////////////////////////////////////////////////
     //
     ///////////////////////////////////////////////////////
-    protected void offer(Supplier<OCPPCommand> source, OCPPConsumer<OCPPMessage<?>> consumer)  {
+    protected void offer(Supplier<OCPPCommand> source, OCPPMessageConsumer consumer)  {
 
         final AtomicReference<Long> start = new AtomicReference<>(System.currentTimeMillis());
         final AtomicReference<String> idRef = new AtomicReference<>();
@@ -91,7 +91,7 @@ public abstract class OCPPFeatureTemplate<T extends OCPPCommand> implements OCPP
             // String x = String.format("%s offer(%s) started.", name(), id);
             // logger.info(x);
 
-            OCPPFeature offer = resolveFeature(usecase);
+            OCPPHandlerInvoker offer = resolveFeature(usecase);
             if(offer == null) {
                 offer = resolveFeature(action);
             }
@@ -133,11 +133,11 @@ public abstract class OCPPFeatureTemplate<T extends OCPPCommand> implements OCPP
     ///////////////////////////////////////////////////////
     //
     ///////////////////////////////////////////////////////
-    public void answer(OCPPMessage<?> source, OCPPConsumer<OCPPMessage<?>> consumer){
+    public void answer(OCPPMessage<?> source, OCPPMessageConsumer consumer){
 
         final AtomicReference<Long> start = new AtomicReference<>(System.currentTimeMillis());
         final AtomicReference<String> idRef = new AtomicReference<>();
-        final AtomicReference<OCPPFeature> callReflectionRef = new AtomicReference<>();
+        final AtomicReference<OCPPHandlerInvoker> callReflectionRef = new AtomicReference<>();
         final AtomicReference<Call<?>> callMessageRef = new AtomicReference<>();
 
         CompletableFuture.supplyAsync(()->{
@@ -152,7 +152,7 @@ public abstract class OCPPFeatureTemplate<T extends OCPPCommand> implements OCPP
                 // String x = String.format("%s answer(%s) started.", name(), id);
                 // logger.info(x);
 
-                OCPPFeature answer = resolveFeature(id);
+                OCPPHandlerInvoker answer = resolveFeature(id);
                 if(answer == null) {
                     answer = resolveFeature(action);
                 }
@@ -198,7 +198,7 @@ public abstract class OCPPFeatureTemplate<T extends OCPPCommand> implements OCPP
                 String usecase = (identifier != null) ? identifier.getUsecase() : cr.getId();
                 String action = (identifier != null) ? identifier.getAction() : cr.getId();
 
-                OCPPFeature offer = resolveFeature(usecase);
+                OCPPHandlerInvoker offer = resolveFeature(usecase);
                 if(offer == null) {
                     offer = resolveFeature(action);
                 }
@@ -226,7 +226,7 @@ public abstract class OCPPFeatureTemplate<T extends OCPPCommand> implements OCPP
                 String usecase = (identifier != null) ? identifier.getUsecase() : ce.getId();
                 String action = (identifier != null) ? identifier.getAction() : ce.getId();
 
-                OCPPFeature offer = resolveFeature(usecase);
+                OCPPHandlerInvoker offer = resolveFeature(usecase);
                 if(offer == null) {
                     offer = resolveFeature(action);
                 }
@@ -256,7 +256,7 @@ public abstract class OCPPFeatureTemplate<T extends OCPPCommand> implements OCPP
             }else if(CallType.CallResult.correct(m)){
 
                 Call<?> cc = callMessageRef.get();
-                OCPPFeature answer = callReflectionRef.get();
+                OCPPHandlerInvoker answer = callReflectionRef.get();
                 CallResult<?> cr = (CallResult<?>)m;
                 
                 answer.sendResponse(cc.getAction(), idRef.get(), cr.getPayload(), null);
@@ -264,7 +264,7 @@ public abstract class OCPPFeatureTemplate<T extends OCPPCommand> implements OCPP
             }else if(CallType.CallError.correct(m)){
 
                 Call<?> cc = callMessageRef.get();
-                OCPPFeature answer = callReflectionRef.get();
+                OCPPHandlerInvoker answer = callReflectionRef.get();
                 CallError<?> ce = (CallError<?>)m;
 
                 answer.sendResponse(cc.getAction(), idRef.get(), null, ce.getPayload());

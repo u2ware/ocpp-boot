@@ -6,7 +6,7 @@ import io.u2ware.ocpp.v1_6.messaging.ChargePoint;
 import io.u2ware.ocpp.v1_6.messaging.ChargePointCommand;
 import io.u2ware.ocpp.v1_6.messaging.ChargePointCommandOperations;
 
-public class TestChargePointCommandOperations extends AbstractEventBusTemplate<ChargePoint> implements ChargePointCommandOperations{
+public class TestChargePointCommandOperations extends AbstractEventBusTemplate<ChargePointCommand> implements ChargePointCommandOperations{
 
     public TestChargePointCommandOperations(ApplicationContext ac){
         super(new ChargePoint().registerDefaultFeatures(), ac);
@@ -18,10 +18,9 @@ public class TestChargePointCommandOperations extends AbstractEventBusTemplate<C
 
     @Override
     public void send(String destination, ChargePointCommand payload) {
-        send(payload);
+        operations.offer(payload, new ClientEventPublisher());
     }
 
-    @Override
     public void send(ChargePointCommand payload) {
         operations.offer(payload, new ClientEventPublisher());
     }

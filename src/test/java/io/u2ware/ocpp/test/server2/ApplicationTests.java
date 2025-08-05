@@ -37,22 +37,13 @@ class ApplicationTests {
 		server.registerDefaultFeatures();
 
 		/////////////////////////////////////
-		// OCPP Server Test without I/O
+		// OCPP Test without I/O
 		/////////////////////////////////////
-		ChargePointCommandTemplate mockClientTemplate1 = new ChargePointCommandTemplate();
+		ChargePointCommandTemplate mockClientTemplate = new ChargePointCommandTemplate();
 
-		MockWebSocketHandlerInvoker.of(ac).connect(serverTemplate, mockClientTemplate1);
+		MockWebSocketHandlerInvoker.of(ac).connect(serverTemplate, mockClientTemplate);
 		Thread.sleep(1000);	
 		
-		/////////////////////////////////////
-		// OCPP Server Test with I/O
-		/////////////////////////////////////
-		ChargePointCommandTemplate mockClientTemplate2 = new ChargePointCommandTemplate();
-
-		WebsocketStandardClient.withSockJS()
-			.connect(String.format("ws://localhost:%d/ocpp", port), mockClientTemplate2)
-			.whenComplete((c1, u1)->{});
-		Thread.sleep(1000);	
 
 		/////////////////////////////////////
 		//
@@ -62,12 +53,8 @@ class ApplicationTests {
 		Thread.sleep(1000);
 
 		logger.info("2 ===================");		
-		mockClientTemplate1.send(ChargePointCommand.ALL.DataTransfer.build());
+		mockClientTemplate.send(ChargePointCommand.ALL.DataTransfer.build());
 		Thread.sleep(1000);
 	
-
-		logger.info("3 ===================");		
-		mockClientTemplate2.send(ChargePointCommand.ALL.DataTransfer.build());
-		Thread.sleep(1000);		
 	}
 }
