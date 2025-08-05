@@ -68,7 +68,7 @@ class ApplicationTests {
 
 		logger.info("2 ===================");		
 		String command = mapper.writeValueAsString(CentralSystemCommand.ALL.DataTransfer.build());
-		ux.get().broadcast("/app/channel."+clientTemplate.getFirstSessionId(), command);
+		ux.get().send("/app/channel."+clientTemplate.getFirstSessionId(), command);
 		Thread.sleep(1000);
 
 

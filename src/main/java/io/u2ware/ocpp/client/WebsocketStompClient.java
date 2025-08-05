@@ -134,7 +134,7 @@ public class WebsocketStompClient {
         });
     }
 
-    public <T> CompletableFuture<WebsocketStompClient> broadcast(String destination, T payload) {
+    public <T> CompletableFuture<WebsocketStompClient> send(String destination, T payload) {
 
         if(session == null) {
             return CompletableFuture.failedFuture(new NullPointerException());

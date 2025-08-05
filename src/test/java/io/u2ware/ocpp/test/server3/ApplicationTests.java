@@ -73,7 +73,7 @@ class ApplicationTests {
 
 		logger.info("2 ===================");		
 		String command1 = mapper.writeValueAsString(CentralSystemCommand.ALL.DataTransfer.build());
-		ux.get().broadcast("/app/channel."+serverTemplate.getFirstSessionId(), command1);
+		ux.get().send("/app/channel."+serverTemplate.getFirstSessionId(), command1);
 		Thread.sleep(1000);
 
 
@@ -99,7 +99,7 @@ class ApplicationTests {
 
 		logger.info("2 ===================");		
 		String command2 = mapper.writeValueAsString(CentralSystemCommand.ALL.DataTransfer.build());
-		ux.get().broadcast("/app/channel."+serverTemplate.getFirstSessionId(), command2);
+		ux.get().send("/app/channel."+serverTemplate.getFirstSessionId(), command2);
 		Thread.sleep(1000);		
 
 		logger.info("3 ===================");		
