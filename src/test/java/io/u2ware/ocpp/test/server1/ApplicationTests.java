@@ -16,11 +16,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.socket.sockjs.client.RestTemplateXhrTransport;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import io.u2ware.ocpp.OCPPVersion;
-import io.u2ware.ocpp.client.WebsocketStandardClient;
 import io.u2ware.ocpp.config.OcppAttributes;
-import io.u2ware.ocpp.test.append0.SimpleWebsocketStandardClientCallback;
-import io.u2ware.ocpp.v1_6.messaging.ChargePointCommandTemplate;
 
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -62,6 +58,7 @@ class ApplicationTests {
 		logger.info("===================");		
 		logger.info(StringUtils.arrayToCommaDelimitedString(ac.getBeanNamesForType(SimpMessageSendingOperations.class)));
 		logger.info("SimpMessageSendingOperations: "+simpOperations);
+		logger.info("OcppAttributes: "+ocppAttributes);
 
 		logger.info("(v1.6)chargePoint16            : "+chargePoint16);
 		logger.info("(v1.6)chargePoint16Operations  : "+chargePoint16Operations);

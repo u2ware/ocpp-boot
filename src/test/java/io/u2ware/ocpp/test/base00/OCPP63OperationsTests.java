@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import io.u2ware.ocpp.test.append0.SimpleMessageCallback;
-import io.u2ware.ocpp.v2_1.handlers.NotifyPeriodicEventStream;
 import io.u2ware.ocpp.v2_1.messaging.*;
 
 
