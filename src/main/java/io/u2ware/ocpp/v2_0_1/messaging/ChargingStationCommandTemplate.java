@@ -7,7 +7,6 @@ import org.springframework.web.socket.WebSocketSession;
 
 import io.u2ware.ocpp.OCPPHandlerInvoker;
 import io.u2ware.ocpp.OCPPSessionTemplate;
-import io.u2ware.ocpp.v1_6.messaging.ChargePointCommand;
 
 public class ChargingStationCommandTemplate extends OCPPSessionTemplate<ChargingStationCommand> implements ChargingStationCommandOperations {
 
