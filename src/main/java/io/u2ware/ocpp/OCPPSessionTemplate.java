@@ -21,6 +21,7 @@ import org.springframework.messaging.simp.stomp.StompSessionHandler;
 import org.springframework.util.Assert;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -44,6 +45,7 @@ public abstract class OCPPSessionTemplate<T extends OCPPCommand> extends TextWeb
     protected ApplicationContext applicationContext;
     protected OCPPHandlerOperations<T> operations;
     protected SimpMessageSendingOperations simpOperations;
+    protected String destination;
 
 
     protected OCPPSessionTemplate(OCPPHandlerOperations<T> operations, SimpMessageSendingOperations simpOperations) {
@@ -52,18 +54,33 @@ public abstract class OCPPSessionTemplate<T extends OCPPCommand> extends TextWeb
         this.simpOperations = simpOperations;
     }
 
+    protected OCPPSessionTemplate(String destination, OCPPHandlerOperations<T> operations, SimpMessageSendingOperations simpOperations) {
+        Assert.hasText(destination,  "description");
+        Assert.notNull(operations, "operations");
+        this.operations = operations;
+        this.simpOperations = simpOperations;
+        this.destination = destination;
+    }
+
+
+
+
+
+
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;
     }
 
-    public String getFirstSessionId() {
+    public String getFirstStandardSessionId() {
         return webSocketSessions.keySet().stream().findFirst().get();
     }
-
+    public String getFirstStompSessionId() {
+        return stompSessions.keySet().stream().findFirst().get();
+    }
 
     /////////////////////////////////////////////////////////////////////
-    //  WebSocketHandler
+    //  WebSocketHandler (Both Server and Client)
     /////////////////////////////////////////////////////////////////////
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {       
@@ -78,27 +95,25 @@ public abstract class OCPPSessionTemplate<T extends OCPPCommand> extends TextWeb
 
     @Override
     public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
-        error(session, "ERROR", exception);
+        error(session, new RuntimeException("handleTransportError", exception));
     }
 
     @Override
-    public void handleTextMessage(WebSocketSession session, TextMessage text) throws Exception {
-        // System.err.println("handleTextMessage: "+text);
-        // System.err.println("handleTextMessage: "+session);
-        String received = text.getPayload();
-        OCPPMessage<?> message = null;
-        try{
-            message = conversion.convertMessage(received);
-        }catch(Exception e){
-            error(session, "ERROR01",  e);
+    public void handleTextMessage(WebSocketSession session, TextMessage payload) throws Exception {
+        // System.err.println("receivedMessage By WebSocketHandler");
+
+        String text = payload.getPayload();
+        OCPPMessage<?> message = convertMessage(text);
+        if(message == null) {
+            error(session, new RuntimeException("handleTextMessage", new IllegalArgumentException(String.format("'%s'", text))));
             return;
-        }
-        received(session, received);
+        }        
+        received(session, text);
         answer(session, message);
     }
 
     /////////////////////////////////////////////////////////////////////
-    //  StompSessionHandler
+    //  StompSessionHandler (Client Side)
     /////////////////////////////////////////////////////////////////////
     @Override
     public void afterConnected(StompSession session, StompHeaders connectedHeaders) {
@@ -111,74 +126,96 @@ public abstract class OCPPSessionTemplate<T extends OCPPCommand> extends TextWeb
             this.stompSessions.remove(session.getSessionId());
             disconnect(session);
         }else{
-            error(session, "ERROR", exception);
+            error(session, new RuntimeException("handleTransportError", exception));
         }
     } 
 
     @Override
     public void handleException(StompSession session, StompCommand command, StompHeaders headers, byte[] payload, Throwable exception) {
-        error(session, "ERROR", exception);
+        error(session, new RuntimeException("handleException", exception));
     }
 
     @Override
     public Type getPayloadType(StompHeaders headers) {
         return String.class;
     }
+
     @Override
     public void handleFrame(StompHeaders headers, Object payload) {
 
-        String received = (String)payload;
-        OCPPMessage<?> message = null;
-        try{
-            message = conversion.convertMessage(received);
-        }catch(Exception e){
-            error(null, "ERROR01",  e);
+        if(simpOperations == null) {
+            error(headers, new RuntimeException("handleFrame",  new NullPointerException("simpOperations")));
             return;
         }
-        received(headers, received);
-        answer("/app/channel", message);
+
+        String text = (String)payload;
+        String id = convertDestination(headers);
+        WebSocketSession websocket = webSocketSessions.get(id);
+        OCPPMessage<?> message = convertMessage(text);
+        T command = convertCommand(text);
+
+        if(message == null && command == null) {
+            error(headers, new RuntimeException("handleFrame", new IllegalArgumentException(String.format("'%s'", text))));
+            return;
+        }
+
+        if(websocket != null) {
+            if(command != null) {
+                // System.err.println("receivedMessage By StompSessionHandler: 1");
+                offer(websocket, command);
+            }else if(message != null){
+                // System.err.println("receivedMessage By StompSessionHandler: 2");
+                received(headers, text);
+                answer(websocket, message);
+            }
+        }else{
+            if(command != null) {
+                // System.err.println("receivedMessage By StompSessionHandler: 3");
+                offer(destination, command);
+            }else if(message != null){
+                // System.err.println("receivedMessage By StompSessionHandler: 4");
+                received(headers, text);
+                answer(destination, message);
+            }
+        }
     }    
 
     /////////////////////////////////////////////////////////////////////
-    //  @MessageMapping
+    //  @MessageMapping (Server Side)
     /////////////////////////////////////////////////////////////////////
-    @MessageMapping("channel")
-    public void handleStompMessage(@Payload String payload){
-        OCPPMessage<?> message = null;
-        try{
-            message = conversion.convertMessage(payload);
-        }catch(Exception e){
-            error(null, "ERROR01",  e);
+    @MessageMapping("channel.{id}")
+    public void handleMessage(@DestinationVariable(value = "id") String id, @Payload String text){
+
+        WebSocketSession websocket = webSocketSessions.get(id);
+        OCPPMessage<?> message = convertMessage(text);
+        T command = convertCommand(text);
+
+        if(message == null && command == null) {
+            error(simpOperations, new RuntimeException("handleMessage", new IllegalArgumentException(String.format("'%s'", text))));
             return;
         }
-        received(simpOperations, payload);
-        answer("/topic/channel", message);
-    }
-
-    @MessageMapping("channel.{id}")
-    public void handleStompMessage(@DestinationVariable(value = "id") String id, @Payload String payload){
-
-        if(webSocketSessions.containsKey(id)){
-            WebSocketSession session = webSocketSessions.get(id);
-            // System.err.println("handleStompMessage: "+payload);
-            // System.err.println("handleStompMessage: "+session);
-            T command = null;
-            try{
-                command = convert(payload);
-                if(command == null) throw new NullPointerException("command");
-            }catch(Exception e){
-                e.printStackTrace();
-                error(simpOperations, "ERROR01",  e);
-                return;
+        
+        if(websocket != null) {
+            if(command != null) {
+                // System.err.println("receivedMessage By @MessageMapping : 1");
+                offer(websocket, command);
+            }else if(message != null){
+                // System.err.println("receivedMessage By @MessageMapping : 2");
+                received(simpOperations, text);
+                answer(websocket, message);
             }
-            offer(session, command);
-
         }else{
-            error(simpOperations, "ERROR01",  new NullPointerException("session"));
+            if(command != null) {
+                // System.err.println("receivedMessage By @MessageMapping : 3"); //????
+                offer("/topic/channel."+id, command);
+            }else if(message != null){
+                // System.err.println("receivedMessage By @MessageMapping : 4");
+                received(simpOperations, text);
+                answer("/topic/channel."+id, message);
+            }
         }
     }
 
-    protected abstract T convert(String payload) throws Exception;
 
     /////////////////////////////////////////////////////////////////////
     //  
@@ -198,20 +235,23 @@ public abstract class OCPPSessionTemplate<T extends OCPPCommand> extends TextWeb
                 return;
             }
             if(message == null && t != null) {
-                error(session, "ERROR02",  t);
+                error(session, new RuntimeException(session.getId(), t));
                 return;
             }
 
+            String send = null;
             try{
                 OCPPMessage<?> m = removeSessionId(session, message);
-                String send = conversion.convertMessage(m);
+                send = conversion.convertMessage(m);
+
+                // System.err.println("sendMessage By WebSocketSession: ");
                 session.sendMessage(new TextMessage(send));
-                send(session, send);
             }catch(Exception e){
                 // e.printStackTrace();
-                error(session, "ERROR03",  t);
+                error(session, new RuntimeException(session.getId(), t));
                 return;
-            }
+            }            
+            send(session, send);
         };
     }
 
@@ -230,27 +270,63 @@ public abstract class OCPPSessionTemplate<T extends OCPPCommand> extends TextWeb
             if(message == null && t == null) {
                 return;
             }
-            if(message == null && t != null) {
-                error(null, "ERROR02",  t);
-                return;
-            }
-            try{
-                String send = conversion.convertMessage(message);
-                if(this.stompSessions.size() > 0) {
-                    StompSession session = this.stompSessions.values().stream().findFirst().get();
-                    session.send(destination, send);
-                    send(session, send);
-                } else{
-                    simpOperations.convertAndSend(destination, send);
-                    send(simpOperations, send);
-                }
 
-            }catch(Exception e){
-                error(null, "ERROR03",  t);
+            boolean hasSession = this.stompSessions.size() > 0 ;
+            StompSession session = hasSession
+                ? this.stompSessions.values().stream().findFirst().get()
+                : null;
+            Object target = hasSession ? session : simpOperations;
+
+            if(message == null && t != null) {
+                error(target, new RuntimeException(destination, t));
                 return;
             }
+
+            String send = null;
+            try{
+                send = conversion.convertMessage(message);
+                if(hasSession) {
+                    // System.err.println("sendMessage By StompSession: "+destination);
+                    session.send(destination, send);
+                }else{
+                    // System.err.println("sendMessage By SendingOperations: "+destination);
+                    simpOperations.convertAndSend(destination, send);
+                }
+            }catch(Exception e){
+                // e.printStackTrace();
+                error(target, new RuntimeException(destination, t));
+                return;
+            }
+
+            send(target, send);
         };
     }
+
+    /////////////////////////////////////////////////////////////////////
+    //
+    /////////////////////////////////////////////////////////////////////
+    protected abstract T convertCommand(String payload);
+
+    protected OCPPMessage<?> convertMessage(String payload){
+        try{
+            return conversion.convertMessage(payload);
+        }catch(Exception e){
+            return null;
+        }        
+    }
+
+    protected String convertDestination(StompHeaders headers){
+
+        String destination = headers.getDestination();
+        try{
+            int i1 = destination.lastIndexOf("channel.");
+            int i2 = destination.length();
+            return destination.substring(i1+8, i2);
+        }catch(Exception e){
+            return "";
+        }
+    }
+
 
     /////////////////////////////////////////////////////////////////////
     //
@@ -284,82 +360,89 @@ public abstract class OCPPSessionTemplate<T extends OCPPCommand> extends TextWeb
     /////////////////////////////////////////////////////////////////////
     //
     /////////////////////////////////////////////////////////////////////
-    protected void connect(Object session){
-        brodcast(session, "CONNECT", "{}");
+    protected void connect(Object source){
+        brodcast("CONNECT", source, "{}");
         if(applicationContext == null) return;
-        applicationContext.publishEvent(new OCPPSessionConnectEvent(session));
+        applicationContext.publishEvent(new OCPPSessionConnectEvent(source));
     }
-    protected void disconnect(Object session){
-        brodcast(session, "DISCONNECT", "{}");
+    protected void disconnect(Object source){
+        brodcast("DISCONNECT", source, "{}");
         if(applicationContext == null) return;
-        applicationContext.publishEvent(new OCPPSessionDisconnectEvent(session));
+        applicationContext.publishEvent(new OCPPSessionDisconnectEvent(source));
     }
-    protected void error(Object session, String text, Throwable exception){
-        brodcast(session, text, exception);
+    protected void error(Object source, Throwable exception){
+        brodcast("ERROR", source, exception);
         if(applicationContext == null) return;
-        applicationContext.publishEvent(new OCPPSessionErrorEvent(session, text, exception));
+        applicationContext.publishEvent(new OCPPSessionErrorEvent(source, exception));
     }
-    protected void received(Object session, String text){
-        brodcast(session, "RECEIVED", text);
+    protected void received(Object source, String text){
+        brodcast("RECEIVED", source, text);
         if(applicationContext == null) return;
-        applicationContext.publishEvent(new OCPPSessionReceivedEvent(session, text));        
+        applicationContext.publishEvent(new OCPPSessionReceivedEvent(source, text));        
     }
-    protected void send(Object session, String text){
-        brodcast(session, "SEND", text);
+    protected void send(Object source, String text){
+        brodcast("SEND", source, text);
         if(applicationContext == null) return;
-        applicationContext.publishEvent(new OCPPSessionSendEvent(session, text));
+        applicationContext.publishEvent(new OCPPSessionSendEvent(source, text));
     }
 
     /////////////////////////////////////////////////////////////////////
     //
     /////////////////////////////////////////////////////////////////////
-    private void brodcast(Object session, String action, Object resource){
-        if(simpOperations == null) {
-            if(ClassUtils.isAssignableValue(Throwable.class, resource)) {
-                logger.info(action+": ", (Throwable)resource);
-            }else{
-                logger.info(action+": "+resource);
-            }         
+    private void brodcast(String action, Object source, Object payload){
+
+        if(simpOperations == null || StringUtils.hasText(destination)) {
+            Object message = createPayload(destination, action, source, payload);
+            logger.info(String.format("[%s] %s", destination, message));
+            // String d = StringUtils.hasText(description) ? "["+description+"]" : "";
+            // if(ClassUtils.isAssignableValue(Throwable.class, payload)) {
+            //     logger.info(d+""+action+": "+payload+" by "+source, (Throwable)payload);
+            // }else{
+            //     logger.info(d+""+action+": "+payload+" by "+source);
+            // }
             return;
         }
-        Object payload = createPayload(session, action, resource);
-        simpOperations.convertAndSend("/topic/console", payload);
+
+        Object message = createPayload("/topic/console", action, source, payload);
+        simpOperations.convertAndSend("/topic/console", message);
     }
 
-    private String createPayload(Object session, String category, Object resource){
+    private String createPayload(String target, String action, Object source, Object payload){
 
         try{
-            // System.err.println("createPayload: "+session);
-            // System.err.println("createPayload: "+category);
             ObjectNode root = mapper.createObjectNode();
-            root.put("category", category);
+            root.put("target", target);
+            root.put("action", action);
 
 
-            ObjectNode target = mapper.createObjectNode();
-            if(ClassUtils.isAssignableValue(WebSocketSession.class, session)) {
-                WebSocketSession ws = (WebSocketSession)session;
-                target.put("type", "WebSocketSession");
-                target.put("id", ws.getId());
-                target.put("localAddress", ws.getLocalAddress().toString());
-                target.put("remoteAddress", ws.getRemoteAddress().toString());
-                target.put("uri", ws.getUri().toString());
-                target.put("acceptedProtocol", ws.getAcceptedProtocol().toString());
-            }else if(ClassUtils.isAssignableValue(StompSession.class, session)) {
-                target.put("type", "StompSession");
+            ObjectNode src = mapper.createObjectNode();
+            if(ObjectUtils.isEmpty(source)) {
+                src.put("type", "Unknown");
 
-            }else if(ClassUtils.isAssignableValue(StompHeaders.class, session)) {
-                target.put("type", "StompHeaders");
+            }else if(ClassUtils.isAssignableValue(WebSocketSession.class, source)) {
+                WebSocketSession ws = (WebSocketSession)source;
+                src.put("type", "WebSocketSession");
+                src.put("id", ws.getId());
+                src.put("localAddress", ws.getLocalAddress().toString());
+                src.put("remoteAddress", ws.getRemoteAddress().toString());
+                src.put("uri", ws.getUri().toString());
+                src.put("acceptedProtocol", ws.getAcceptedProtocol().toString());
+            }else if(ClassUtils.isAssignableValue(StompSession.class, source)) {
+                src.put("type", "StompSession");
 
-            }else if(ClassUtils.isAssignableValue(SimpMessageSendingOperations.class, session)) {
-                target.put("type", "SimpMessageSendingOperations");
+            }else if(ClassUtils.isAssignableValue(StompHeaders.class, source)) {
+                src.put("type", "StompHeaders");
 
-            }else if(! ObjectUtils.isEmpty(session)){
-                target.put("type", ClassUtils.getShortName(session.getClass()));
+            }else if(ClassUtils.isAssignableValue(SimpMessageSendingOperations.class, source)) {
+                src.put("type", "SimpMessageSendingOperations");
+
+            }else{
+                src.put("type", ClassUtils.getShortName(source.getClass()));
             }
-            root.set("target", target);
+            root.set("source", src);
 
-            if(ClassUtils.isAssignableValue(Throwable.class, resource)) {
-                Throwable t = (Throwable)resource;
+            if(ClassUtils.isAssignableValue(Throwable.class, payload)) {
+                Throwable t = (Throwable)payload;
                 ArrayNode stack = mapper.createArrayNode();
                 while(t != null) {
                     stack.add(t.toString());
@@ -370,22 +453,19 @@ public abstract class OCPPSessionTemplate<T extends OCPPCommand> extends TextWeb
                 root.set("message", message);
 
 
-            }else if(ClassUtils.isAssignableValue(String.class, resource)) {
-                String t = (String)resource;
+            }else if(ClassUtils.isAssignableValue(String.class, payload)) {
+                String t = (String)payload;
                 JsonNode message = mapper.readTree(t);
                 root.set("message", message);
             }else{
-                JsonNode message = mapper.convertValue(resource, JsonNode.class);
+                JsonNode message = mapper.convertValue(payload, JsonNode.class);
                 root.set("message", message);
             }
-
-
             // return root;
             return mapper.writeValueAsString(root);
         }catch(Exception e) {
-            e.printStackTrace();
+            // e.printStackTrace();
             return "{}";
-            // return mapper.createObjectNode();
         }
     }
 

@@ -61,7 +61,6 @@ public class OCPPHandlerInvoker {
     public static String extractElement(Collection<String> elements, String source) {
         if(StringUtils.hasText(source)) { 
             for(String element : elements){
-                // System.err.println(element+" "+source);
                 if(source.contains(element)) {
                     return element;
                 }

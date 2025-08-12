@@ -122,7 +122,7 @@ public class MockWebSocketHandlerInvoker {
 
         private MockWebSocketSession(MockWebSocketSessionWorker consumer){
             this.consumer = consumer;
-            this.id = UUID.randomUUID().toString();
+            this.id = "MockWebSocketSession-"+UUID.randomUUID().toString();
         }
 
 

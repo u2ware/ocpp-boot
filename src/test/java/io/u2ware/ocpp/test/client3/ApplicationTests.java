@@ -1,6 +1,6 @@
 package io.u2ware.ocpp.test.client3;
 
-import java.util.concurrent.atomic.AtomicReference;
+import java.util.concurrent.CompletableFuture;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -10,11 +10,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.context.ApplicationContext;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
+import org.springframework.messaging.simp.stomp.StompHeaders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.u2ware.ocpp.client.MockWebSocketHandlerInvoker;
 import io.u2ware.ocpp.client.WebsocketStompClient;
+import io.u2ware.ocpp.client.WebsocketStompGenericHandler;
 import io.u2ware.ocpp.client.WebsocketStompLoggingHandler;
 import io.u2ware.ocpp.v1_6.messaging.CentralSystemCommand;
 import io.u2ware.ocpp.v1_6.messaging.CentralSystemCommandTemplate;
@@ -42,23 +44,19 @@ class ApplicationTests {
 		client.registerDefaultFeatures();
 
 		/////////////////////////////////////
-		// UX
+		// clientTemplate
 		/////////////////////////////////////
-		AtomicReference<WebsocketStompClient> ux = new AtomicReference<>();
-		WebsocketStompClient.withSockJS()
-			.connect(String.format("ws://localhost:%d/ocpp-boot", port), new WebsocketStompLoggingHandler("UX"))
+		CompletableFuture<WebsocketStompClient> ux = WebsocketStompClient.withSockJS()
+			.connect(String.format("ws://localhost:%d/ocpp-boot", port), new WebsocketStompLoggingHandler("clientTemplate"))
 			.whenComplete((c1, u1)->{
-				c1.sleep(100).subscribe("/topic/console")
-					.whenComplete((c2,u2)->{
-						ux.set(c2);
-					});
+				c1.sleep(100).subscribe("/topic/console");
 			});
 		Thread.sleep(1000);	
 		
 		/////////////////////////////////////
 		//  (1) Test without I/O 
 		/////////////////////////////////////	
-		CentralSystemCommandTemplate mockServerTemplate1 = new CentralSystemCommandTemplate(simpOperations);
+		CentralSystemCommandTemplate mockServerTemplate1 = new CentralSystemCommandTemplate("mockServerTemplate1", simpOperations);
 		MockWebSocketHandlerInvoker.of(ac).connect(clientTemplate, mockServerTemplate1);
 		Thread.sleep(1000);	
 		
@@ -67,8 +65,8 @@ class ApplicationTests {
 		Thread.sleep(1000);
 
 		logger.info("2 ===================");		
-		String command = mapper.writeValueAsString(CentralSystemCommand.ALL.DataTransfer.build());
-		ux.get().send("/app/channel."+clientTemplate.getFirstSessionId(), command);
+		String send = mapper.writeValueAsString(CentralSystemCommand.ALL.DataTransfer.build());
+		ux.get().send("/app/channel."+clientTemplate.getFirstStandardSessionId(), send);
 		Thread.sleep(1000);
 
 
@@ -78,31 +76,78 @@ class ApplicationTests {
 
 
 		/////////////////////////////////////
-		//  (2) Test with Websocket I/O 
+		//  (2) Test with Stomp I/O
 		/////////////////////////////////////
-		//No exists !!!!!!!
-
-
-		/////////////////////////////////////
-		//  (3) Test with Stomp I/O
-		/////////////////////////////////////
-		CentralSystemCommandTemplate mockServerTemplate3 = new CentralSystemCommandTemplate(simpOperations);
+		CentralSystemCommandTemplate mockServerTemplate2 = new CentralSystemCommandTemplate("/app/channel.aaa", simpOperations);
 		WebsocketStompClient.withSockJS()
-			.connect(String.format("ws://localhost:%d/ocpp-boot", port), mockServerTemplate3)
+			.connect(String.format("ws://localhost:%d/ocpp-boot", port), mockServerTemplate2)
 			.whenComplete((c1, u1)->{
-				c1.sleep(100).subscribe("/topic/channel")
+				c1.sleep(100).subscribe("/topic/channel.aaa")
 					.whenComplete((c2,u2)->{
 					});
 			});
 		Thread.sleep(1000);	
 
 		logger.info("1 ===================");		
-		clientTemplate.send("/topic/channel", ChargePointCommand.ALL.DataTransfer.build());
+		clientTemplate.send("/topic/channel.aaa", ChargePointCommand.ALL.DataTransfer.build());
 		Thread.sleep(1000);
 
-		logger.info("3 ===================");		
-		mockServerTemplate3.send("/app/channel", CentralSystemCommand.ALL.DataTransfer.build());
+		logger.info("2 ===================");		
+		mockServerTemplate2.send("/app/channel.aaa", CentralSystemCommand.ALL.DataTransfer.build());
 		Thread.sleep(1000);
+
+
+
+		///////////////////////////////////
+		//  (3) Test with Stomp Broker I/O
+		///////////////////////////////////
+		CentralSystemCommandTemplate mockServerTemplate3 = new CentralSystemCommandTemplate("/topic/channel.outbound", simpOperations);
+		WebsocketStompClient.withSockJS()
+			.connect(String.format("ws://localhost:%d/ocpp-boot", port), mockServerTemplate3)
+			.whenComplete((c1, u1)->{
+				c1.sleep(100).subscribe("/topic/channel.inbound");
+			});
+		Thread.sleep(1000);			
+		
+		
+		WebsocketStompClient.withSockJS()
+			.connect(String.format("ws://localhost:%d/ocpp-boot", port), new WebsocketStompLoggingHandler("Broker"))
+			.whenComplete((c1, u1)->{
+				c1.sleep(100).subscribe("/topic/channel.broker", new WebsocketStompGenericHandler<String>() {
+					public void handle(StompHeaders header, String payload) {
+						System.err.println("/topic/channel.broker -> /topic/channel.inbound");
+						c1.send("/topic/channel.inbound", payload);
+					}
+				});
+
+				c1.sleep(100).subscribe("/topic/channel.outbound", new WebsocketStompGenericHandler<String>() {
+					public void handle(StompHeaders header, String payload) {
+						System.err.println("/topic/channel.outbound ->  -> /app/channel.broker "+payload);
+						c1.send("/app/channel.broker", payload);
+					}
+				});
+			});
+		Thread.sleep(2000);	
+
+
+		logger.info("1 ===================");		
+		clientTemplate.send("/topic/channel.broker", ChargePointCommand.ALL.DataTransfer.build());
+		Thread.sleep(1000);
+
+
+		logger.info("2 ===================");		
+		mockServerTemplate3.send("/topic/channel.outbound", CentralSystemCommand.ALL.DataTransfer.build());
+		Thread.sleep(1000);		
+		
+
+
+
+
+
+		/////////////////////////////////////
+		//  (4) Test with Websocket I/O 
+		/////////////////////////////////////
+		// //No way !!!!!!!
 
 	}
 }

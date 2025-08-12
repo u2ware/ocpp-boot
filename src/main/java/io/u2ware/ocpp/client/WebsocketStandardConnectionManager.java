@@ -48,7 +48,12 @@ public class WebsocketStandardConnectionManager extends WebSocketHandlerDecorato
     }
 
     public CompletableFuture<WebSocketSession> open() throws Exception{
-        return client.execute(this, uri);
+        try{
+            return client.execute(this, uri);
+        }catch(Throwable e){
+            e.printStackTrace();
+            return CompletableFuture.failedFuture(e);
+        }
     }
 
     public <T> void sendMessage(WebSocketMessage<T> message) throws Exception{

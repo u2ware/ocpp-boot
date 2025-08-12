@@ -39,6 +39,6 @@ public class OcppEventHandler {
 
     @EventListener
     public void handle(OCPPSessionErrorEvent e) {
-        logger.info(e.getPayload(), e.getException());
+        logger.info(e.getPayload(), e.getPayload());
     }
 }

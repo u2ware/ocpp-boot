@@ -26,7 +26,7 @@ public class WebsocketStompLoggingHandler extends WebsocketStompGenericHandler<S
 
     @Override
     public void handle(StompHeaders header, String payload) {
-        logger.info(String.format("[%s] handle : %s", title, payload));
+        logger.info(String.format("[%s] %s", title, payload));
     }
 
     @Override

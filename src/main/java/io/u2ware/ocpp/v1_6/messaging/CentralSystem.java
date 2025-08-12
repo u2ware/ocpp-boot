@@ -3,9 +3,11 @@ package io.u2ware.ocpp.v1_6.messaging;
 import org.springframework.util.ClassUtils;
 
 import io.u2ware.ocpp.OCPPMessageConsumer;
+import io.u2ware.ocpp.CallException;
 import io.u2ware.ocpp.OCPPHandlerInvoker;
 import io.u2ware.ocpp.OCPPHandlerTemplate;
 import io.u2ware.ocpp.OCPPVersion;
+import io.u2ware.ocpp.v1_6.exception.ErrorCodes;
 
 public final class CentralSystem extends OCPPHandlerTemplate<CentralSystemCommand>{
 
@@ -29,6 +31,11 @@ public final class CentralSystem extends OCPPHandlerTemplate<CentralSystemComman
     @Override
     protected String handlerType(String source) {
         return String.format("%s.handlers.%s.CentralSystemHandler", rootPackage, source);
+    }
+
+    @Override
+    protected CallException error(String message) {
+        return ErrorCodes.NotSupported.exception(message);
     }
 
     @Override
@@ -73,4 +80,5 @@ public final class CentralSystem extends OCPPHandlerTemplate<CentralSystemComman
         }
         return this;
     }
+
 }

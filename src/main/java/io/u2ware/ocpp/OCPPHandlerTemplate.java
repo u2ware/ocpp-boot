@@ -24,6 +24,7 @@ public abstract class OCPPHandlerTemplate<T extends OCPPCommand> implements OCPP
     protected abstract String responseType(String source);
     protected abstract String errorType(String source);
     protected abstract String handlerType(String source);
+    protected abstract CallException error(String message);
 
     public Class<?> requestClass(String source) {
         return OCPPHandlerInvoker.resolveType(requestType(source));

@@ -3,9 +3,11 @@ package io.u2ware.ocpp.v2_0_1.messaging;
 import org.springframework.util.ClassUtils;
 
 import io.u2ware.ocpp.OCPPMessageConsumer;
+import io.u2ware.ocpp.CallException;
 import io.u2ware.ocpp.OCPPHandlerInvoker;
 import io.u2ware.ocpp.OCPPHandlerTemplate;
 import io.u2ware.ocpp.OCPPVersion;
+import io.u2ware.ocpp.v2_0_1.exception.ErrorCodes;
 
 public final class CSMS extends OCPPHandlerTemplate<CSMSCommand>{
     
@@ -31,6 +33,11 @@ public final class CSMS extends OCPPHandlerTemplate<CSMSCommand>{
         return String.format("%s.handlers.%s.CSMSHandler", rootPackage, source);
     }
 
+    @Override
+    protected CallException error(String message) {
+        return ErrorCodes.NotSupported.exception(message);
+    }
+        
     @Override
     public boolean isServer() {
         return true;

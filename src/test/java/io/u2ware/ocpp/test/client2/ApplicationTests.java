@@ -35,7 +35,7 @@ class ApplicationTests {
 		/////////////////////////////////////
 		// OCPP Test without I/O
 		/////////////////////////////////////
-		CentralSystemCommandTemplate mockServerTemplate = new CentralSystemCommandTemplate();
+		CentralSystemCommandTemplate mockServerTemplate = new CentralSystemCommandTemplate("mockServerTemplate");
 		
 		MockWebSocketHandlerInvoker.of(ac).connect(clientTemplate, mockServerTemplate);
 		Thread.sleep(1000);

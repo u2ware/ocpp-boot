@@ -12,17 +12,25 @@ import io.u2ware.ocpp.OCPPSessionTemplate;
 @RestController
 public class ChargePointCommandTemplate extends OCPPSessionTemplate<ChargePointCommand> implements ChargePointCommandOperations {
 
-    public ChargePointCommandTemplate() {
-        super(new ChargePoint().registerDefaultFeatures(), null);
-    }
-
-    public ChargePointCommandTemplate(SimpMessageSendingOperations simpOperations) {
-        super(new ChargePoint().registerDefaultFeatures(), simpOperations);
-    }
 
     public ChargePointCommandTemplate(ChargePoint operations, SimpMessageSendingOperations simpOperations) {
         super(operations, simpOperations);
     }
+
+
+    public ChargePointCommandTemplate(String description) {
+        super(description, new ChargePoint().registerDefaultFeatures(), null);
+    }    
+    public ChargePointCommandTemplate(String description, ChargePoint operations) {
+        super(description, operations, null);
+    }
+    public ChargePointCommandTemplate(String description, SimpMessageSendingOperations simpOperations) {
+        super(description, new ChargePoint().registerDefaultFeatures(), simpOperations);
+    }
+    public ChargePointCommandTemplate(String description, ChargePoint operations, SimpMessageSendingOperations simpOperations) {
+        super(description, operations, simpOperations);
+    }
+
 
 
     @Override
@@ -43,18 +51,21 @@ public class ChargePointCommandTemplate extends OCPPSessionTemplate<ChargePointC
             super.offer(session, command);
             
         }, ()->{
-            error(this, "ERROR", new NullPointerException("session"));
+            error(this, new RuntimeException("ChargePointCommandTemplate#send()",new NullPointerException("session")));
         });
     }
 
     @Override
-    protected ChargePointCommand convert(String payload) throws Exception {
-        ChargePointCommand s = conversion.comfortableReadValue(payload, ChargePointCommand.class);
-        ChargePointCommand c = ChargePointCommand.ALL.valueOf(s.getAction()).build();
-        if(StringUtils.hasText(s.getIdentifier())) c.setIdentifier(s.getIdentifier());
-        if(StringUtils.hasText(s.getUsecase())) c.setUsecase(s.getUsecase());
-        if(! ObjectUtils.isEmpty(s.getAttributes())) c.setAttributes(s.getAttributes());
-        return c;
+    protected ChargePointCommand convertCommand(String payload)  {
+        try{
+            ChargePointCommand s = conversion.comfortableReadValue(payload, ChargePointCommand.class);
+            ChargePointCommand c = ChargePointCommand.ALL.valueOf(s.getAction()).build();
+            if(StringUtils.hasText(s.getIdentifier())) c.setIdentifier(s.getIdentifier());
+            if(StringUtils.hasText(s.getUsecase())) c.setUsecase(s.getUsecase());
+            if(! ObjectUtils.isEmpty(s.getAttributes())) c.setAttributes(s.getAttributes());
+            return c;
+        }catch(Exception e){
+            return null;
+        }
     }
-
 }

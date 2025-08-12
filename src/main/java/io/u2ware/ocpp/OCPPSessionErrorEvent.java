@@ -4,20 +4,14 @@ import org.springframework.context.ApplicationEvent;
 
 public class OCPPSessionErrorEvent extends ApplicationEvent{
 
-    private String text;
     private Throwable t;
 
-    public OCPPSessionErrorEvent(Object source, String text, Throwable t) {
+    public OCPPSessionErrorEvent(Object source, Throwable t) {
         super(source);
-        this.text = text;
         this.t = t;
     }
 
-    public String getPayload(){
-        return text;
-    }         
-
-    public Throwable getException(){
+    public Throwable getPayload(){
         return t;
     }
 }

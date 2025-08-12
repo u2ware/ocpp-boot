@@ -25,8 +25,8 @@ class ApplicationTests {
 		/////////////////////////////////////////////////////
 		// Test without I/O by MockWebSocketHandlerInvoker
 		/////////////////////////////////////////////////////
-		io.u2ware.ocpp.v1_6.messaging.CentralSystemCommandTemplate serverOperations = new io.u2ware.ocpp.v1_6.messaging.CentralSystemCommandTemplate();
-		io.u2ware.ocpp.v1_6.messaging.ChargePointCommandTemplate clientOperations = new io.u2ware.ocpp.v1_6.messaging.ChargePointCommandTemplate();
+		io.u2ware.ocpp.v1_6.messaging.CentralSystemCommandTemplate serverOperations = new io.u2ware.ocpp.v1_6.messaging.CentralSystemCommandTemplate("Mock1");
+		io.u2ware.ocpp.v1_6.messaging.ChargePointCommandTemplate clientOperations = new io.u2ware.ocpp.v1_6.messaging.ChargePointCommandTemplate("Mock2");
 
 		MockWebSocketHandlerInvoker.of(ac).connect(serverOperations, clientOperations);
 		Thread.sleep(1000);
@@ -59,8 +59,8 @@ class ApplicationTests {
 		/////////////////////////////////////////////////////
 		// Test without I/O by MockWebSocketHandlerInvoker
 		/////////////////////////////////////////////////////
-		io.u2ware.ocpp.v2_0_1.messaging.CSMSCommandTemplate serverOperations = new io.u2ware.ocpp.v2_0_1.messaging.CSMSCommandTemplate();
-		io.u2ware.ocpp.v2_0_1.messaging.ChargingStationCommandTemplate clientOperations = new  io.u2ware.ocpp.v2_0_1.messaging.ChargingStationCommandTemplate();
+		io.u2ware.ocpp.v2_0_1.messaging.CSMSCommandTemplate serverOperations = new io.u2ware.ocpp.v2_0_1.messaging.CSMSCommandTemplate("Mock1");
+		io.u2ware.ocpp.v2_0_1.messaging.ChargingStationCommandTemplate clientOperations = new  io.u2ware.ocpp.v2_0_1.messaging.ChargingStationCommandTemplate("Mock2");
 
 		MockWebSocketHandlerInvoker.of(ac).connect(serverOperations, clientOperations);
 		Thread.sleep(1000);
@@ -94,8 +94,8 @@ class ApplicationTests {
 		/////////////////////////////////////////////////////
 		// Test without I/O by MockWebSocketHandlerInvoker
 		/////////////////////////////////////////////////////
-		io.u2ware.ocpp.v2_1.messaging.CSMSCommandTemplate serverOperations = new io.u2ware.ocpp.v2_1.messaging.CSMSCommandTemplate();
-		io.u2ware.ocpp.v2_1.messaging.ChargingStationCommandTemplate clientOperations = new  io.u2ware.ocpp.v2_1.messaging.ChargingStationCommandTemplate();
+		io.u2ware.ocpp.v2_1.messaging.CSMSCommandTemplate serverOperations = new io.u2ware.ocpp.v2_1.messaging.CSMSCommandTemplate("Mock1");
+		io.u2ware.ocpp.v2_1.messaging.ChargingStationCommandTemplate clientOperations = new  io.u2ware.ocpp.v2_1.messaging.ChargingStationCommandTemplate("Mock2");
 
 		MockWebSocketHandlerInvoker.of(ac).connect(serverOperations, clientOperations);
 		Thread.sleep(1000);
