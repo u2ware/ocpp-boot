@@ -6,11 +6,8 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.springframework.util.ClassUtils;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-
-import io.u2ware.ocpp.OCPPHandlerInvoker;
 
 public class CentralSystemInitializer implements InitializingBean, ApplicationContextAware {
 

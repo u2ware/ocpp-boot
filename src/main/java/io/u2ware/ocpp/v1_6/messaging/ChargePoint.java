@@ -6,12 +6,10 @@ import org.springframework.util.ClassUtils;
 import org.springframework.util.MultiValueMap;
 import org.springframework.util.StringUtils;
 
-import io.u2ware.ocpp.OCPPMessageConsumer;
-import io.u2ware.ocpp.CallException;
 import io.u2ware.ocpp.OCPPHandlerInvoker;
 import io.u2ware.ocpp.OCPPHandlerTemplate;
+import io.u2ware.ocpp.OCPPMessageConsumer;
 import io.u2ware.ocpp.OCPPVersion;
-import io.u2ware.ocpp.v1_6.exception.ErrorCodes;
 
 public final class ChargePoint extends OCPPHandlerTemplate<ChargePointCommand>{
 

@@ -1,7 +1,5 @@
 package io.u2ware.ocpp.v2_1.messaging;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Map;
 
 import org.springframework.beans.BeansException;
