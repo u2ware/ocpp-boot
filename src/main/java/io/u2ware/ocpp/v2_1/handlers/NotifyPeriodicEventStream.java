@@ -1,22 +1,21 @@
 package io.u2ware.ocpp.v2_1.handlers;
 
-import io.u2ware.ocpp.v2_1.actions.NotifyPeriodicEventStreamOffer;
-import io.u2ware.ocpp.v2_1.exception.ErrorCode;
-import io.u2ware.ocpp.v2_1.model.NotifyPeriodicEventStreamRequest;
-import io.u2ware.ocpp.v2_1.model.NotifyPeriodicEventStreamResponse;
-
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+
+import io.u2ware.ocpp.v2_1.actions.NotifyPeriodicEventStreamOffer;
 import io.u2ware.ocpp.v2_1.actions.NotifyPeriodicEventStreamAnswer;
+import io.u2ware.ocpp.v2_1.model.NotifyPeriodicEventStreamRequest;
+import io.u2ware.ocpp.v2_1.model.NotifyPeriodicEventStreamResponse;
+import io.u2ware.ocpp.v2_1.exception.ErrorCode;
 
-public class NotifyPeriodicEventStream {
- 
+public interface NotifyPeriodicEventStream {
+    
+
     public interface ChargingStationHandler extends NotifyPeriodicEventStreamOffer, io.u2ware.ocpp.v2_1.messaging.ChargingStationHandler {
-
-        default String[] features() { return new String[]{"NotifyPeriodicEventStream"};}
 
         public static ChargingStationHandler DEFAULT = new ChargingStationHandler(){
 
@@ -25,21 +24,19 @@ public class NotifyPeriodicEventStream {
             @Override
             public NotifyPeriodicEventStreamRequest sendNotifyPeriodicEventStreamRequest(String id,
                     Map<String, Object> req) {
-                logger.info(String.format("\n\n\t sendNotifyPeriodicEventStreamRequest(%s)\n", id));
+                logger.info(String.format("\n\n\tsendNotifyPeriodicEventStreamRequest(%s)\n", id));
                 return NotifyPeriodicEventStreamRequest.builder().build();
             }
 
             @Override
             public void receivedNotifyPeriodicEventStreamResponse(String id, NotifyPeriodicEventStreamResponse res,
-                    ErrorCode err) {                
-                logger.info(String.format("\n\n\t receivedNotifyPeriodicEventStreamResponse(%s)\n", id));                
+                    ErrorCode err) {
+                logger.info(String.format("\n\n\treceivedNotifyPeriodicEventStreamResponse(%s)\n", id), err);
             }
         };
     }
 
     public interface CSMSHandler extends NotifyPeriodicEventStreamAnswer, io.u2ware.ocpp.v2_1.messaging.CSMSHandler {    
-
-        default String[] features() { return new String[]{"NotifyPeriodicEventStream"};}
 
         public static CSMSHandler DEFAULT = new CSMSHandler(){
 
@@ -48,15 +45,16 @@ public class NotifyPeriodicEventStream {
             @Override
             public NotifyPeriodicEventStreamResponse receivedNotifyPeriodicEventStreamRequest(String id,
                     NotifyPeriodicEventStreamRequest req) {
-                logger.info(String.format("\n\n\t receivedNotifyPeriodicEventStreamRequest(%s)\n", id));
-                return null;
+                logger.info(String.format("\n\n\treceivedNotifyPeriodicEventStreamRequest(%s)\n", id));
+                return NotifyPeriodicEventStreamResponse.builder().build();
             }
 
             @Override
             public void sendNotifyPeriodicEventStreamResponse(String id, NotifyPeriodicEventStreamResponse res,
                     ErrorCode err) {
-                logger.info(String.format("\n\n\t sendNotifyPeriodicEventStreamResponse(%s)\n", id));                
+                logger.info(String.format("\n\n\tsendNotifyPeriodicEventStreamResponse(%s)\n", id), err);
             }
         };
     }
+
 }

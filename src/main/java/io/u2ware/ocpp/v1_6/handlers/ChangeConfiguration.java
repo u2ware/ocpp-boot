@@ -16,8 +16,6 @@ public interface ChangeConfiguration {
 
     public interface CentralSystemHandler extends ChangeConfigurationOffer, io.u2ware.ocpp.v1_6.messaging.CentralSystemHandler {
 
-        default String[] features() { return new String[]{"ChangeConfiguration"};}
-
         public static CentralSystemHandler DEFAULT = new CentralSystemHandler(){
 
             protected Log logger = LogFactory.getLog(getClass());
@@ -34,8 +32,6 @@ public interface ChangeConfiguration {
     }
 
     public interface ChargePointHandler extends ChangeConfigurationAnswer, io.u2ware.ocpp.v1_6.messaging.ChargePointHandler {    
-
-        default String[] features() { return new String[]{"ChangeConfiguration"};}
 
         public static ChargePointHandler DEFAULT = new ChargePointHandler(){
 

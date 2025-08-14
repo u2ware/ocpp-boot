@@ -16,8 +16,6 @@ public interface CancelReservation {
 
     public interface CentralSystemHandler extends CancelReservationOffer, io.u2ware.ocpp.v1_6.messaging.CentralSystemHandler {
 
-        default String[] features() { return new String[]{"CancelReservation"};}
-
         public static CentralSystemHandler DEFAULT = new CentralSystemHandler(){
 
             protected Log logger = LogFactory.getLog(getClass());
@@ -34,8 +32,6 @@ public interface CancelReservation {
     }
 
     public interface ChargePointHandler extends CancelReservationAnswer, io.u2ware.ocpp.v1_6.messaging.ChargePointHandler {    
-
-        default String[] features() { return new String[]{"CancelReservation"};}
 
         public static ChargePointHandler DEFAULT = new ChargePointHandler(){
 

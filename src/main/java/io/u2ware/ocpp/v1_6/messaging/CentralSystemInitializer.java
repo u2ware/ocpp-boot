@@ -6,12 +6,17 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.util.ClassUtils;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
+import io.u2ware.ocpp.OCPPHandlerInvoker;
 
 public class CentralSystemInitializer implements InitializingBean, ApplicationContextAware {
 
     private CentralSystem operations;
     private ApplicationContext applicationContext;
+    private MultiValueMap<String,Object> metadata = new LinkedMultiValueMap<>();
 
     public CentralSystemInitializer(CentralSystem operations) {
         this.operations = operations;
@@ -26,7 +31,7 @@ public class CentralSystemInitializer implements InitializingBean, ApplicationCo
 
         Map<String, CentralSystemHandler> handlers = applicationContext.getBeansOfType(CentralSystemHandler.class);
         for(CentralSystemHandler handler : handlers.values()) {
-            operations.registerFeature(handler);
+            operations.registerHandler(handler, metadata);
         }
     } 
 }

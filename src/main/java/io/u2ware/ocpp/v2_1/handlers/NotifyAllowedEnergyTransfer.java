@@ -16,8 +16,6 @@ public interface NotifyAllowedEnergyTransfer {
 
     public interface CSMSHandler extends NotifyAllowedEnergyTransferOffer, io.u2ware.ocpp.v2_1.messaging.CSMSHandler {
 
-        default String[] features() { return new String[]{"NotifyAllowedEnergyTransfer"};}
-
         public static CSMSHandler DEFAULT = new CSMSHandler(){
 
             protected Log logger = LogFactory.getLog(getClass());
@@ -34,8 +32,6 @@ public interface NotifyAllowedEnergyTransfer {
     }
 
     public interface ChargingStationHandler extends NotifyAllowedEnergyTransferAnswer, io.u2ware.ocpp.v2_1.messaging.ChargingStationHandler {    
-
-        default String[] features() { return new String[]{"NotifyAllowedEnergyTransfer"};}
 
         public static ChargingStationHandler DEFAULT = new ChargingStationHandler(){
 

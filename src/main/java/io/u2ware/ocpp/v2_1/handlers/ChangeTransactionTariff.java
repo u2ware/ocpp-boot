@@ -16,8 +16,6 @@ public interface ChangeTransactionTariff {
 
     public interface CSMSHandler extends ChangeTransactionTariffOffer, io.u2ware.ocpp.v2_1.messaging.CSMSHandler {
 
-        default String[] features() { return new String[]{"ChangeTransactionTariff"};}
-
         public static CSMSHandler DEFAULT = new CSMSHandler(){
 
             protected Log logger = LogFactory.getLog(getClass());
@@ -34,8 +32,6 @@ public interface ChangeTransactionTariff {
     }
 
     public interface ChargingStationHandler extends ChangeTransactionTariffAnswer, io.u2ware.ocpp.v2_1.messaging.ChargingStationHandler {    
-
-        default String[] features() { return new String[]{"ChangeTransactionTariff"};}
 
         public static ChargingStationHandler DEFAULT = new ChargingStationHandler(){
 

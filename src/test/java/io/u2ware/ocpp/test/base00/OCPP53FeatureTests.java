@@ -21,10 +21,10 @@ public class OCPP53FeatureTests {
 
         ///////////////////////////////////////////
         ChargePoint cp = new ChargePoint();
-        cp.registerFeature(new SimpleAuthorizeOffer("cp1", SimpleAuthorizeOffer.Test.OK));
+        cp.registerHandler(new SimpleAuthorizeOffer("cp1", SimpleAuthorizeOffer.Test.OK));
 
         CentralSystem cs = new CentralSystem();
-        cs.registerFeature(new SimpleAuthorizeAnswer("cp1", SimpleAuthorizeAnswer.Test.OK));
+        cs.registerHandler(new SimpleAuthorizeAnswer("cp1", SimpleAuthorizeAnswer.Test.OK));
 
 
         ///////////////////////////////////////////

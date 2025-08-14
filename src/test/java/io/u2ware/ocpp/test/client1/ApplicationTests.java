@@ -45,9 +45,9 @@ class ApplicationTests {
 	private @Autowired(required = false) io.u2ware.ocpp.v2_0_1.messaging.ChargingStationInitializer chargingStation201Initializer;	
 	
 
-	private @Autowired(required = false) io.u2ware.ocpp.v2_0_1.messaging.CSMS csms201;
-	private @Autowired(required = false) io.u2ware.ocpp.v2_0_1.messaging.CSMSCommandOperations csms201Operations;
-	private @Autowired(required = false) io.u2ware.ocpp.v2_0_1.messaging.CSMSInitializer csms201Initializer;	
+	private @Autowired(required = false) io.u2ware.ocpp.v2_1.messaging.CSMS csms201;
+	private @Autowired(required = false) io.u2ware.ocpp.v2_1.messaging.CSMSCommandOperations csms201Operations;
+	private @Autowired(required = false) io.u2ware.ocpp.v2_1.messaging.CSMSInitializer csms201Initializer;	
 
 	private @Autowired OcppAttributes ocppAttributes;
 
@@ -73,9 +73,9 @@ class ApplicationTests {
 		logger.info("(v2.0.1)chargingStation201Operations  : "+chargingStation201Operations);
 		logger.info("(v2.0.1)chargingStation201Initializer : "+chargingStation201Initializer);
 
-		logger.info("(v2.0.1)csms201            : "+csms201);
-		logger.info("(v2.0.1)csms201Operations  : "+csms201Operations);
-		logger.info("(v2.0.1)csms201Initializer : "+csms201Initializer);
+		logger.info("(v2.1)csms201            : "+csms201);
+		logger.info("(v2.1)csms201Operations  : "+csms201Operations);
+		logger.info("(v2.1)csms201Initializer : "+csms201Initializer);
 		logger.info("===================");		
 
 		RestTemplateXhrTransport t = new RestTemplateXhrTransport();

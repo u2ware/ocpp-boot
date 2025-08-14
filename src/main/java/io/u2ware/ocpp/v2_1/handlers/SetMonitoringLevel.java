@@ -16,8 +16,6 @@ public interface SetMonitoringLevel {
 
     public interface CSMSHandler extends SetMonitoringLevelOffer, io.u2ware.ocpp.v2_1.messaging.CSMSHandler {
 
-        default String[] features() { return new String[]{"SetMonitoringLevel"};}
-
         public static CSMSHandler DEFAULT = new CSMSHandler(){
 
             protected Log logger = LogFactory.getLog(getClass());
@@ -34,8 +32,6 @@ public interface SetMonitoringLevel {
     }
 
     public interface ChargingStationHandler extends SetMonitoringLevelAnswer, io.u2ware.ocpp.v2_1.messaging.ChargingStationHandler {    
-
-        default String[] features() { return new String[]{"SetMonitoringLevel"};}
 
         public static ChargingStationHandler DEFAULT = new ChargingStationHandler(){
 

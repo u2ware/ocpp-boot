@@ -60,29 +60,29 @@ public class OCPP62OperationsTests {
 
         logger.info("-------------------");
         ChargingStation cp = new ChargingStation();
-        cp.registerDefaultFeatures();
+        cp.registerDefaultHandlers();
 
         CSMS cs = new CSMS();        
-        cs.registerDefaultFeatures();
+        cs.registerDefaultHandlers();
 
         logger.info("-------------------");
         ChargingStationCommand a = ChargingStationCommand.ALL.TransactionEvent.build();
         logger.info(a.getAction());
         logger.info(a.getUsecase());
         logger.info(a.getIdentifier());
-        logger.info(cp.resolveFeature(a.getIdentifier()));
-        logger.info(cp.resolveFeature(a.getAction()));
-        logger.info(cs.resolveFeature(a.getIdentifier()));
-        logger.info(cs.resolveFeature(a.getAction()));
+        logger.info(cp.resolveFeature(a.getIdentifier(), true));
+        logger.info(cp.resolveFeature(a.getAction(), true));
+        logger.info(cs.resolveFeature(a.getIdentifier(), true));
+        logger.info(cs.resolveFeature(a.getAction(), true));
 
         CSMSCommand b =  CSMSCommand.ALL.RequestStartTransaction.build();
         logger.info(b.getAction());
         logger.info(b.getUsecase());
         logger.info(b.getIdentifier());
-        logger.info(cp.resolveFeature(b.getIdentifier()));
-        logger.info(cp.resolveFeature(b.getAction()));
-        logger.info(cs.resolveFeature(b.getIdentifier()));
-        logger.info(cs.resolveFeature(b.getAction()));
+        logger.info(cp.resolveFeature(b.getIdentifier(), true));
+        logger.info(cp.resolveFeature(b.getAction(), true));
+        logger.info(cs.resolveFeature(b.getIdentifier(), true));
+        logger.info(cs.resolveFeature(b.getAction(), true));
 
         logger.info("-------------------");
         testV20(ChargingStationCommand.ALL.DataTransfer.build(), cp, cs);

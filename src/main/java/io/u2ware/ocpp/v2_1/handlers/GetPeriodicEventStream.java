@@ -16,8 +16,6 @@ public interface GetPeriodicEventStream {
 
     public interface CSMSHandler extends GetPeriodicEventStreamOffer, io.u2ware.ocpp.v2_1.messaging.CSMSHandler {
 
-        default String[] features() { return new String[]{"GetPeriodicEventStream"};}
-
         public static CSMSHandler DEFAULT = new CSMSHandler(){
 
             protected Log logger = LogFactory.getLog(getClass());
@@ -34,8 +32,6 @@ public interface GetPeriodicEventStream {
     }
 
     public interface ChargingStationHandler extends GetPeriodicEventStreamAnswer, io.u2ware.ocpp.v2_1.messaging.ChargingStationHandler {    
-
-        default String[] features() { return new String[]{"GetPeriodicEventStream"};}
 
         public static ChargingStationHandler DEFAULT = new ChargingStationHandler(){
 

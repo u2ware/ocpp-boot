@@ -16,8 +16,6 @@ public interface ClearChargingProfile {
 
     public interface CentralSystemHandler extends ClearChargingProfileOffer, io.u2ware.ocpp.v1_6.messaging.CentralSystemHandler {
 
-        default String[] features() { return new String[]{"ClearChargingProfile"};}
-
         public static CentralSystemHandler DEFAULT = new CentralSystemHandler(){
 
             protected Log logger = LogFactory.getLog(getClass());
@@ -34,8 +32,6 @@ public interface ClearChargingProfile {
     }
 
     public interface ChargePointHandler extends ClearChargingProfileAnswer, io.u2ware.ocpp.v1_6.messaging.ChargePointHandler {    
-
-        default String[] features() { return new String[]{"ClearChargingProfile"};}
 
         public static ChargePointHandler DEFAULT = new ChargePointHandler(){
 

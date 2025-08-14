@@ -1,13 +1,15 @@
 package io.u2ware.ocpp.v1_6.messaging;
 
-import org.springframework.util.ClassUtils;
+import java.util.ArrayList;
 
-import io.u2ware.ocpp.OCPPMessageConsumer;
-import io.u2ware.ocpp.CallException;
+import org.springframework.util.ClassUtils;
+import org.springframework.util.MultiValueMap;
+import org.springframework.util.StringUtils;
+
 import io.u2ware.ocpp.OCPPHandlerInvoker;
 import io.u2ware.ocpp.OCPPHandlerTemplate;
+import io.u2ware.ocpp.OCPPMessageConsumer;
 import io.u2ware.ocpp.OCPPVersion;
-import io.u2ware.ocpp.v1_6.exception.ErrorCodes;
 
 public final class CentralSystem extends OCPPHandlerTemplate<CentralSystemCommand>{
 
@@ -34,11 +36,6 @@ public final class CentralSystem extends OCPPHandlerTemplate<CentralSystemComman
     }
 
     @Override
-    protected CallException error(String message) {
-        return ErrorCodes.NotSupported.exception(message);
-    }
-
-    @Override
     public boolean isServer() {
         return true;
     }
@@ -47,7 +44,6 @@ public final class CentralSystem extends OCPPHandlerTemplate<CentralSystemComman
     public boolean isClient() {
         return false;
     }
-
 
     @Override
     public String name() {
@@ -63,22 +59,83 @@ public final class CentralSystem extends OCPPHandlerTemplate<CentralSystemComman
         super.offer(()->{ return command;}, consumer);
     }
 
-    public void registerFeature(CentralSystemHandler handler) {
-        super.registerFeature(handler);
-    }
 
-    public CentralSystem registerDefaultFeatures() {
+    //////////////////////////////////////////////////////
+    //
+    //////////////////////////////////////////////////////
+    public CentralSystem registerDefaultHandlers() {
         for(ChargePointCommand.Builder e :  ChargePointCommand.ALL.values()){
-            Class<?> c = handlerClass(e.action());
-            CentralSystemHandler h = (CentralSystemHandler)OCPPHandlerInvoker.invokeField(c, "DEFAULT");
-            super.registerFeature(h);
+            String action = e.action();
+            Class<?> type = handlerClass(action);
+            CentralSystemHandler handler = (CentralSystemHandler)OCPPHandlerInvoker.invokeField(type, "DEFAULT");
+            super.registerFeature(action, handler);
         }
         for(CentralSystemCommand.Builder e :  CentralSystemCommand.ALL.values()){
-            Class<?> c = handlerClass(e.action());
-            CentralSystemHandler h = (CentralSystemHandler)OCPPHandlerInvoker.invokeField(c, "DEFAULT");
-            super.registerFeature(h);
+            String action = e.action();
+            Class<?> type = handlerClass(action);
+            CentralSystemHandler handler = (CentralSystemHandler)OCPPHandlerInvoker.invokeField(type, "DEFAULT");
+            super.registerFeature(action, handler);
         }
         return this;
     }
 
+
+    public CentralSystem registerHandler(CentralSystemHandler handler, MultiValueMap<String,Object> metadata) {
+
+
+        String usecase = handler.usecase();
+        boolean actions = handler.actions();
+
+
+        for(ChargePointCommand.Builder e :  ChargePointCommand.ALL.values()){
+            String action = e.action();
+            Class<?> type = handlerClass(action);
+
+            if(metadata != null && ! metadata.containsKey(action)){
+                metadata.put(action, new ArrayList<>());
+            }
+
+            if(ClassUtils.isAssignableValue(type, handler)){
+                if(StringUtils.hasText(usecase)) {
+                    super.registerFeature(usecase, handler);
+                    if(metadata != null){
+                        metadata.add(action, usecase);
+                    }
+                }
+                if(actions) {
+                    super.registerFeature(action, handler);
+                    if(metadata != null){
+                        metadata.add(action, action);
+                    }
+                }
+            }
+        }
+        for(CentralSystemCommand.Builder e :  CentralSystemCommand.ALL.values()){
+            String action = e.action();
+            Class<?> type = handlerClass(action);
+
+            if(metadata != null && ! metadata.containsKey(action)){
+                metadata.put(action, new ArrayList<>());
+            }            
+            if(ClassUtils.isAssignableValue(type, handler)){
+                if(StringUtils.hasText(usecase)) {
+                    super.registerFeature(usecase, handler);
+                    if(metadata != null){
+                        metadata.add(action, usecase);
+                    }
+                }
+                if(actions) {
+                    super.registerFeature(action, handler);
+                    if(metadata != null){
+                        metadata.add(action, action);
+                    }
+                }
+            }
+        }        
+        return this;
+    }
+
+    public CentralSystem registerHandler(CentralSystemHandler handler) {       
+        return registerHandler(handler, null);
+    }
 }

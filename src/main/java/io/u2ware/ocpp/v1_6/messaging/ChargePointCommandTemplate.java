@@ -19,13 +19,13 @@ public class ChargePointCommandTemplate extends OCPPSessionTemplate<ChargePointC
 
 
     public ChargePointCommandTemplate(String description) {
-        super(description, new ChargePoint().registerDefaultFeatures(), null);
+        super(description, new ChargePoint().registerDefaultHandlers(), null);
     }    
     public ChargePointCommandTemplate(String description, ChargePoint operations) {
         super(description, operations, null);
     }
     public ChargePointCommandTemplate(String description, SimpMessageSendingOperations simpOperations) {
-        super(description, new ChargePoint().registerDefaultFeatures(), simpOperations);
+        super(description, new ChargePoint().registerDefaultHandlers(), simpOperations);
     }
     public ChargePointCommandTemplate(String description, ChargePoint operations, SimpMessageSendingOperations simpOperations) {
         super(description, operations, simpOperations);

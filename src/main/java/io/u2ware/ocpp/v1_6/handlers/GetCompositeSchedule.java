@@ -16,8 +16,6 @@ public interface GetCompositeSchedule {
 
     public interface CentralSystemHandler extends GetCompositeScheduleOffer, io.u2ware.ocpp.v1_6.messaging.CentralSystemHandler {
 
-        default String[] features() { return new String[]{"GetCompositeSchedule"};}
-
         public static CentralSystemHandler DEFAULT = new CentralSystemHandler(){
 
             protected Log logger = LogFactory.getLog(getClass());
@@ -34,8 +32,6 @@ public interface GetCompositeSchedule {
     }
 
     public interface ChargePointHandler extends GetCompositeScheduleAnswer, io.u2ware.ocpp.v1_6.messaging.ChargePointHandler {    
-
-        default String[] features() { return new String[]{"GetCompositeSchedule"};}
 
         public static ChargePointHandler DEFAULT = new ChargePointHandler(){
 

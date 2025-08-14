@@ -16,8 +16,6 @@ public interface CertificateSigned {
 
     public interface CSMSHandler extends CertificateSignedOffer, io.u2ware.ocpp.v2_1.messaging.CSMSHandler {
 
-        default String[] features() { return new String[]{"CertificateSigned"};}
-
         public static CSMSHandler DEFAULT = new CSMSHandler(){
 
             protected Log logger = LogFactory.getLog(getClass());
@@ -34,8 +32,6 @@ public interface CertificateSigned {
     }
 
     public interface ChargingStationHandler extends CertificateSignedAnswer, io.u2ware.ocpp.v2_1.messaging.ChargingStationHandler {    
-
-        default String[] features() { return new String[]{"CertificateSigned"};}
 
         public static ChargingStationHandler DEFAULT = new ChargingStationHandler(){
 

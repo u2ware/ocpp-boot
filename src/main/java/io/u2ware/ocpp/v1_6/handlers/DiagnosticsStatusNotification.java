@@ -16,8 +16,6 @@ public interface DiagnosticsStatusNotification {
 
     public interface ChargePointHandler extends DiagnosticsStatusNotificationOffer, io.u2ware.ocpp.v1_6.messaging.ChargePointHandler {
 
-        default String[] features() { return new String[]{"DiagnosticsStatusNotification"};}
-
         public static ChargePointHandler DEFAULT = new ChargePointHandler(){
 
             protected Log logger = LogFactory.getLog(getClass());
@@ -34,8 +32,6 @@ public interface DiagnosticsStatusNotification {
     }
 
     public interface CentralSystemHandler extends DiagnosticsStatusNotificationAnswer, io.u2ware.ocpp.v1_6.messaging.CentralSystemHandler {    
-
-        default String[] features() { return new String[]{"DiagnosticsStatusNotification"};}
 
         public static CentralSystemHandler DEFAULT = new CentralSystemHandler(){
 

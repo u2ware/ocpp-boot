@@ -16,8 +16,6 @@ public interface BatterySwap {
 
     public interface ChargingStationHandler extends BatterySwapOffer, io.u2ware.ocpp.v2_1.messaging.ChargingStationHandler {
 
-        default String[] features() { return new String[]{"BatterySwap"};}
-
         public static ChargingStationHandler DEFAULT = new ChargingStationHandler(){
 
             protected Log logger = LogFactory.getLog(getClass());
@@ -34,8 +32,6 @@ public interface BatterySwap {
     }
 
     public interface CSMSHandler extends BatterySwapAnswer, io.u2ware.ocpp.v2_1.messaging.CSMSHandler {    
-
-        default String[] features() { return new String[]{"BatterySwap"};}
 
         public static CSMSHandler DEFAULT = new CSMSHandler(){
 

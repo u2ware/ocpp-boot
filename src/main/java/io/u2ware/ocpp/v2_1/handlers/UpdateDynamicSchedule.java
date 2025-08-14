@@ -16,8 +16,6 @@ public interface UpdateDynamicSchedule {
 
     public interface CSMSHandler extends UpdateDynamicScheduleOffer, io.u2ware.ocpp.v2_1.messaging.CSMSHandler {
 
-        default String[] features() { return new String[]{"UpdateDynamicSchedule"};}
-
         public static CSMSHandler DEFAULT = new CSMSHandler(){
 
             protected Log logger = LogFactory.getLog(getClass());
@@ -34,8 +32,6 @@ public interface UpdateDynamicSchedule {
     }
 
     public interface ChargingStationHandler extends UpdateDynamicScheduleAnswer, io.u2ware.ocpp.v2_1.messaging.ChargingStationHandler {    
-
-        default String[] features() { return new String[]{"UpdateDynamicSchedule"};}
 
         public static ChargingStationHandler DEFAULT = new ChargingStationHandler(){
 

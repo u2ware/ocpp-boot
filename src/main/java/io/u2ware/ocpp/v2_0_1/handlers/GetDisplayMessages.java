@@ -16,8 +16,6 @@ public interface GetDisplayMessages {
 
     public interface CSMSHandler extends GetDisplayMessagesOffer, io.u2ware.ocpp.v2_0_1.messaging.CSMSHandler {
 
-        default String[] features() { return new String[]{"GetDisplayMessages"};}
-
         public static CSMSHandler DEFAULT = new CSMSHandler(){
 
             protected Log logger = LogFactory.getLog(getClass());
@@ -34,8 +32,6 @@ public interface GetDisplayMessages {
     }
 
     public interface ChargingStationHandler extends GetDisplayMessagesAnswer, io.u2ware.ocpp.v2_0_1.messaging.ChargingStationHandler {    
-
-        default String[] features() { return new String[]{"GetDisplayMessages"};}
 
         public static ChargingStationHandler DEFAULT = new ChargingStationHandler(){
 

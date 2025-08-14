@@ -6,12 +6,15 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 
 public class ChargePointInitializer implements InitializingBean, ApplicationContextAware {
 
     private ChargePoint operations;
     private ApplicationContext applicationContext;
+    private MultiValueMap<String,Object> metadata = new LinkedMultiValueMap<>();
 
     public ChargePointInitializer(ChargePoint operations) {
         this.operations = operations;
@@ -26,7 +29,7 @@ public class ChargePointInitializer implements InitializingBean, ApplicationCont
        
         Map<String, ChargePointHandler> handlers = applicationContext.getBeansOfType(ChargePointHandler.class);
         for(ChargePointHandler handler : handlers.values()) {
-            operations.registerFeature(handler);
+            operations.registerHandler(handler, metadata);
         }
     } 
 }

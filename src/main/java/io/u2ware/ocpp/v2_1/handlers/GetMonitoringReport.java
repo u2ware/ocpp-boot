@@ -16,8 +16,6 @@ public interface GetMonitoringReport {
 
     public interface CSMSHandler extends GetMonitoringReportOffer, io.u2ware.ocpp.v2_1.messaging.CSMSHandler {
 
-        default String[] features() { return new String[]{"GetMonitoringReport"};}
-
         public static CSMSHandler DEFAULT = new CSMSHandler(){
 
             protected Log logger = LogFactory.getLog(getClass());
@@ -34,8 +32,6 @@ public interface GetMonitoringReport {
     }
 
     public interface ChargingStationHandler extends GetMonitoringReportAnswer, io.u2ware.ocpp.v2_1.messaging.ChargingStationHandler {    
-
-        default String[] features() { return new String[]{"GetMonitoringReport"};}
 
         public static ChargingStationHandler DEFAULT = new ChargingStationHandler(){
 

@@ -16,8 +16,6 @@ public interface ClearCache {
 
     public interface CSMSHandler extends ClearCacheOffer, io.u2ware.ocpp.v2_1.messaging.CSMSHandler {
 
-        default String[] features() { return new String[]{"ClearCache"};}
-
         public static CSMSHandler DEFAULT = new CSMSHandler(){
 
             protected Log logger = LogFactory.getLog(getClass());
@@ -34,8 +32,6 @@ public interface ClearCache {
     }
 
     public interface ChargingStationHandler extends ClearCacheAnswer, io.u2ware.ocpp.v2_1.messaging.ChargingStationHandler {    
-
-        default String[] features() { return new String[]{"ClearCache"};}
 
         public static ChargingStationHandler DEFAULT = new ChargingStationHandler(){
 

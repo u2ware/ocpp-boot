@@ -16,8 +16,6 @@ public interface Heartbeat {
 
     public interface ChargePointHandler extends HeartbeatOffer, io.u2ware.ocpp.v1_6.messaging.ChargePointHandler {
 
-        default String[] features() { return new String[]{"Heartbeat"};}
-
         public static ChargePointHandler DEFAULT = new ChargePointHandler(){
 
             protected Log logger = LogFactory.getLog(getClass());
@@ -34,8 +32,6 @@ public interface Heartbeat {
     }
 
     public interface CentralSystemHandler extends HeartbeatAnswer, io.u2ware.ocpp.v1_6.messaging.CentralSystemHandler {    
-
-        default String[] features() { return new String[]{"Heartbeat"};}
 
         public static CentralSystemHandler DEFAULT = new CentralSystemHandler(){
 

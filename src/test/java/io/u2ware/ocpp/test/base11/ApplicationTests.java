@@ -25,11 +25,11 @@ class ApplicationTests {
 
 
 		CentralSystem cs = new CentralSystem();
-        cs.registerDefaultFeatures();
+        cs.registerDefaultHandlers();
 
 
 		ChargePoint cp = new ChargePoint();
-        cp.registerDefaultFeatures();
+        cp.registerDefaultHandlers();
 
 
 		///////////////////////////////////////

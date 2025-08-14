@@ -16,8 +16,6 @@ public interface RemoteStopTransaction {
 
     public interface CentralSystemHandler extends RemoteStopTransactionOffer, io.u2ware.ocpp.v1_6.messaging.CentralSystemHandler {
 
-        default String[] features() { return new String[]{"RemoteStopTransaction"};}
-
         public static CentralSystemHandler DEFAULT = new CentralSystemHandler(){
 
             protected Log logger = LogFactory.getLog(getClass());
@@ -34,8 +32,6 @@ public interface RemoteStopTransaction {
     }
 
     public interface ChargePointHandler extends RemoteStopTransactionAnswer, io.u2ware.ocpp.v1_6.messaging.ChargePointHandler {    
-
-        default String[] features() { return new String[]{"RemoteStopTransaction"};}
 
         public static ChargePointHandler DEFAULT = new ChargePointHandler(){
 

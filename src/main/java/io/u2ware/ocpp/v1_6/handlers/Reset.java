@@ -16,8 +16,6 @@ public interface Reset {
 
     public interface CentralSystemHandler extends ResetOffer, io.u2ware.ocpp.v1_6.messaging.CentralSystemHandler {
 
-        default String[] features() { return new String[]{"Reset"};}
-
         public static CentralSystemHandler DEFAULT = new CentralSystemHandler(){
 
             protected Log logger = LogFactory.getLog(getClass());
@@ -34,8 +32,6 @@ public interface Reset {
     }
 
     public interface ChargePointHandler extends ResetAnswer, io.u2ware.ocpp.v1_6.messaging.ChargePointHandler {    
-
-        default String[] features() { return new String[]{"Reset"};}
 
         public static ChargePointHandler DEFAULT = new ChargePointHandler(){
 

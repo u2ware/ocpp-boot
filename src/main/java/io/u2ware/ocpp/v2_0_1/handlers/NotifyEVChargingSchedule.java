@@ -16,8 +16,6 @@ public interface NotifyEVChargingSchedule {
 
     public interface ChargingStationHandler extends NotifyEVChargingScheduleOffer, io.u2ware.ocpp.v2_0_1.messaging.ChargingStationHandler {
 
-        default String[] features() { return new String[]{"NotifyEVChargingSchedule"};}
-
         public static ChargingStationHandler DEFAULT = new ChargingStationHandler(){
 
             protected Log logger = LogFactory.getLog(getClass());
@@ -34,8 +32,6 @@ public interface NotifyEVChargingSchedule {
     }
 
     public interface CSMSHandler extends NotifyEVChargingScheduleAnswer, io.u2ware.ocpp.v2_0_1.messaging.CSMSHandler {    
-
-        default String[] features() { return new String[]{"NotifyEVChargingSchedule"};}
 
         public static CSMSHandler DEFAULT = new CSMSHandler(){
 

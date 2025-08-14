@@ -16,8 +16,6 @@ public interface ReportChargingProfiles {
 
     public interface ChargingStationHandler extends ReportChargingProfilesOffer, io.u2ware.ocpp.v2_1.messaging.ChargingStationHandler {
 
-        default String[] features() { return new String[]{"ReportChargingProfiles"};}
-
         public static ChargingStationHandler DEFAULT = new ChargingStationHandler(){
 
             protected Log logger = LogFactory.getLog(getClass());
@@ -34,8 +32,6 @@ public interface ReportChargingProfiles {
     }
 
     public interface CSMSHandler extends ReportChargingProfilesAnswer, io.u2ware.ocpp.v2_1.messaging.CSMSHandler {    
-
-        default String[] features() { return new String[]{"ReportChargingProfiles"};}
 
         public static CSMSHandler DEFAULT = new CSMSHandler(){
 

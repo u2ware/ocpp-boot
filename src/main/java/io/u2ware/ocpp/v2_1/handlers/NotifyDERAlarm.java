@@ -16,8 +16,6 @@ public interface NotifyDERAlarm {
 
     public interface ChargingStationHandler extends NotifyDERAlarmOffer, io.u2ware.ocpp.v2_1.messaging.ChargingStationHandler {
 
-        default String[] features() { return new String[]{"NotifyDERAlarm"};}
-
         public static ChargingStationHandler DEFAULT = new ChargingStationHandler(){
 
             protected Log logger = LogFactory.getLog(getClass());
@@ -34,8 +32,6 @@ public interface NotifyDERAlarm {
     }
 
     public interface CSMSHandler extends NotifyDERAlarmAnswer, io.u2ware.ocpp.v2_1.messaging.CSMSHandler {    
-
-        default String[] features() { return new String[]{"NotifyDERAlarm"};}
 
         public static CSMSHandler DEFAULT = new CSMSHandler(){
 

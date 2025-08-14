@@ -51,7 +51,7 @@ class ApplicationTests {
 	@Test
 	void contextLoads() throws Exception {
 
-		server.registerDefaultFeatures();
+		server.registerDefaultHandlers();
 
 		/////////////////////////////////////
 		// serverTemplate

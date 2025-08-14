@@ -7,7 +7,7 @@ import io.u2ware.ocpp.OCPPVersion;
 import io.u2ware.ocpp.config.EnableOcppClient;
 
 @SpringBootApplication
-@EnableOcppClient(version = OCPPVersion.V2_0_1)
+@EnableOcppClient(version = OCPPVersion.V2_1)
 public class Application {
 
 	public static void main(String[] args) {

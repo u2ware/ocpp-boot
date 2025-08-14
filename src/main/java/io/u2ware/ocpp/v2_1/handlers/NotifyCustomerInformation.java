@@ -16,8 +16,6 @@ public interface NotifyCustomerInformation {
 
     public interface ChargingStationHandler extends NotifyCustomerInformationOffer, io.u2ware.ocpp.v2_1.messaging.ChargingStationHandler {
 
-        default String[] features() { return new String[]{"NotifyCustomerInformation"};}
-
         public static ChargingStationHandler DEFAULT = new ChargingStationHandler(){
 
             protected Log logger = LogFactory.getLog(getClass());
@@ -34,8 +32,6 @@ public interface NotifyCustomerInformation {
     }
 
     public interface CSMSHandler extends NotifyCustomerInformationAnswer, io.u2ware.ocpp.v2_1.messaging.CSMSHandler {    
-
-        default String[] features() { return new String[]{"NotifyCustomerInformation"};}
 
         public static CSMSHandler DEFAULT = new CSMSHandler(){
 

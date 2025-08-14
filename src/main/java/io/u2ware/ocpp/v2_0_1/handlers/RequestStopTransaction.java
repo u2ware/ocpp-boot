@@ -16,8 +16,6 @@ public interface RequestStopTransaction {
 
     public interface CSMSHandler extends RequestStopTransactionOffer, io.u2ware.ocpp.v2_0_1.messaging.CSMSHandler {
 
-        default String[] features() { return new String[]{"RequestStopTransaction"};}
-
         public static CSMSHandler DEFAULT = new CSMSHandler(){
 
             protected Log logger = LogFactory.getLog(getClass());
@@ -34,8 +32,6 @@ public interface RequestStopTransaction {
     }
 
     public interface ChargingStationHandler extends RequestStopTransactionAnswer, io.u2ware.ocpp.v2_0_1.messaging.ChargingStationHandler {    
-
-        default String[] features() { return new String[]{"RequestStopTransaction"};}
 
         public static ChargingStationHandler DEFAULT = new ChargingStationHandler(){
 

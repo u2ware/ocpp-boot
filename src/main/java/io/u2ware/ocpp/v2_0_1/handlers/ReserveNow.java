@@ -16,8 +16,6 @@ public interface ReserveNow {
 
     public interface CSMSHandler extends ReserveNowOffer, io.u2ware.ocpp.v2_0_1.messaging.CSMSHandler {
 
-        default String[] features() { return new String[]{"ReserveNow"};}
-
         public static CSMSHandler DEFAULT = new CSMSHandler(){
 
             protected Log logger = LogFactory.getLog(getClass());
@@ -34,8 +32,6 @@ public interface ReserveNow {
     }
 
     public interface ChargingStationHandler extends ReserveNowAnswer, io.u2ware.ocpp.v2_0_1.messaging.ChargingStationHandler {    
-
-        default String[] features() { return new String[]{"ReserveNow"};}
 
         public static ChargingStationHandler DEFAULT = new ChargingStationHandler(){
 

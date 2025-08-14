@@ -1,13 +1,15 @@
 package io.u2ware.ocpp.v2_1.messaging;
 
-import org.springframework.util.ClassUtils;
+import java.util.ArrayList;
 
-import io.u2ware.ocpp.OCPPMessageConsumer;
-import io.u2ware.ocpp.CallException;
+import org.springframework.util.ClassUtils;
+import org.springframework.util.MultiValueMap;
+import org.springframework.util.StringUtils;
+
 import io.u2ware.ocpp.OCPPHandlerInvoker;
 import io.u2ware.ocpp.OCPPHandlerTemplate;
+import io.u2ware.ocpp.OCPPMessageConsumer;
 import io.u2ware.ocpp.OCPPVersion;
-import io.u2ware.ocpp.v2_1.exception.ErrorCodes;
 
 public final class CSMS extends OCPPHandlerTemplate<CSMSCommand>{
     
@@ -34,50 +36,106 @@ public final class CSMS extends OCPPHandlerTemplate<CSMSCommand>{
     }
 
     @Override
-    protected CallException error(String message) {
-        return ErrorCodes.NotSupported.exception(message);
-    }    
-
-    @Override
-    public boolean isServer() {
+    public final boolean isServer() {
         return true;
     }
 
     @Override
-    public boolean isClient() {
+    public final boolean isClient() {
         return false;
     }      
 
     @Override
-    public String name() {
+    public final String name() {
         return ClassUtils.getShortName(getClass());
     }
 
     @Override
-    public OCPPVersion version() {
-        return OCPPVersion.V1_6;
+    public final OCPPVersion version() {
+        return OCPPVersion.V2_1;
     }
 
     public void offer(CSMSCommand command, OCPPMessageConsumer consumer) {
         super.offer(()->{ return command;}, consumer);
     }
 
-    public void registerFeature(CSMSHandler handler) {
-        super.registerFeature(handler);
-    }  
-
-    public CSMS registerDefaultFeatures() {
+    //////////////////////////////////////////////////////
+    //
+    //////////////////////////////////////////////////////
+    public CSMS registerDefaultHandlers() {
         for(ChargingStationCommand.Builder e :  ChargingStationCommand.ALL.values()){
-            Class<?> c = handlerClass(e.action());
-            CSMSHandler h = (CSMSHandler)OCPPHandlerInvoker.invokeField(c, "DEFAULT");
-            super.registerFeature(h);
+            String action = e.action();
+            Class<?> type = handlerClass(action);
+            CSMSHandler handler = (CSMSHandler)OCPPHandlerInvoker.invokeField(type, "DEFAULT");
+            super.registerFeature(action, handler);
         }
         for(CSMSCommand.Builder e :  CSMSCommand.ALL.values()){
-            Class<?> c = handlerClass(e.action());
-            CSMSHandler h = (CSMSHandler)OCPPHandlerInvoker.invokeField(c, "DEFAULT");
-            super.registerFeature(h);
+            String action = e.action();
+            Class<?> type = handlerClass(action);
+            CSMSHandler handler = (CSMSHandler)OCPPHandlerInvoker.invokeField(type, "DEFAULT");
+            super.registerFeature(action, handler);
         }
         return this;
+    }
+
+
+    public CSMS registerHandler(CSMSHandler handler, MultiValueMap<String,Object> metadata) {
+
+
+        String usecase = handler.usecase();
+        boolean actions = handler.actions();
+
+
+        for(ChargingStationCommand.Builder e :  ChargingStationCommand.ALL.values()){
+            String action = e.action();
+            Class<?> type = handlerClass(action);
+
+            if(metadata != null && ! metadata.containsKey(action)){
+                metadata.put(action, new ArrayList<>());
+            }
+
+            if(ClassUtils.isAssignableValue(type, handler)){
+                if(StringUtils.hasText(usecase)) {
+                    super.registerFeature(usecase, handler);
+                    if(metadata != null){
+                        metadata.add(action, usecase);
+                    }
+                }
+                if(actions) {
+                    super.registerFeature(action, handler);
+                    if(metadata != null){
+                        metadata.add(action, action);
+                    }
+                }
+            }
+        }
+        for(CSMSCommand.Builder e :  CSMSCommand.ALL.values()){
+            String action = e.action();
+            Class<?> type = handlerClass(action);
+
+            if(metadata != null && ! metadata.containsKey(action)){
+                metadata.put(action, new ArrayList<>());
+            }            
+            if(ClassUtils.isAssignableValue(type, handler)){
+                if(StringUtils.hasText(usecase)) {
+                    super.registerFeature(usecase, handler);
+                    if(metadata != null){
+                        metadata.add(action, usecase);
+                    }
+                }
+                if(actions) {
+                    super.registerFeature(action, handler);
+                    if(metadata != null){
+                        metadata.add(action, action);
+                    }
+                }
+            }
+        }        
+        return this;
+    }
+
+    public CSMS registerHandler(CSMSHandler handler) {       
+        return registerHandler(handler, null);
     }
 
 }

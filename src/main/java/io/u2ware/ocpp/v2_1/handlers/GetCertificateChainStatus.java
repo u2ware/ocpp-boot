@@ -16,8 +16,6 @@ public interface GetCertificateChainStatus {
 
     public interface ChargingStationHandler extends GetCertificateChainStatusOffer, io.u2ware.ocpp.v2_1.messaging.ChargingStationHandler {
 
-        default String[] features() { return new String[]{"GetCertificateChainStatus"};}
-
         public static ChargingStationHandler DEFAULT = new ChargingStationHandler(){
 
             protected Log logger = LogFactory.getLog(getClass());
@@ -34,8 +32,6 @@ public interface GetCertificateChainStatus {
     }
 
     public interface CSMSHandler extends GetCertificateChainStatusAnswer, io.u2ware.ocpp.v2_1.messaging.CSMSHandler {    
-
-        default String[] features() { return new String[]{"GetCertificateChainStatus"};}
 
         public static CSMSHandler DEFAULT = new CSMSHandler(){
 

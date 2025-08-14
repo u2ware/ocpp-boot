@@ -30,11 +30,11 @@ public class OCPP51FeatureTests {
     public void context1Loads() throws Exception {
 
         CentralSystem cs = new CentralSystem();
-        cs.registerFeature(Authorize.CentralSystemHandler.DEFAULT);
+        cs.registerHandler(Authorize.CentralSystemHandler.DEFAULT);
 
 
         ChargePoint cp = new ChargePoint();        
-        cp.registerFeature(Authorize.ChargePointHandler.DEFAULT);
+        cp.registerHandler(Authorize.ChargePointHandler.DEFAULT);
 
 
 

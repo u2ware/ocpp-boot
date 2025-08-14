@@ -16,8 +16,6 @@ public interface StartTransaction {
 
     public interface ChargePointHandler extends StartTransactionOffer, io.u2ware.ocpp.v1_6.messaging.ChargePointHandler {
 
-        default String[] features() { return new String[]{"StartTransaction"};}
-
         public static ChargePointHandler DEFAULT = new ChargePointHandler(){
 
             protected Log logger = LogFactory.getLog(getClass());
@@ -34,8 +32,6 @@ public interface StartTransaction {
     }
 
     public interface CentralSystemHandler extends StartTransactionAnswer, io.u2ware.ocpp.v1_6.messaging.CentralSystemHandler {    
-
-        default String[] features() { return new String[]{"StartTransaction"};}
 
         public static CentralSystemHandler DEFAULT = new CentralSystemHandler(){
 

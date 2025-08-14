@@ -24,7 +24,6 @@ public abstract class OCPPHandlerTemplate<T extends OCPPCommand> implements OCPP
     protected abstract String responseType(String source);
     protected abstract String errorType(String source);
     protected abstract String handlerType(String source);
-    protected abstract CallException error(String message);
 
     public Class<?> requestClass(String source) {
         return OCPPHandlerInvoker.resolveType(requestType(source));
@@ -54,17 +53,18 @@ public abstract class OCPPHandlerTemplate<T extends OCPPCommand> implements OCPP
 
     protected Map<String, OCPPHandlerInvoker> features = new HashMap<>();
 
-    public OCPPHandlerInvoker resolveFeature(String feature){
-        if(features.containsKey(feature)) return features.get(feature);
-        String key = OCPPHandlerInvoker.extractElement(features.keySet(), feature);
-        return features.get(key);
+    public OCPPHandlerInvoker resolveFeature(String feature, boolean allowContains){
+        if(allowContains) {
+            String key = OCPPHandlerInvoker.extractElement(features.keySet(), feature);
+            return features.get(key);
+        }else{
+            return features.get(feature);
+        }
     }
 
-    protected void registerFeature(OCPPHandler handler) {
-        for(String feature : handler.features()) {
-            logger.info(String.format("[%s] %s(%s)", name(), feature, ClassUtils.getDescriptiveType(handler)));
-            this.features.put(feature, new OCPPHandlerInvoker(handler));
-        }
+    protected void registerFeature(String feature, OCPPHandler handler) {
+        logger.info(String.format("[%s] %s(%s)", name(), feature, ClassUtils.getDescriptiveType(handler)));
+        this.features.put(feature, new OCPPHandlerInvoker(handler));
     }
 
 
@@ -92,9 +92,9 @@ public abstract class OCPPHandlerTemplate<T extends OCPPCommand> implements OCPP
             // String x = String.format("%s offer(%s) started.", name(), id);
             // logger.info(x);
 
-            OCPPHandlerInvoker offer = resolveFeature(usecase);
+            OCPPHandlerInvoker offer = resolveFeature(usecase, true);
             if(offer == null) {
-                offer = resolveFeature(action);
+                offer = resolveFeature(action, false);
             }
             if(offer == null) {
                 String x = String.format("%s offer(%s) '%s' reflection is not found.", name(), id, action);
@@ -153,9 +153,9 @@ public abstract class OCPPHandlerTemplate<T extends OCPPCommand> implements OCPP
                 // String x = String.format("%s answer(%s) started.", name(), id);
                 // logger.info(x);
 
-                OCPPHandlerInvoker answer = resolveFeature(id);
+                OCPPHandlerInvoker answer = resolveFeature(id, true);
                 if(answer == null) {
-                    answer = resolveFeature(action);
+                    answer = resolveFeature(action, false);
                 }
                 if(answer == null) {
                     String x = String.format("%s answer(%s) '%s' reflection is not found.", name(), id, action);
@@ -199,9 +199,9 @@ public abstract class OCPPHandlerTemplate<T extends OCPPCommand> implements OCPP
                 String usecase = (identifier != null) ? identifier.getUsecase() : cr.getId();
                 String action = (identifier != null) ? identifier.getAction() : cr.getId();
 
-                OCPPHandlerInvoker offer = resolveFeature(usecase);
+                OCPPHandlerInvoker offer = resolveFeature(usecase, true);
                 if(offer == null) {
-                    offer = resolveFeature(action);
+                    offer = resolveFeature(action, false);
                 }
                 if(offer == null) {
                     String x = String.format("%s answer(%s) '%s' reflection is not found.", name(), id, action);
@@ -227,9 +227,9 @@ public abstract class OCPPHandlerTemplate<T extends OCPPCommand> implements OCPP
                 String usecase = (identifier != null) ? identifier.getUsecase() : ce.getId();
                 String action = (identifier != null) ? identifier.getAction() : ce.getId();
 
-                OCPPHandlerInvoker offer = resolveFeature(usecase);
+                OCPPHandlerInvoker offer = resolveFeature(usecase, true);
                 if(offer == null) {
-                    offer = resolveFeature(action);
+                    offer = resolveFeature(action, false);
                 }
                 if(offer == null) {
                     String x = String.format("%s answer(%s) '%s' reflection is not found.", name(), id, action);

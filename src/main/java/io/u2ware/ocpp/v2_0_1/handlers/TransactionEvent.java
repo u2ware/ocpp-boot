@@ -16,8 +16,6 @@ public interface TransactionEvent {
 
     public interface ChargingStationHandler extends TransactionEventOffer, io.u2ware.ocpp.v2_0_1.messaging.ChargingStationHandler {
 
-        default String[] features() { return new String[]{"TransactionEvent"};}
-
         public static ChargingStationHandler DEFAULT = new ChargingStationHandler(){
 
             protected Log logger = LogFactory.getLog(getClass());
@@ -34,8 +32,6 @@ public interface TransactionEvent {
     }
 
     public interface CSMSHandler extends TransactionEventAnswer, io.u2ware.ocpp.v2_0_1.messaging.CSMSHandler {    
-
-        default String[] features() { return new String[]{"TransactionEvent"};}
 
         public static CSMSHandler DEFAULT = new CSMSHandler(){
 

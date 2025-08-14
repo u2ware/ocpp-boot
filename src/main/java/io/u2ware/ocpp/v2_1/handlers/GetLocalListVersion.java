@@ -16,8 +16,6 @@ public interface GetLocalListVersion {
 
     public interface ChargingStationHandler extends GetLocalListVersionOffer, io.u2ware.ocpp.v2_1.messaging.ChargingStationHandler {
 
-        default String[] features() { return new String[]{"GetLocalListVersion"};}
-
         public static ChargingStationHandler DEFAULT = new ChargingStationHandler(){
 
             protected Log logger = LogFactory.getLog(getClass());
@@ -34,8 +32,6 @@ public interface GetLocalListVersion {
     }
 
     public interface CSMSHandler extends GetLocalListVersionAnswer, io.u2ware.ocpp.v2_1.messaging.CSMSHandler {    
-
-        default String[] features() { return new String[]{"GetLocalListVersion"};}
 
         public static CSMSHandler DEFAULT = new CSMSHandler(){
 

@@ -16,8 +16,6 @@ public interface UsePriorityCharging {
 
     public interface CSMSHandler extends UsePriorityChargingOffer, io.u2ware.ocpp.v2_1.messaging.CSMSHandler {
 
-        default String[] features() { return new String[]{"UsePriorityCharging"};}
-
         public static CSMSHandler DEFAULT = new CSMSHandler(){
 
             protected Log logger = LogFactory.getLog(getClass());
@@ -34,8 +32,6 @@ public interface UsePriorityCharging {
     }
 
     public interface ChargingStationHandler extends UsePriorityChargingAnswer, io.u2ware.ocpp.v2_1.messaging.ChargingStationHandler {    
-
-        default String[] features() { return new String[]{"UsePriorityCharging"};}
 
         public static ChargingStationHandler DEFAULT = new ChargingStationHandler(){
 

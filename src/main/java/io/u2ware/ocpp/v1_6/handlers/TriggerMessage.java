@@ -16,8 +16,6 @@ public interface TriggerMessage {
 
     public interface CentralSystemHandler extends TriggerMessageOffer, io.u2ware.ocpp.v1_6.messaging.CentralSystemHandler {
 
-        default String[] features() { return new String[]{"TriggerMessage"};}
-
         public static CentralSystemHandler DEFAULT = new CentralSystemHandler(){
 
             protected Log logger = LogFactory.getLog(getClass());
@@ -34,8 +32,6 @@ public interface TriggerMessage {
     }
 
     public interface ChargePointHandler extends TriggerMessageAnswer, io.u2ware.ocpp.v1_6.messaging.ChargePointHandler {    
-
-        default String[] features() { return new String[]{"TriggerMessage"};}
 
         public static ChargePointHandler DEFAULT = new ChargePointHandler(){
 

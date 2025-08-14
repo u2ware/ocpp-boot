@@ -16,8 +16,6 @@ public interface ClearChargingProfile {
 
     public interface CSMSHandler extends ClearChargingProfileOffer, io.u2ware.ocpp.v2_1.messaging.CSMSHandler {
 
-        default String[] features() { return new String[]{"ClearChargingProfile"};}
-
         public static CSMSHandler DEFAULT = new CSMSHandler(){
 
             protected Log logger = LogFactory.getLog(getClass());
@@ -34,8 +32,6 @@ public interface ClearChargingProfile {
     }
 
     public interface ChargingStationHandler extends ClearChargingProfileAnswer, io.u2ware.ocpp.v2_1.messaging.ChargingStationHandler {    
-
-        default String[] features() { return new String[]{"ClearChargingProfile"};}
 
         public static ChargingStationHandler DEFAULT = new ChargingStationHandler(){
 

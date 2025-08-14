@@ -16,8 +16,6 @@ public interface VatNumberValidation {
 
     public interface CSMSHandler extends VatNumberValidationOffer, io.u2ware.ocpp.v2_1.messaging.CSMSHandler {
 
-        default String[] features() { return new String[]{"VatNumberValidation"};}
-
         public static CSMSHandler DEFAULT = new CSMSHandler(){
 
             protected Log logger = LogFactory.getLog(getClass());
@@ -34,8 +32,6 @@ public interface VatNumberValidation {
     }
 
     public interface ChargingStationHandler extends VatNumberValidationAnswer, io.u2ware.ocpp.v2_1.messaging.ChargingStationHandler {    
-
-        default String[] features() { return new String[]{"VatNumberValidation"};}
 
         public static ChargingStationHandler DEFAULT = new ChargingStationHandler(){
 

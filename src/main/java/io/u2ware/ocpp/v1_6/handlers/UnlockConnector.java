@@ -16,8 +16,6 @@ public interface UnlockConnector {
 
     public interface CentralSystemHandler extends UnlockConnectorOffer, io.u2ware.ocpp.v1_6.messaging.CentralSystemHandler {
 
-        default String[] features() { return new String[]{"UnlockConnector"};}
-
         public static CentralSystemHandler DEFAULT = new CentralSystemHandler(){
 
             protected Log logger = LogFactory.getLog(getClass());
@@ -34,8 +32,6 @@ public interface UnlockConnector {
     }
 
     public interface ChargePointHandler extends UnlockConnectorAnswer, io.u2ware.ocpp.v1_6.messaging.ChargePointHandler {    
-
-        default String[] features() { return new String[]{"UnlockConnector"};}
 
         public static ChargePointHandler DEFAULT = new ChargePointHandler(){
 

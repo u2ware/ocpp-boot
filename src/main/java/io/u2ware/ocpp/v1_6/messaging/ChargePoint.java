@@ -1,6 +1,10 @@
 package io.u2ware.ocpp.v1_6.messaging;
 
+import java.util.ArrayList;
+
 import org.springframework.util.ClassUtils;
+import org.springframework.util.MultiValueMap;
+import org.springframework.util.StringUtils;
 
 import io.u2ware.ocpp.OCPPMessageConsumer;
 import io.u2ware.ocpp.CallException;
@@ -34,11 +38,6 @@ public final class ChargePoint extends OCPPHandlerTemplate<ChargePointCommand>{
     }
 
     @Override
-    protected CallException error(String message) {
-        return ErrorCodes.NotSupported.exception(message);
-    }
-
-    @Override
     public boolean isServer() {
         return false;
     }
@@ -62,22 +61,82 @@ public final class ChargePoint extends OCPPHandlerTemplate<ChargePointCommand>{
         super.offer(()->{ return command;}, consumer);
     }
 
-    public void registerFeature(ChargePointHandler handler) {
-        super.registerFeature(handler);
-    }
 
-    public ChargePoint registerDefaultFeatures() {
+    //////////////////////////////////////////////////////
+    //
+    //////////////////////////////////////////////////////
+    public ChargePoint registerDefaultHandlers() {
         for(ChargePointCommand.Builder e :  ChargePointCommand.ALL.values()){
-            Class<?> c = handlerClass(e.action());
-            ChargePointHandler h = (ChargePointHandler)OCPPHandlerInvoker.invokeField(c, "DEFAULT");
-            super.registerFeature(h);
+            String action = e.action();
+            Class<?> type = handlerClass(action);
+            ChargePointHandler handler = (ChargePointHandler)OCPPHandlerInvoker.invokeField(type, "DEFAULT");
+            super.registerFeature(action, handler);
         }
         for(CentralSystemCommand.Builder e :  CentralSystemCommand.ALL.values()){
-            Class<?> c = handlerClass(e.action());
-            ChargePointHandler h = (ChargePointHandler)OCPPHandlerInvoker.invokeField(c, "DEFAULT");
-            super.registerFeature(h);
+            String action = e.action();
+            Class<?> type = handlerClass(action);
+            ChargePointHandler handler = (ChargePointHandler)OCPPHandlerInvoker.invokeField(type, "DEFAULT");
+            super.registerFeature(action, handler);
         }
         return this;
+    }
+
+    public ChargePoint registerHandler(ChargePointHandler handler, MultiValueMap<String,Object> metadata) {
+
+        String usecase = handler.usecase();
+        boolean actions = handler.actions();
+
+        for(ChargePointCommand.Builder e :  ChargePointCommand.ALL.values()){
+            String action = e.action();
+            Class<?> type = handlerClass(action);
+
+            if(metadata != null && ! metadata.containsKey(action)){
+                metadata.put(action, new ArrayList<>());
+            }
+
+            if(ClassUtils.isAssignableValue(type, handler)){
+                if(StringUtils.hasText(usecase)) {
+                    super.registerFeature(usecase, handler);
+                    if(metadata != null){
+                        metadata.add(action, usecase);
+                    }
+                }
+                if(actions) {
+                    super.registerFeature(action, handler);
+                    if(metadata != null){
+                        metadata.add(action, action);
+                    }
+                }
+            }
+        }
+        for(CentralSystemCommand.Builder e :  CentralSystemCommand.ALL.values()){
+            String action = e.action();
+            Class<?> type = handlerClass(action);
+
+            if(metadata != null && ! metadata.containsKey(action)){
+                metadata.put(action, new ArrayList<>());
+            }
+            
+            if(ClassUtils.isAssignableValue(type, handler)){
+                if(StringUtils.hasText(usecase)) {
+                    super.registerFeature(usecase, handler);
+                    if(metadata != null){
+                        metadata.add(action, usecase);
+                    }
+                }
+                if(actions) {
+                    super.registerFeature(action, handler);
+                    if(metadata != null){
+                        metadata.add(action, action);
+                    }
+                }
+            }
+        }        
+        return this;
+    }
+
+    public ChargePoint registerHandler(ChargePointHandler handler) {       
+        return registerHandler(handler, null);
     }
 
 }

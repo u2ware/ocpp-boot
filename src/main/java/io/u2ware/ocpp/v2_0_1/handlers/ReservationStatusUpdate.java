@@ -16,8 +16,6 @@ public interface ReservationStatusUpdate {
 
     public interface ChargingStationHandler extends ReservationStatusUpdateOffer, io.u2ware.ocpp.v2_0_1.messaging.ChargingStationHandler {
 
-        default String[] features() { return new String[]{"ReservationStatusUpdate"};}
-
         public static ChargingStationHandler DEFAULT = new ChargingStationHandler(){
 
             protected Log logger = LogFactory.getLog(getClass());
@@ -34,8 +32,6 @@ public interface ReservationStatusUpdate {
     }
 
     public interface CSMSHandler extends ReservationStatusUpdateAnswer, io.u2ware.ocpp.v2_0_1.messaging.CSMSHandler {    
-
-        default String[] features() { return new String[]{"ReservationStatusUpdate"};}
 
         public static CSMSHandler DEFAULT = new CSMSHandler(){
 

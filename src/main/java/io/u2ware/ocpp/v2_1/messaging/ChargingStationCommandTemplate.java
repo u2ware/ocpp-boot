@@ -16,13 +16,13 @@ public class ChargingStationCommandTemplate extends OCPPSessionTemplate<Charging
 
 
     public ChargingStationCommandTemplate(String description) {
-        super(description, new ChargingStation().registerDefaultFeatures(), null);
+        super(description, new ChargingStation().registerDefaultHandlers(), null);
     }    
     public ChargingStationCommandTemplate(String description, ChargingStation operations) {
         super(description, operations, null);
     }
     public ChargingStationCommandTemplate(String description, SimpMessageSendingOperations simpOperations) {
-        super(description, new ChargingStation().registerDefaultFeatures(), simpOperations);
+        super(description, new ChargingStation().registerDefaultHandlers(), simpOperations);
     }
     public ChargingStationCommandTemplate(String description, ChargingStation operations, SimpMessageSendingOperations simpOperations) {
         super(description, operations, simpOperations);

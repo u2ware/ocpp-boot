@@ -22,13 +22,13 @@ public class OCPP52FeatureTests {
 
         ///////////////////////////////////////////
         ChargePoint cp0 = new ChargePoint();
-        cp0.registerFeature(io.u2ware.ocpp.v1_6.handlers.Authorize.ChargePointHandler.DEFAULT);
+        cp0.registerHandler(io.u2ware.ocpp.v1_6.handlers.Authorize.ChargePointHandler.DEFAULT);
 
         ChargePoint cp1 = new ChargePoint();
-        cp1.registerFeature(new SimpleAuthorizeOffer("cp1", SimpleAuthorizeOffer.Test.CALLERROR));
+        cp1.registerHandler(new SimpleAuthorizeOffer("cp1", SimpleAuthorizeOffer.Test.CALLERROR));
 
         ChargePoint cp2 = new ChargePoint();
-        cp2.registerFeature(new SimpleAuthorizeOffer("cp1", SimpleAuthorizeOffer.Test.EXCEPTION));
+        cp2.registerHandler(new SimpleAuthorizeOffer("cp1", SimpleAuthorizeOffer.Test.EXCEPTION));
 
 
         ///////////////////////////////////////////        

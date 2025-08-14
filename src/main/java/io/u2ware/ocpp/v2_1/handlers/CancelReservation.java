@@ -16,8 +16,6 @@ public interface CancelReservation {
 
     public interface CSMSHandler extends CancelReservationOffer, io.u2ware.ocpp.v2_1.messaging.CSMSHandler {
 
-        default String[] features() { return new String[]{"CancelReservation"};}
-
         public static CSMSHandler DEFAULT = new CSMSHandler(){
 
             protected Log logger = LogFactory.getLog(getClass());
@@ -34,8 +32,6 @@ public interface CancelReservation {
     }
 
     public interface ChargingStationHandler extends CancelReservationAnswer, io.u2ware.ocpp.v2_1.messaging.ChargingStationHandler {    
-
-        default String[] features() { return new String[]{"CancelReservation"};}
 
         public static ChargingStationHandler DEFAULT = new ChargingStationHandler(){
 

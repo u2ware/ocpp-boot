@@ -17,13 +17,13 @@ public class CSMSCommandTemplate extends OCPPSessionTemplate<CSMSCommand> implem
 
 
     public CSMSCommandTemplate(String description) {
-        super(description, new CSMS().registerDefaultFeatures(), null);
+        super(description, new CSMS().registerDefaultHandlers(), null);
     }    
     public CSMSCommandTemplate(String description, CSMS operations) {
         super(description, operations, null);
     }
     public CSMSCommandTemplate(String description, SimpMessageSendingOperations simpOperations) {
-        super(description, new CSMS().registerDefaultFeatures(), simpOperations);
+        super(description, new CSMS().registerDefaultHandlers(), simpOperations);
     }
     public CSMSCommandTemplate(String description, CSMS operations, SimpMessageSendingOperations simpOperations) {
         super(description, operations, simpOperations);

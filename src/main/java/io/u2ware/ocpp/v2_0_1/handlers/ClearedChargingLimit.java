@@ -16,8 +16,6 @@ public interface ClearedChargingLimit {
 
     public interface ChargingStationHandler extends ClearedChargingLimitOffer, io.u2ware.ocpp.v2_0_1.messaging.ChargingStationHandler {
 
-        default String[] features() { return new String[]{"ClearedChargingLimit"};}
-
         public static ChargingStationHandler DEFAULT = new ChargingStationHandler(){
 
             protected Log logger = LogFactory.getLog(getClass());
@@ -34,8 +32,6 @@ public interface ClearedChargingLimit {
     }
 
     public interface CSMSHandler extends ClearedChargingLimitAnswer, io.u2ware.ocpp.v2_0_1.messaging.CSMSHandler {    
-
-        default String[] features() { return new String[]{"ClearedChargingLimit"};}
 
         public static CSMSHandler DEFAULT = new CSMSHandler(){
 

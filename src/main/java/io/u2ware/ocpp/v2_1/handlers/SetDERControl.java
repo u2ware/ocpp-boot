@@ -16,8 +16,6 @@ public interface SetDERControl {
 
     public interface CSMSHandler extends SetDERControlOffer, io.u2ware.ocpp.v2_1.messaging.CSMSHandler {
 
-        default String[] features() { return new String[]{"SetDERControl"};}
-
         public static CSMSHandler DEFAULT = new CSMSHandler(){
 
             protected Log logger = LogFactory.getLog(getClass());
@@ -34,8 +32,6 @@ public interface SetDERControl {
     }
 
     public interface ChargingStationHandler extends SetDERControlAnswer, io.u2ware.ocpp.v2_1.messaging.ChargingStationHandler {    
-
-        default String[] features() { return new String[]{"SetDERControl"};}
 
         public static ChargingStationHandler DEFAULT = new ChargingStationHandler(){
 

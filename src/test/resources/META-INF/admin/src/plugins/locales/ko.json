@@ -1,0 +1,24 @@
+{
+    "locale" : "KO"
+    ,
+    "$dialog" : {
+        "confirm" : {
+            "title" : "확인"
+            ,
+            "message" : ""
+            ,
+            "yes" : "OK"
+            ,
+            "no" : "Cancel"
+        }
+        ,
+        "alert" : {
+            "title" : "검토"
+            ,
+            "message" : ""
+            ,
+            "yes" : "OK"
+        }
+    }
+
+}

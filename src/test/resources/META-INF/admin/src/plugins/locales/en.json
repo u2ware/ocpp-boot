@@ -1,0 +1,23 @@
+{
+    "locale" : "EN"
+    ,
+    "$dialog" : {
+        "confirm" : {
+            "title" : "Confirm"
+            ,
+            "message" : ""
+            ,
+            "yes" : "OK"
+            ,
+            "no" : "Cancel"
+        }
+        ,
+        "alert" : {
+            "title" : "Alert"
+            ,
+            "message" : ""
+            ,
+            "yes" : "OK"
+        }
+    }
+}

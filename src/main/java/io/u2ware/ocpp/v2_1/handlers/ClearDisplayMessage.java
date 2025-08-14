@@ -16,8 +16,6 @@ public interface ClearDisplayMessage {
 
     public interface ChargingStationHandler extends ClearDisplayMessageOffer, io.u2ware.ocpp.v2_1.messaging.ChargingStationHandler {
 
-        default String[] features() { return new String[]{"ClearDisplayMessage"};}
-
         public static ChargingStationHandler DEFAULT = new ChargingStationHandler(){
 
             protected Log logger = LogFactory.getLog(getClass());
@@ -34,8 +32,6 @@ public interface ClearDisplayMessage {
     }
 
     public interface CSMSHandler extends ClearDisplayMessageAnswer, io.u2ware.ocpp.v2_1.messaging.CSMSHandler {    
-
-        default String[] features() { return new String[]{"ClearDisplayMessage"};}
 
         public static CSMSHandler DEFAULT = new CSMSHandler(){
 

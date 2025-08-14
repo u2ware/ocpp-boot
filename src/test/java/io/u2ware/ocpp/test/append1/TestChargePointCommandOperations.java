@@ -9,7 +9,7 @@ import io.u2ware.ocpp.v1_6.messaging.ChargePointCommandOperations;
 public class TestChargePointCommandOperations extends AbstractEventBusTemplate<ChargePointCommand> implements ChargePointCommandOperations{
 
     public TestChargePointCommandOperations(ApplicationContext ac){
-        super(new ChargePoint().registerDefaultFeatures(), ac);
+        super(new ChargePoint().registerDefaultHandlers(), ac);
     }
 
     public TestChargePointCommandOperations(ChargePoint operations, ApplicationContext ac){

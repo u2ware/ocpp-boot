@@ -16,8 +16,6 @@ public interface SendLocalList {
 
     public interface CSMSHandler extends SendLocalListOffer, io.u2ware.ocpp.v2_0_1.messaging.CSMSHandler {
 
-        default String[] features() { return new String[]{"SendLocalList"};}
-
         public static CSMSHandler DEFAULT = new CSMSHandler(){
 
             protected Log logger = LogFactory.getLog(getClass());
@@ -34,8 +32,6 @@ public interface SendLocalList {
     }
 
     public interface ChargingStationHandler extends SendLocalListAnswer, io.u2ware.ocpp.v2_0_1.messaging.ChargingStationHandler {    
-
-        default String[] features() { return new String[]{"SendLocalList"};}
 
         public static ChargingStationHandler DEFAULT = new ChargingStationHandler(){
 

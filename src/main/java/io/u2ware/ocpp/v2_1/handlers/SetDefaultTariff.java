@@ -16,8 +16,6 @@ public interface SetDefaultTariff {
 
     public interface CSMSHandler extends SetDefaultTariffOffer, io.u2ware.ocpp.v2_1.messaging.CSMSHandler {
 
-        default String[] features() { return new String[]{"SetDefaultTariff"};}
-
         public static CSMSHandler DEFAULT = new CSMSHandler(){
 
             protected Log logger = LogFactory.getLog(getClass());
@@ -34,8 +32,6 @@ public interface SetDefaultTariff {
     }
 
     public interface ChargingStationHandler extends SetDefaultTariffAnswer, io.u2ware.ocpp.v2_1.messaging.ChargingStationHandler {    
-
-        default String[] features() { return new String[]{"SetDefaultTariff"};}
 
         public static ChargingStationHandler DEFAULT = new ChargingStationHandler(){
 

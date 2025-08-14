@@ -16,8 +16,6 @@ public interface UpdateFirmware {
 
     public interface CentralSystemHandler extends UpdateFirmwareOffer, io.u2ware.ocpp.v1_6.messaging.CentralSystemHandler {
 
-        default String[] features() { return new String[]{"UpdateFirmware"};}
-
         public static CentralSystemHandler DEFAULT = new CentralSystemHandler(){
 
             protected Log logger = LogFactory.getLog(getClass());
@@ -34,8 +32,6 @@ public interface UpdateFirmware {
     }
 
     public interface ChargePointHandler extends UpdateFirmwareAnswer, io.u2ware.ocpp.v1_6.messaging.ChargePointHandler {    
-
-        default String[] features() { return new String[]{"UpdateFirmware"};}
 
         public static ChargePointHandler DEFAULT = new ChargePointHandler(){
 

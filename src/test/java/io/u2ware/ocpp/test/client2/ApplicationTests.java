@@ -30,7 +30,7 @@ class ApplicationTests {
 	@Test
 	void contextLoads() throws Exception {
 
-		client.registerDefaultFeatures();
+		client.registerDefaultHandlers();
 
 		/////////////////////////////////////
 		// OCPP Test without I/O

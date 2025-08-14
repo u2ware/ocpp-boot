@@ -16,8 +16,6 @@ public interface SetChargingProfile {
 
     public interface CSMSHandler extends SetChargingProfileOffer, io.u2ware.ocpp.v2_0_1.messaging.CSMSHandler {
 
-        default String[] features() { return new String[]{"SetChargingProfile"};}
-
         public static CSMSHandler DEFAULT = new CSMSHandler(){
 
             protected Log logger = LogFactory.getLog(getClass());
@@ -34,8 +32,6 @@ public interface SetChargingProfile {
     }
 
     public interface ChargingStationHandler extends SetChargingProfileAnswer, io.u2ware.ocpp.v2_0_1.messaging.ChargingStationHandler {    
-
-        default String[] features() { return new String[]{"SetChargingProfile"};}
 
         public static ChargingStationHandler DEFAULT = new ChargingStationHandler(){
 

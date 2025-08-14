@@ -16,8 +16,6 @@ public interface StatusNotification {
 
     public interface ChargingStationHandler extends StatusNotificationOffer, io.u2ware.ocpp.v2_1.messaging.ChargingStationHandler {
 
-        default String[] features() { return new String[]{"StatusNotification"};}
-
         public static ChargingStationHandler DEFAULT = new ChargingStationHandler(){
 
             protected Log logger = LogFactory.getLog(getClass());
@@ -34,8 +32,6 @@ public interface StatusNotification {
     }
 
     public interface CSMSHandler extends StatusNotificationAnswer, io.u2ware.ocpp.v2_1.messaging.CSMSHandler {    
-
-        default String[] features() { return new String[]{"StatusNotification"};}
 
         public static CSMSHandler DEFAULT = new CSMSHandler(){
 

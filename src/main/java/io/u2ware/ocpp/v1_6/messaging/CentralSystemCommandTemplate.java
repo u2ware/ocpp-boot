@@ -19,13 +19,13 @@ public class CentralSystemCommandTemplate extends OCPPSessionTemplate<CentralSys
 
 
     public CentralSystemCommandTemplate(String description) {
-        super(description, new CentralSystem().registerDefaultFeatures(), null);
+        super(description, new CentralSystem().registerDefaultHandlers(), null);
     }    
     public CentralSystemCommandTemplate(String description, CentralSystem operations) {
         super(description, operations, null);
     }
     public CentralSystemCommandTemplate(String description, SimpMessageSendingOperations simpOperations) {
-        super(description, new CentralSystem().registerDefaultFeatures(), simpOperations);
+        super(description, new CentralSystem().registerDefaultHandlers(), simpOperations);
     }
     public CentralSystemCommandTemplate(String description, CentralSystem operations, SimpMessageSendingOperations simpOperations) {
         super(description, operations, simpOperations);

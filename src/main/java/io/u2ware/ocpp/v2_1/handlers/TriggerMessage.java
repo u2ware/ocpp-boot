@@ -16,8 +16,6 @@ public interface TriggerMessage {
 
     public interface CSMSHandler extends TriggerMessageOffer, io.u2ware.ocpp.v2_1.messaging.CSMSHandler {
 
-        default String[] features() { return new String[]{"TriggerMessage"};}
-
         public static CSMSHandler DEFAULT = new CSMSHandler(){
 
             protected Log logger = LogFactory.getLog(getClass());
@@ -34,8 +32,6 @@ public interface TriggerMessage {
     }
 
     public interface ChargingStationHandler extends TriggerMessageAnswer, io.u2ware.ocpp.v2_1.messaging.ChargingStationHandler {    
-
-        default String[] features() { return new String[]{"TriggerMessage"};}
 
         public static ChargingStationHandler DEFAULT = new ChargingStationHandler(){
 

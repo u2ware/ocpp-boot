@@ -16,8 +16,6 @@ public interface BootNotification {
 
     public interface ChargingStationHandler extends BootNotificationOffer, io.u2ware.ocpp.v2_0_1.messaging.ChargingStationHandler {
 
-        default String[] features() { return new String[]{"BootNotification"};}
-
         public static ChargingStationHandler DEFAULT = new ChargingStationHandler(){
 
             protected Log logger = LogFactory.getLog(getClass());
@@ -34,8 +32,6 @@ public interface BootNotification {
     }
 
     public interface CSMSHandler extends BootNotificationAnswer, io.u2ware.ocpp.v2_0_1.messaging.CSMSHandler {    
-
-        default String[] features() { return new String[]{"BootNotification"};}
 
         public static CSMSHandler DEFAULT = new CSMSHandler(){
 

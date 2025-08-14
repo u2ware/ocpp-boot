@@ -16,8 +16,6 @@ public interface ClearTariffs {
 
     public interface CSMSHandler extends ClearTariffsOffer, io.u2ware.ocpp.v2_1.messaging.CSMSHandler {
 
-        default String[] features() { return new String[]{"ClearTariffs"};}
-
         public static CSMSHandler DEFAULT = new CSMSHandler(){
 
             protected Log logger = LogFactory.getLog(getClass());
@@ -34,8 +32,6 @@ public interface ClearTariffs {
     }
 
     public interface ChargingStationHandler extends ClearTariffsAnswer, io.u2ware.ocpp.v2_1.messaging.ChargingStationHandler {    
-
-        default String[] features() { return new String[]{"ClearTariffs"};}
 
         public static ChargingStationHandler DEFAULT = new ChargingStationHandler(){
 

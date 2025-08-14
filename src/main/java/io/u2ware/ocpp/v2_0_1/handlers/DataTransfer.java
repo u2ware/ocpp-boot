@@ -16,8 +16,6 @@ public interface DataTransfer {
 
     public interface ChargingStationHandler extends DataTransferOffer, DataTransferAnswer, io.u2ware.ocpp.v2_0_1.messaging.ChargingStationHandler {
 
-        default String[] features() { return new String[]{"DataTransfer"};}
-
         public static ChargingStationHandler DEFAULT = new ChargingStationHandler(){
 
             protected Log logger = LogFactory.getLog(getClass());
@@ -38,13 +36,11 @@ public interface DataTransfer {
 
             public void sendDataTransferResponse(String id, DataTransferResponse res, ErrorCode err){
                 logger.info(String.format("\n\n\tsendDataTransferResponse(%s)\n", id), err);
-            }
+            }            
         };
     }
 
     public interface CSMSHandler extends DataTransferOffer, DataTransferAnswer, io.u2ware.ocpp.v2_0_1.messaging.CSMSHandler {    
-
-        default String[] features() { return new String[]{"DataTransfer"};}
 
         public static CSMSHandler DEFAULT = new CSMSHandler(){
 

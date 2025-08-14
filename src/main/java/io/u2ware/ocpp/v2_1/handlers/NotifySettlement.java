@@ -16,8 +16,6 @@ public interface NotifySettlement {
 
     public interface ChargingStationHandler extends NotifySettlementOffer, io.u2ware.ocpp.v2_1.messaging.ChargingStationHandler {
 
-        default String[] features() { return new String[]{"NotifySettlement"};}
-
         public static ChargingStationHandler DEFAULT = new ChargingStationHandler(){
 
             protected Log logger = LogFactory.getLog(getClass());
@@ -34,8 +32,6 @@ public interface NotifySettlement {
     }
 
     public interface CSMSHandler extends NotifySettlementAnswer, io.u2ware.ocpp.v2_1.messaging.CSMSHandler {    
-
-        default String[] features() { return new String[]{"NotifySettlement"};}
 
         public static CSMSHandler DEFAULT = new CSMSHandler(){
 

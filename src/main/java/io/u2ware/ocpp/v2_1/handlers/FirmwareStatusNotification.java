@@ -16,8 +16,6 @@ public interface FirmwareStatusNotification {
 
     public interface ChargingStationHandler extends FirmwareStatusNotificationOffer, io.u2ware.ocpp.v2_1.messaging.ChargingStationHandler {
 
-        default String[] features() { return new String[]{"FirmwareStatusNotification"};}
-
         public static ChargingStationHandler DEFAULT = new ChargingStationHandler(){
 
             protected Log logger = LogFactory.getLog(getClass());
@@ -34,8 +32,6 @@ public interface FirmwareStatusNotification {
     }
 
     public interface CSMSHandler extends FirmwareStatusNotificationAnswer, io.u2ware.ocpp.v2_1.messaging.CSMSHandler {    
-
-        default String[] features() { return new String[]{"FirmwareStatusNotification"};}
 
         public static CSMSHandler DEFAULT = new CSMSHandler(){
 
