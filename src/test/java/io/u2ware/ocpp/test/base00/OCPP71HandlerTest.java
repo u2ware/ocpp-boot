@@ -12,8 +12,6 @@ import io.u2ware.ocpp.v1_6.exception.ErrorCode;
 import io.u2ware.ocpp.v1_6.handlers.Authorize;
 import io.u2ware.ocpp.v1_6.handlers.BootNotification;
 import io.u2ware.ocpp.v1_6.handlers.Heartbeat;
-import io.u2ware.ocpp.v1_6.handlers.Authorize.ChargePointHandler;
-import io.u2ware.ocpp.v1_6.messaging.CentralSystem;
 import io.u2ware.ocpp.v1_6.messaging.ChargePoint;
 import io.u2ware.ocpp.v1_6.model.AuthorizeRequest;
 import io.u2ware.ocpp.v1_6.model.AuthorizeResponse;

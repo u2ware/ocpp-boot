@@ -2,7 +2,6 @@ package io.u2ware.ocpp.test.base00;
 
 import java.util.Map;
 
-import io.u2ware.ocpp.test.base00.HandlerA.ChargePointHandler;
 import io.u2ware.ocpp.v1_6.exception.ErrorCode;
 import io.u2ware.ocpp.v1_6.model.AuthorizeRequest;
 import io.u2ware.ocpp.v1_6.model.AuthorizeResponse;
