@@ -14,7 +14,7 @@ public class CSMSInitializer implements InitializingBean, ApplicationContextAwar
 
     private CSMS operations;
     private ApplicationContext applicationContext;
-    private MultiValueMap<String,Object> metadata = new LinkedMultiValueMap<>();
+    private MultiValueMap<String,String> metadata = new LinkedMultiValueMap<>();
 
     public CSMSInitializer(CSMS operations) {
         this.operations = operations;

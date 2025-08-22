@@ -64,82 +64,76 @@ public final class ChargingStation extends OCPPHandlerTemplate<ChargingStationCo
     //
     //////////////////////////////////////////////////////
     public ChargingStation registerDefaultHandlers() {
+        return registerDefaultHandlers(null);
+    }
+
+    public ChargingStation registerDefaultHandlers(MultiValueMap<String,String> metadata) {
         for(ChargingStationCommand.Builder e :  ChargingStationCommand.ALL.values()){
             String action = e.action();
             Class<?> type = handlerClass(action);
-
-            System.err.println(action+ " "+handlerType(action)+" "+handlerClass(action));
-
             ChargingStationHandler handler = (ChargingStationHandler)OCPPHandlerInvoker.invokeField(type, "DEFAULT");
-            super.registerFeature(action, handler);
+            this.registerHandler(action, type, handler, metadata);
         }
         for(CSMSCommand.Builder e :  CSMSCommand.ALL.values()){
             String action = e.action();
             Class<?> type = handlerClass(action);
             ChargingStationHandler handler = (ChargingStationHandler)OCPPHandlerInvoker.invokeField(type, "DEFAULT");
-            super.registerFeature(action, handler);
+            this.registerHandler(action, type, handler, metadata);
         }
         return this;
     }
 
+    public ChargingStation registerHandler(ChargingStationHandler handler){
+        return registerHandler(handler, null);
+    }
 
-    public ChargingStation registerHandler(ChargingStationHandler handler, MultiValueMap<String,Object> metadata) {
-
-
-        String usecase = handler.usecase();
-        boolean actions = handler.actions();
-
+    public ChargingStation registerHandler(ChargingStationHandler handler, MultiValueMap<String,String> metadata) {
 
         for(ChargingStationCommand.Builder e :  ChargingStationCommand.ALL.values()){
             String action = e.action();
             Class<?> type = handlerClass(action);
+            this.registerHandler(action, type, handler, metadata);
 
-            if(metadata != null && ! metadata.containsKey(action)){
-                metadata.put(action, new ArrayList<>());
-            }
-
-            if(ClassUtils.isAssignableValue(type, handler)){
-                if(StringUtils.hasText(usecase)) {
-                    super.registerFeature(usecase, handler);
-                    if(metadata != null){
-                        metadata.add(action, usecase);
-                    }
-                }
-                if(actions) {
-                    super.registerFeature(action, handler);
-                    if(metadata != null){
-                        metadata.add(action, action);
-                    }
-                }
-            }
         }
         for(CSMSCommand.Builder e :  CSMSCommand.ALL.values()){
             String action = e.action();
             Class<?> type = handlerClass(action);
-
-            if(metadata != null && ! metadata.containsKey(action)){
-                metadata.put(action, new ArrayList<>());
-            }            
-            if(ClassUtils.isAssignableValue(type, handler)){
-                if(StringUtils.hasText(usecase)) {
-                    super.registerFeature(usecase, handler);
-                    if(metadata != null){
-                        metadata.add(action, usecase);
-                    }
-                }
-                if(actions) {
-                    super.registerFeature(action, handler);
-                    if(metadata != null){
-                        metadata.add(action, action);
-                    }
-                }
-            }
+            this.registerHandler(action, type, handler, metadata);
         }        
         return this;
     }
 
-    public ChargingStation registerHandler(ChargingStationHandler handler) {       
-        return registerHandler(handler, null);
-    }
+    //////////////////////////////////////////////////////
+    //
+    //////////////////////////////////////////////////////
+    private ChargingStation registerHandler(String action, Class<?> type, ChargingStationHandler handler, MultiValueMap<String,String> metadata) {
 
+        String usecase = handler.usecase();
+        boolean actions = handler.actions();
+        if(metadata != null) {
+            metadata.computeIfAbsent(action, (key)->{ return new ArrayList<>();});
+        }
+
+        if(ClassUtils.isAssignableValue(type, handler)){
+            if(StringUtils.hasText(usecase)) {
+                super.registerFeature(usecase, handler);
+                if(metadata != null) {
+                    metadata.computeIfPresent(action, (key, list)->{
+                        if(! list.contains(usecase)) list.add(usecase);
+                        return list;
+                    });
+                }
+            }
+            if(actions) {
+                super.registerFeature(action, handler);
+                if(metadata != null) {
+                    metadata.computeIfPresent(action, (key, list)->{
+                        if(! list.contains(action)) list.add(action);
+                        return list;
+                    });
+                }
+            }
+        }
+        return this;
+    }
 }

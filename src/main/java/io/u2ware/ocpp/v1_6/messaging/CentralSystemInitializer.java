@@ -13,7 +13,7 @@ public class CentralSystemInitializer implements InitializingBean, ApplicationCo
 
     private CentralSystem operations;
     private ApplicationContext applicationContext;
-    private MultiValueMap<String,Object> metadata = new LinkedMultiValueMap<>();
+    private MultiValueMap<String,String> metadata = new LinkedMultiValueMap<>();
 
     public CentralSystemInitializer(CentralSystem operations) {
         this.operations = operations;

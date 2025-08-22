@@ -14,7 +14,7 @@ public class ChargePointInitializer implements InitializingBean, ApplicationCont
 
     private ChargePoint operations;
     private ApplicationContext applicationContext;
-    private MultiValueMap<String,Object> metadata = new LinkedMultiValueMap<>();
+    private MultiValueMap<String,String> metadata = new LinkedMultiValueMap<>();
 
     public ChargePointInitializer(ChargePoint operations) {
         this.operations = operations;
@@ -31,5 +31,6 @@ public class ChargePointInitializer implements InitializingBean, ApplicationCont
         for(ChargePointHandler handler : handlers.values()) {
             operations.registerHandler(handler, metadata);
         }
-    } 
+    }
+
 }

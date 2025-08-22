@@ -64,78 +64,73 @@ public final class CentralSystem extends OCPPHandlerTemplate<CentralSystemComman
     //
     //////////////////////////////////////////////////////
     public CentralSystem registerDefaultHandlers() {
+        return registerDefaultHandlers(null);
+    }
+
+    public CentralSystem registerDefaultHandlers(MultiValueMap<String,String> metadata) {
         for(ChargePointCommand.Builder e :  ChargePointCommand.ALL.values()){
             String action = e.action();
             Class<?> type = handlerClass(action);
             CentralSystemHandler handler = (CentralSystemHandler)OCPPHandlerInvoker.invokeField(type, "DEFAULT");
-            super.registerFeature(action, handler);
+            this.registerHandler(action, type, handler, metadata);
         }
         for(CentralSystemCommand.Builder e :  CentralSystemCommand.ALL.values()){
             String action = e.action();
             Class<?> type = handlerClass(action);
             CentralSystemHandler handler = (CentralSystemHandler)OCPPHandlerInvoker.invokeField(type, "DEFAULT");
-            super.registerFeature(action, handler);
+            this.registerHandler(action, type, handler, metadata);
         }
         return this;
     }
 
+    public CentralSystem registerHandler(CentralSystemHandler handler){
+        return registerHandler(handler, null);
+    }
 
-    public CentralSystem registerHandler(CentralSystemHandler handler, MultiValueMap<String,Object> metadata) {
+    public CentralSystem registerHandler(CentralSystemHandler handler, MultiValueMap<String,String> metadata) {       
+        for(ChargePointCommand.Builder e :  ChargePointCommand.ALL.values()){
+            String action = e.action();
+            Class<?> type = handlerClass(action);
+            this.registerHandler(action, type, handler, metadata);
+        }
+        for(CentralSystemCommand.Builder e :  CentralSystemCommand.ALL.values()){
+            String action = e.action();
+            Class<?> type = handlerClass(action);
+            this.registerHandler(action, type, handler, metadata);
+        }
+        return this;
+    }
 
-
+    //////////////////////////////////////////////////////
+    //
+    //////////////////////////////////////////////////////
+    private CentralSystem registerHandler(String action, Class<?> type, CentralSystemHandler handler, MultiValueMap<String,String> metadata) {       
         String usecase = handler.usecase();
         boolean actions = handler.actions();
+        if(metadata != null) {
+            metadata.computeIfAbsent(action, (key)->{ return new ArrayList<>();});
+        }
 
-
-        for(ChargePointCommand.Builder e :  ChargePointCommand.ALL.values()){
-            String action = e.action();
-            Class<?> type = handlerClass(action);
-
-            if(metadata != null && ! metadata.containsKey(action)){
-                metadata.put(action, new ArrayList<>());
-            }
-
-            if(ClassUtils.isAssignableValue(type, handler)){
-                if(StringUtils.hasText(usecase)) {
-                    super.registerFeature(usecase, handler);
-                    if(metadata != null){
-                        metadata.add(action, usecase);
-                    }
+        if(ClassUtils.isAssignableValue(type, handler)){
+            if(StringUtils.hasText(usecase)) {
+                super.registerFeature(usecase, handler);
+                if(metadata != null) {
+                    metadata.computeIfPresent(action, (key, list)->{
+                        if(! list.contains(usecase)) list.add(usecase);
+                        return list;
+                    });
                 }
-                if(actions) {
-                    super.registerFeature(action, handler);
-                    if(metadata != null){
-                        metadata.add(action, action);
-                    }
+            }
+            if(actions) {
+                super.registerFeature(action, handler);
+                if(metadata != null) {
+                    metadata.computeIfPresent(action, (key, list)->{
+                        if(! list.contains(action)) list.add(action);
+                        return list;
+                    });
                 }
             }
         }
-        for(CentralSystemCommand.Builder e :  CentralSystemCommand.ALL.values()){
-            String action = e.action();
-            Class<?> type = handlerClass(action);
-
-            if(metadata != null && ! metadata.containsKey(action)){
-                metadata.put(action, new ArrayList<>());
-            }            
-            if(ClassUtils.isAssignableValue(type, handler)){
-                if(StringUtils.hasText(usecase)) {
-                    super.registerFeature(usecase, handler);
-                    if(metadata != null){
-                        metadata.add(action, usecase);
-                    }
-                }
-                if(actions) {
-                    super.registerFeature(action, handler);
-                    if(metadata != null){
-                        metadata.add(action, action);
-                    }
-                }
-            }
-        }        
         return this;
-    }
-
-    public CentralSystem registerHandler(CentralSystemHandler handler) {       
-        return registerHandler(handler, null);
     }
 }

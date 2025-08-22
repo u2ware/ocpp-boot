@@ -2,12 +2,12 @@
 
 title OCPP-BOOT Core Concept
 
-participant "\tCommandOperations\t" as Sending #APPLICATION
-participant " Offer " as Offer #IMPLEMENTATION
-participant " Sender " as Sender #APPLICATION
-participant "\t\tWebsocket\t\t\n" as Websocket 
-participant " Receiver " as Receiver #APPLICATION
-participant " Answer " as Answer #IMPLEMENTATION
+participant "Command\n(Command Operations)" as Sending #APPLICATION
+participant "Offer\n(Handler) " as Offer #IMPLEMENTATION
+participant "Sender\n(Handler Operations)" as Sender #APPLICATION
+participant "Websocket" as Websocket 
+participant "Receiver\n(Handler Operations)" as Receiver #APPLICATION
+participant "Answer\n(Handler) " as Answer #IMPLEMENTATION
 
 note over Sending : (1) call send \n Command
 

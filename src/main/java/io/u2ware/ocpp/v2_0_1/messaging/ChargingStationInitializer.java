@@ -14,7 +14,7 @@ public class ChargingStationInitializer implements InitializingBean, Application
 
     private ChargingStation operations;
     private ApplicationContext applicationContext;
-    private MultiValueMap<String,Object> metadata = new LinkedMultiValueMap<>();
+    private MultiValueMap<String,String> metadata = new LinkedMultiValueMap<>();
 
     public ChargingStationInitializer(ChargingStation operations) {
         this.operations = operations;
